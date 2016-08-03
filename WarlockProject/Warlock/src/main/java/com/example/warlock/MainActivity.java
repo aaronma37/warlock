@@ -1,4 +1,6 @@
 package com.example.warlock;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -21,6 +23,9 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
@@ -59,8 +64,8 @@ public class MainActivity extends ActionBarActivity {
         ////////////////////////
 
 
-        sView = new SurfaceView(this);
-        setContentView(sView);
+        //sView = new SurfaceView(this);
+        //setContentView(sView);
     }
 
 

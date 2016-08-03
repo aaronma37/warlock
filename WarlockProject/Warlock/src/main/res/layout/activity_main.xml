@@ -2,9 +2,16 @@
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="fill_parent"
 android:layout_height="fill_parent"
-android:orientation="vertical"
-tools:context="com.example.aaron.test.OpenGLES20Activity">
+android:screenOrientation="landscape"
 
+    tools:context="com.example.aaron.test.OpenGLES20Activity">
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp" />
 
 </LinearLayout>
 
