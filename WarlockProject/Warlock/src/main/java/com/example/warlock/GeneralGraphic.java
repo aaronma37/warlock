@@ -65,16 +65,16 @@ public class GeneralGraphic
     // number of coordinates per vertex in this array
     static final int COORDS_PER_VERTEX = 2;
     static float spriteCoords[] = {
-            -2f,  2f,   // top left
-            -2f, -2f,   // bottom left
-            2f, -2f,   // bottom right
-            2f,  2f}; //top right
+            -1f,  1f,   // top left
+            -1f, -1f,   // bottom left
+            1f, -1f,   // bottom right
+            1f,  1f}; //top right
 
     private short drawOrder[] = { 0, 1, 2, 0, 2, 3 }; //Order to draw vertices
     private final int vertexStride = COORDS_PER_VERTEX * 4; //Bytes per vertex
 
     // Set color with red, green, blue and alpha (opacity) values
-    float color[] = { 1f, 1f, 1f, 1.0f };
+    float color[] = { 1f, 1f, 1f, 1f };
 
     public GeneralGraphic(final Context activityContext, int k)
     {
@@ -128,6 +128,18 @@ public class GeneralGraphic
         //Load the texture
         if (s==0){
             mTextureDataHandle = loadTexture(mActivityContext, R.drawable.castle_1);
+        }
+        else if (s==1){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.red_box);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.red_box);
+        }
+        else if (s==2){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.blue_box);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.blue_box);
+        }
+        else if (s==3){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.stage_1);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.stage_1);
         }
     }
 
@@ -193,6 +205,14 @@ public class GeneralGraphic
         if (s==0){
             mTextureDataHandle = loadTexture(mActivityContext, R.drawable.castle_1);
             selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.castle_1);
+        }
+        else if (s==1){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.redbox);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.redbox);
+        }
+        else if (s==2){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.blue_box);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.blue_box);
         }
 
     }

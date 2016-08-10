@@ -45,6 +45,7 @@ public class Rend implements GLSurfaceView.Renderer {
     public boolean SINFO_FLAG=true;
     private FloatBuffer textureBuffer;
     public Context context;
+    public int game_state=0;
 
     float Coords[] = {
             -0.5f,  0.5f, 0.0f,   // top left
@@ -69,8 +70,12 @@ public class Rend implements GLSurfaceView.Renderer {
     private final float[] zeroRotationMatrix = new float[16];
     float[] scratch = new float[16];
     float[] scratch2 = new float[16];
-    public GeneralGraphic red_dot;
-
+    public GeneralGraphic red_dot, stage_1;
+    public GeneralGraphic red_box;
+    public GeneralGraphic blue_box;
+    public Person aaron, luke;
+    public Projectile projectile_fireball;
+    public Offensive_Physical_Actions fireball;
 
     private float width,height;
 
@@ -106,7 +111,14 @@ public class Rend implements GLSurfaceView.Renderer {
 
         c[0]=255;c[1]=255;c[2]=255;c[3]=.2f;
         red_dot = new GeneralGraphic(context,0);
+        red_box = new GeneralGraphic(context,1);
+        blue_box = new GeneralGraphic(context,2);
+        stage_1 = new GeneralGraphic(context,3);
 
+        aaron = new Person("Aaron", -.5f, -.1f);
+        luke = new Person("Luke", .5f, -.1f);
+        projectile_fireball = new Projectile(0f, 0f, .01f,5,0,0,0f, .05f, .05f, 0);
+        fireball = new Offensive_Physical_Actions(0.5f, 0, projectile_fireball);
     }
 
 
@@ -120,7 +132,36 @@ public class Rend implements GLSurfaceView.Renderer {
 
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
-        red_dot.Draw(stockMatrix,false);
+        //red_dot.Draw(stockMatrix,false);
+        //_box.Draw(stockMatrix,false);
+
+        if (game_state==0){
+            //Load stage
+            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+            Matrix.scaleM(scratch, 0, 2f,1f, 1f);
+            stage_1.Draw(scratch,false);
+
+            //Load characters
+
+            //Load char 1
+            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+            Matrix.translateM(scratch, 0, aaron.center_x, aaron.center_y, 0);
+            Matrix.scaleM(scratch, 0, aaron.width/100f,aaron.height/100f,.5f);
+
+            blue_box.Draw(scratch,false);
+
+            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+            Matrix.translateM(scratch, 0, luke.center_x, luke.center_y, 0);
+            Matrix.scaleM(scratch, 0, luke.width/100f,luke.height/100f,.5f);
+
+            blue_box.Draw(scratch,false);
+
+            if(!aaron.busy){
+                aaron.cast(fireball);
+            }
+        }
+
+
 
     }
 
