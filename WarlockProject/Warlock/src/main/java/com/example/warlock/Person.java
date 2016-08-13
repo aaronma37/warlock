@@ -8,6 +8,7 @@ public class Person {
     public String name;
     public int height;
     public int width;
+    public Hitbox hitbox;
     public float center_x;
     public float center_y;
     public boolean busy;
@@ -16,6 +17,7 @@ public class Person {
     public Person() {
         health=100;
         name="default";
+        hitbox=new Hitbox(3,5);
         height=10;
         width=6;
         busy=false;
@@ -29,7 +31,7 @@ public class Person {
         name=given_name;
         height=10;
         width=6;
-
+        hitbox = new Hitbox(3,5);
         center_x=start_x;
         center_y=start_y;
         busy=false;

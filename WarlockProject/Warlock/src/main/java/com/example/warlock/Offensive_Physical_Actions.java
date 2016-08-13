@@ -22,12 +22,14 @@ public class Offensive_Physical_Actions {
         animation=init_animation;
         projectile=init_projectile;
         cast_time=0;
+        active=true;
     }
 
     public void step(){
         cast_time=cast_time+1;
         if (cast_time>total_cast_time){
             make_active=true;
+            active=false;
         }
     }
 }

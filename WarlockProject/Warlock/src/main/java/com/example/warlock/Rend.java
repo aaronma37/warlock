@@ -47,6 +47,9 @@ public class Rend implements GLSurfaceView.Renderer {
     public Context context;
     public int game_state=0;
 
+    private List<Projectile> active_projectiles = new ArrayList<>();
+    private List<Person> active_people = new ArrayList<>();
+
     float Coords[] = {
             -0.5f,  0.5f, 0.0f,   // top left
             -0.5f, -0.5f, 0.0f,   // bottom left
@@ -117,8 +120,32 @@ public class Rend implements GLSurfaceView.Renderer {
 
         aaron = new Person("Aaron", -.5f, -.1f);
         luke = new Person("Luke", .5f, -.1f);
-        projectile_fireball = new Projectile(0f, 0f, .01f,5,0,0,0f, .05f, .05f, 0);
-        fireball = new Offensive_Physical_Actions(0.5f, 0, projectile_fireball);
+        projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0);
+        fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball);
+        enterArena();
+    }
+
+    public void enterArena(){
+        active_people.clear();
+        active_people.add(aaron);
+        active_people.add(luke);
+
+        active_projectiles.clear();
+    }
+
+    public void exitArena(){
+        active_people.clear();
+    }
+
+    public boolean checkCollision(Hitbox hbox1, float x_1, float y_1, Hitbox hbox2, float x_2, float y_2){
+
+        if (x_1-hbox1.x<=x_2+hbox2.x && x_1+hbox1.x >= x_2-hbox2.x){
+            if (y_1-hbox1.y<=y_2+hbox2.y && y_1+hbox1.y >= y_2-hbox2.y){
+                return true;
+            }
+        }
+
+        return false;
     }
 
 
@@ -136,29 +163,67 @@ public class Rend implements GLSurfaceView.Renderer {
         //_box.Draw(stockMatrix,false);
 
         if (game_state==0){
+
+            for (int i = 0; i < active_people.size(); i++){
+                if(!active_people.get(i).busy){
+                    //Choose what to do::
+                    active_people.get(i).cast(fireball);
+                }else if (active_people.get(i).action.active){
+                    //Complete action
+                    active_people.get(i).action.step();
+                    if (active_people.get(i).action.make_active){
+                        active_people.get(i).action.make_active=false;
+                        active_people.get(i).busy=false;
+                        //Add new projectile to list
+                        active_projectiles.add(active_people.get(i).action.projectile);
+                        active_projectiles.get(active_projectiles.size()-1).addTarget(luke);
+                    }
+                }
+            }
+
+
+            System.out.println("projectile size"+ active_projectiles.size());
+
+            for (int i = 0; i < active_projectiles.size();i++){
+                active_projectiles.get(i).step();
+                //Check hit
+                for (int j = 0; j< active_projectiles.get(i).active_targets.size();j++){
+                    if (checkCollision(active_projectiles.get(i).active_targets.get(j).hitbox,active_projectiles.get(i).active_targets.get(j).center_x,active_projectiles.get(i).active_targets.get(j).center_y,active_projectiles.get(i).hitbox,active_projectiles.get(i).location_x,active_projectiles.get(i).location_y)){
+                        active_projectiles.get(j).on_hit();
+                    }
+                }
+
+            }
+
+
+
             //Load stage
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
             Matrix.scaleM(scratch, 0, 2f,1f, 1f);
             stage_1.Draw(scratch,false);
 
             //Load characters
-
-            //Load char 1
-            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, aaron.center_x, aaron.center_y, 0);
-            Matrix.scaleM(scratch, 0, aaron.width/100f,aaron.height/100f,.5f);
-
-            blue_box.Draw(scratch,false);
-
-            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, luke.center_x, luke.center_y, 0);
-            Matrix.scaleM(scratch, 0, luke.width/100f,luke.height/100f,.5f);
-
-            blue_box.Draw(scratch,false);
-
-            if(!aaron.busy){
-                aaron.cast(fireball);
+            for (int i = 0; i< active_people.size();i++){
+                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y, 0);
+                Matrix.scaleM(scratch, 0, active_people.get(i).hitbox.x*2/100f,active_people.get(i).hitbox.y*2/100f,.5f);
+                blue_box.Draw(scratch,false);
+                if (active_people.get(i).busy){
+                    //System.out.println("Busy");
+                }else{
+                    //System.out.println("Not Busy");
+                }
             }
+
+            for (int i = 0; i< active_projectiles.size();i++){
+                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                Matrix.translateM(scratch, 0, active_projectiles.get(i).location_x, active_projectiles.get(i).location_y, 0);
+                Matrix.scaleM(scratch, 0, active_projectiles.get(i).hitbox.x*2/100f,active_projectiles.get(i).hitbox.y*2/100f,.5f);
+                red_box.Draw(scratch,false);
+            }
+
+
+
         }
 
 
