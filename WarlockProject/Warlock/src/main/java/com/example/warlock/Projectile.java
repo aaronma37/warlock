@@ -20,11 +20,14 @@ public class Projectile {
     public float location_y;
     public float direction;
     public List<Person> active_targets = new ArrayList<>();
-    public Projectile(){
+    public int active_time;
+    public int time_active=0;
 
+    public Projectile(){
+        active=false;
     }
 
-    public Projectile(float init_cast_location_x,float init_cast_location_y, float init_speed, float init_damage, int init_type, int init_debuff, float init_persistance, Hitbox init_hitbox, float init_direction){
+    public Projectile(float init_cast_location_x,float init_cast_location_y, float init_speed, float init_damage, int init_type, int init_debuff, float init_persistance, Hitbox init_hitbox, float init_direction, int init_active_time){
         cast_location_x=init_cast_location_x;
         cast_location_y=init_cast_location_y;
         location_x=cast_location_x;
@@ -38,11 +41,16 @@ public class Projectile {
         hitbox=init_hitbox;
         direction=init_direction;
         active_targets.clear();
+        active_time=init_active_time;
     }
 
     public void step(){
         location_x=location_x+speed*(float)Math.cos(direction);
         location_y=location_x+speed*(float)Math.cos(direction);
+        time_active=time_active+1;
+        if (time_active>active_time){
+            active=false;
+        }
     }
 
     public void on_hit(){

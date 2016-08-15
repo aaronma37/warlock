@@ -39,6 +39,7 @@ public class Person {
 
     public void cast(Offensive_Physical_Actions desired_action){
         busy=true;
+        action= new Offensive_Physical_Actions();
         action=desired_action;
     }
 

@@ -120,9 +120,10 @@ public class Rend implements GLSurfaceView.Renderer {
 
         aaron = new Person("Aaron", -.5f, -.1f);
         luke = new Person("Luke", .5f, -.1f);
-        projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0);
+        projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0,100);
         fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball);
         enterArena();
+
     }
 
     public void enterArena(){
@@ -167,7 +168,7 @@ public class Rend implements GLSurfaceView.Renderer {
             for (int i = 0; i < active_people.size(); i++){
                 if(!active_people.get(i).busy){
                     //Choose what to do::
-                    active_people.get(i).cast(fireball);
+                    active_people.get(i).cast(new Offensive_Physical_Actions(100f, 0, new Projectile(active_people.get(i).center_x, active_people.get(i).center_y, .001f,5,0,0,0f, new Hitbox(2,2), 0, 5)));
                 }else if (active_people.get(i).action.active){
                     //Complete action
                     active_people.get(i).action.step();
@@ -181,11 +182,13 @@ public class Rend implements GLSurfaceView.Renderer {
                 }
             }
 
-
-            System.out.println("projectile size"+ active_projectiles.size());
-
-            for (int i = 0; i < active_projectiles.size();i++){
+            for (int i = active_projectiles.size()-1; i >= 0;i--){
                 active_projectiles.get(i).step();
+                if (!active_projectiles.get(i).active){
+                    active_projectiles.remove(i);
+                    System.out.println("Projectile: " + i + "deleted");
+                    break;
+                }
                 //Check hit
                 for (int j = 0; j< active_projectiles.get(i).active_targets.size();j++){
                     if (checkCollision(active_projectiles.get(i).active_targets.get(j).hitbox,active_projectiles.get(i).active_targets.get(j).center_x,active_projectiles.get(i).active_targets.get(j).center_y,active_projectiles.get(i).hitbox,active_projectiles.get(i).location_x,active_projectiles.get(i).location_y)){
@@ -208,11 +211,7 @@ public class Rend implements GLSurfaceView.Renderer {
                 Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y, 0);
                 Matrix.scaleM(scratch, 0, active_people.get(i).hitbox.x*2/100f,active_people.get(i).hitbox.y*2/100f,.5f);
                 blue_box.Draw(scratch,false);
-                if (active_people.get(i).busy){
-                    //System.out.println("Busy");
-                }else{
-                    //System.out.println("Not Busy");
-                }
+
             }
 
             for (int i = 0; i< active_projectiles.size();i++){

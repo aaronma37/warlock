@@ -81,19 +81,20 @@ public class MainActivity extends ActionBarActivity {
                     public void onSuccess(LoginResult loginResult) {
                         Log.d("myTag", "Success");
                         handleFacebookAccessToken(loginResult.getAccessToken());
-
+                        System.out.print("SUCCESS");
                     }
 
                     @Override
                     public void onCancel() {
                         Log.d("myTag", "Cancel");
+                        System.out.print("CANCEL");
 
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
                         Log.d("myTag", "Fail");
-
+                        System.out.print("FAIL");
                     }
                 });
         mAuth = FirebaseAuth.getInstance();
@@ -105,9 +106,13 @@ public class MainActivity extends ActionBarActivity {
                     if (user != null) {
                         // User is signed in
                         Log.d("mytag", "onAuthStateChanged:signed_in:" + user.getUid());
+                        System.out.println("SIGNED IN");
+
                     } else {
                         // User is signed out
                         Log.d("mytag", "onAuthStateChanged:signed_out");
+                        System.out.println("SIGNED OUT");
+
                     }
                     // ...
                 }
@@ -152,12 +157,12 @@ public class MainActivity extends ActionBarActivity {
         ////////////////////////
         mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
         final String userId = user.getUid();
 
         System.out.println("userID" + userId);
 
         setFirstFirebase();
+
 
         sView = new SurfaceView(this);
         setContentView(sView);
@@ -182,7 +187,6 @@ public class MainActivity extends ActionBarActivity {
                         Log.w("myTag", "getUser:onCancelled", databaseError.toException());
                     }
                 });
-
 
     }
 
@@ -288,6 +292,9 @@ public class MainActivity extends ActionBarActivity {
 
         Firebase.setAndroidContext(this);
         Firebase ref = new Firebase("https://arms-bb507.firebaseio.com");
+        if (ref.getAuth()==null){
+            System.out.print("got null");
+        }
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Firebase alanRef = ref.child("users").child(user.getUid());
         User alan = new User(user.getDisplayName());
