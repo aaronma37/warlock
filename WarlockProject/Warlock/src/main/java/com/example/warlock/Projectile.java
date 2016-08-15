@@ -46,8 +46,9 @@ public class Projectile {
 
     public void step(){
         location_x=location_x+speed*(float)Math.cos(direction);
-        location_y=location_x+speed*(float)Math.cos(direction);
+        location_y=location_y+speed*(float)Math.sin(direction);
         time_active=time_active+1;
+        System.out.println("stepping: " +direction);
         if (time_active>active_time){
             active=false;
         }
@@ -61,6 +62,28 @@ public class Projectile {
         active_targets.add(target);
     }
 
+    public void setSpell(Person target, Person origin, int spell_type){
+        active=true;
+
+        if (spell_type==0){
+            cast_location_x=origin.center_x;
+            cast_location_y=origin.center_y;
+            location_x=cast_location_x;
+            location_y=cast_location_y;
+            speed=.025f;
+            damage=5;
+            type=0;
+            debuff=0;
+            persistance=0;
+            hitbox=new Hitbox(2,2);
+            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+
+            active_targets.clear();
+            active_targets.add(target);
+            active_time=150;
+        }
+    }
 
 
 }
