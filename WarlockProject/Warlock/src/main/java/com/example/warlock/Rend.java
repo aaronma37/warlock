@@ -53,6 +53,8 @@ public class Rend implements GLSurfaceView.Renderer {
     private Projectile projectile_swap[] = new Projectile[50];
     private int active_projectile_count=0;
     private List<Person> active_people = new ArrayList<>();
+    private List<Person> blue_team = new ArrayList<>();
+    private List<Person> red_team = new ArrayList<>();
 
     float Coords[] = {
             -0.5f,  0.5f, 0.0f,   // top left
@@ -87,6 +89,8 @@ public class Rend implements GLSurfaceView.Renderer {
     private long start_time, end_time;
     private int meta_obs[] = new int[10];
     private int off_obs[] = new int[10];
+    private boolean blue_victory_flag, red_victory_flag;
+    private int victory=0;
 
     private Person temp_person = new Person();
 
@@ -130,10 +134,7 @@ public class Rend implements GLSurfaceView.Renderer {
         cast_bar = new GeneralGraphic(context,5);
         stage_1 = new GeneralGraphic(context,3);
 
-        aaron = new Person("Aaron", -.5f, -.1f);
-        luke = new Person("Luke", .5f, -.1f);
-        projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0,100);
-        fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball,aaron);
+
         enterArena();
         float start_time = System.currentTimeMillis();
 
@@ -141,9 +142,22 @@ public class Rend implements GLSurfaceView.Renderer {
     }
 
     public void enterArena(){
+        game_state=0;
+        aaron = new Person("Aaron", -.5f, -.1f);
+        luke = new Person("Luke", .5f, -.1f);
+        projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0,100);
+        fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball,aaron);
         active_people.clear();
         active_people.add(aaron);
         active_people.add(luke);
+
+        blue_team.clear();
+        blue_team.add(aaron);
+
+        red_team.clear();
+        red_team.add(luke);
+
+        victory=0;
 
 /*        aaron.cast(new Offensive_Physical_Actions(100f, 0, new Projectile(aaron.center_x, aaron.center_y, .001f,5,0,0,0f, new Hitbox(2,2), 0, 5),luke));
         aaron.action.active=false;
@@ -153,6 +167,9 @@ public class Rend implements GLSurfaceView.Renderer {
         luke.action.active=false;
         luke.busy=false;*/
         //active_projectiles.clear();
+
+        aaron.setActionSpace();
+        luke.setActionSpace();
 
         aaron.a[1].o[2]=0;
         aaron.a[1].o[0]=0;
@@ -210,128 +227,140 @@ public class Rend implements GLSurfaceView.Renderer {
 
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
-        //red_dot.Draw(stockMatrix,false);
-        //_box.Draw(stockMatrix,false);
-
         if (game_state==0){
 
+            update_battle();
 
-            for (int i = 0; i < active_people.size(); i++){
-                //temp_person = active_people.get(i);
-                if(!active_people.get(i).busy){
-                    //Choose what to do::
-                    if (i==0){
-                        calculateMetaObs(active_people.get(i),luke);
-                        calculateOffObs(active_people.get(i),luke);
-                        active_people.get(i).choose(meta_obs,off_obs,luke);
-                        //active_people.get(i).cast(new Offensive_Physical_Actions(100f, 0, new Projectile(active_people.get(i).center_x, active_people.get(i).center_y, .001f,5,0,0,0f, new Hitbox(2,2), 0, 5),luke));
-                       //active_people.get(i).cast(0,luke);
-                        // fireball.set(0,projectile_fireball, luke);
-                      //  active_people.get(i).cast(fireball);
+            draw_battle();
 
-                    }else{
-                        calculateMetaObs(active_people.get(i),aaron);
-                        calculateOffObs(active_people.get(i),aaron);
+        }else if (game_state==1){
+            enterArena();
+        }
+    }
 
-                        active_people.get(i).choose(meta_obs,off_obs,aaron);
-                        //active_people.get(i).cast(0,aaron);
-
-                       // active_people.get(i).cast(new Offensive_Physical_Actions(100f, 0, new Projectile(active_people.get(i).center_x, active_people.get(i).center_y, .001f,5,0,0,0f, new Hitbox(2,2), 0, 5),aaron));
-                    //    fireball.set(0,projectile_fireball, aaron);
-
-                //        active_people.get(i).cast(fireball);
-                    }
-                }else if (active_people.get(i).action.active){
-                    //Complete action
-                    active_people.get(i).action.step();
-                    if (active_people.get(i).action.move_flag){
-                        active_people.get(i).motion(active_people.get(i).action.move_speed,active_people.get(i).action.move_direction);
-                    }
-                    if (active_people.get(i).action.facing_flag){
-                        active_people.get(i).facing_direction=active_people.get(i).action.facing_direction;
-                    }
-                    if (active_people.get(i).action.make_active){
-                        active_people.get(i).action.make_active=false;
-                        active_people.get(i).busy=false;
-                        //Add new projectile to list
-                        if (active_people.get(i).action.projectile_flag){
-                            projectile_swap[active_projectiles.size()].reset();
-                            projectile_swap[active_projectiles.size()].setSpell(active_people.get(i).action.target,active_people.get(i),active_people.get(i).action.spell_type);
-                            active_projectiles.add(projectile_swap[active_projectiles.size()]);
-                        }
-
-
-                        //active_projectiles.get(active_projectiles.size()-1).setSpell(active_people.get(i).action.target,active_people.get(i),0);
-                        //active_projectiles.get(active_projectiles.size()-1).addTarget(luke);
-                    }
-                }
-            }
-
-            for (int i = active_projectiles.size()-1; i >= 0;i--){
-
-                if (!active_projectiles.get(i).active){
-                    projectile_swap[i].reset();
-                    active_projectiles.remove(i);
-                    break;
-                }else{
-                    active_projectiles.get(i).step();
-                }
-                //Check hit
-                for (int j = 0; j< active_projectiles.get(i).active_targets.size();j++){
-                    if (checkCollision(active_projectiles.get(i).active_targets.get(j).hitbox,active_projectiles.get(i).active_targets.get(j).center_x,active_projectiles.get(i).active_targets.get(j).center_y,active_projectiles.get(i).hitbox,active_projectiles.get(i).location_x,active_projectiles.get(i).location_y)){
-                        active_projectiles.get(i).on_hit();
-                        active_projectiles.get(i).active_targets.get(j).hitBy(active_projectiles.get(i));
-                    }
-                }
-
-            }
+    public void draw_battle(){
+        //Load stage
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+        Matrix.scaleM(scratch, 0, 2f,1f, 1f);
+        stage_1.Draw(scratch,false);
 
 
 
-            //Load stage
+
+        //Load characters
+        for (int i = 0; i< active_people.size();i++){
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.scaleM(scratch, 0, 2f,1f, 1f);
-            stage_1.Draw(scratch,false);
+            Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y, 0);
+            Matrix.scaleM(scratch, 0, active_people.get(i).hitbox.x*2/100f,active_people.get(i).hitbox.y*2/100f,.5f);
+            blue_box.Draw(scratch,false);
 
-            //Load characters
-            for (int i = 0; i< active_people.size();i++){
+            if (show_info){
                 Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y, 0);
-                Matrix.scaleM(scratch, 0, active_people.get(i).hitbox.x*2/100f,active_people.get(i).hitbox.y*2/100f,.5f);
-                blue_box.Draw(scratch,false);
+                Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).hitbox.x*2/100f-active_people.get(i).health/1600f, active_people.get(i).center_y+.15f, 0);
+                Matrix.scaleM(scratch, 0, active_people.get(i).health/1600f,1/100f,.5f);
+                hp_box.Draw(scratch,false);
 
-                if (show_info){
-                    Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                    Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).hitbox.x*2/100f-active_people.get(i).health/1600f, active_people.get(i).center_y+.15f, 0);
-                    Matrix.scaleM(scratch, 0, active_people.get(i).health/1600f,1/100f,.5f);
-                    hp_box.Draw(scratch,false);
+                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).hitbox.x*2/100f-active_people.get(i).action.cast_time/active_people.get(i).action.total_cast_time/16f, active_people.get(i).center_y+.12f, 0);
+                Matrix.scaleM(scratch, 0, active_people.get(i).action.cast_time/active_people.get(i).action.total_cast_time/16f,1/100f,.5f);
+                cast_bar.Draw(scratch,false);
 
-                    Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                    Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).hitbox.x*2/100f-active_people.get(i).action.cast_time/active_people.get(i).action.total_cast_time/16f, active_people.get(i).center_y+.12f, 0);
-                    Matrix.scaleM(scratch, 0, active_people.get(i).action.cast_time/active_people.get(i).action.total_cast_time/16f,1/100f,.5f);
-                    cast_bar.Draw(scratch,false);
-
-
-                }
 
             }
-
-            for (int i = 0; i< active_projectiles.size();i++){
-                if (active_projectiles.get(i).active){
-                    Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                    Matrix.translateM(scratch, 0, active_projectiles.get(i).location_x, active_projectiles.get(i).location_y, 0);
-                    Matrix.scaleM(scratch, 0, active_projectiles.get(i).hitbox.x*2/100f,active_projectiles.get(i).hitbox.y*2/100f,.5f);
-                    red_box.Draw(scratch,false);
-                }
-
-            }
-
-
 
         }
 
+        for (int i = 0; i< active_projectiles.size();i++){
+            if (active_projectiles.get(i).active){
+                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                Matrix.translateM(scratch, 0, active_projectiles.get(i).location_x, active_projectiles.get(i).location_y, 0);
+                Matrix.scaleM(scratch, 0, active_projectiles.get(i).hitbox.x*2/100f,active_projectiles.get(i).hitbox.y*2/100f,.5f);
+                red_box.Draw(scratch,false);
+            }
 
+        }
+    }
 
+    public void update_battle(){
+        //Update game
+        victory=1;
+        red_victory_flag=true;
+        for (int i =0; i<blue_team.size();i++){
+            if (resolve_people(blue_team.get(i),red_team.get(0))){
+                red_victory_flag=false;
+            }
+        }
+        blue_victory_flag=true;
+        for (int i =0; i<red_team.size();i++){
+            if (resolve_people(red_team.get(i),blue_team.get(0))){
+                blue_victory_flag=false;
+            }
+        }
+
+        if (blue_victory_flag==true){
+            game_state=1;
+        }else if (red_victory_flag==true){
+            game_state=1;
+        }
+
+        for (int i = active_projectiles.size()-1; i >= 0;i--){
+            resolve_projectile(active_projectiles.get(i),i);
+        }
+    }
+
+    public boolean resolve_people(Person origin, Person target){
+            if (origin.alive){
+                //temp_person = active_people.get(i);
+                if(origin.state.state==0){
+                    //Choose what to do::
+
+                        calculateMetaObs(origin,target);
+                        calculateOffObs(origin,target);
+                    origin.choose(meta_obs,off_obs,target);
+
+                }else if (origin.state.state==1 && origin.action.active){
+                    //Complete action
+                    origin.action.step();
+                    if (origin.action.move_flag){
+                        origin.motion(origin.action.move_speed,origin.action.move_direction);
+                    }
+                    if (origin.action.facing_flag){
+                        origin.facing_direction=origin.action.facing_direction;
+                    }
+                    if (origin.action.make_active){
+                        origin.action.make_active=false;
+                        origin.busy=false;
+                        origin.state.setState(0,0,0,0);
+                        //Add new projectile to list
+                        if (origin.action.projectile_flag){
+                            projectile_swap[active_projectiles.size()].reset();
+                            projectile_swap[active_projectiles.size()].setSpell(origin.action.target,origin,origin.action.spell_type);
+                            active_projectiles.add(projectile_swap[active_projectiles.size()]);
+                        }
+                    }
+                }else if(origin.state.state==2){
+                    origin.step();
+                }
+                return true;
+            }
+        return false;
+    }
+
+    public void resolve_projectile(Projectile inner_projectile, int i){
+        if (!inner_projectile.active){
+            projectile_swap[i].reset();
+            active_projectiles.remove(i);
+            return;
+        }else{
+            inner_projectile.step();
+        }
+        //Check hit
+        for (int j = 0; j< inner_projectile.active_targets.size();j++){
+            if (checkCollision(inner_projectile.active_targets.get(j).hitbox,inner_projectile.active_targets.get(j).center_x,inner_projectile.active_targets.get(j).center_y,inner_projectile.hitbox,inner_projectile.location_x,inner_projectile.location_y)){
+                inner_projectile.on_hit();
+                inner_projectile.active_targets.get(j).hitBy(inner_projectile);
+            }
+        }
     }
 
     @Override
@@ -438,7 +467,7 @@ public class Rend implements GLSurfaceView.Renderer {
         //DANGER
         if (Math.abs(self.center_x-enemy.center_x)>.5f){
             off_obs[6]=1;
-        }else if (Math.abs(self.center_x-enemy.center_x)>.35f){
+        }else if (Math.abs(self.center_x-enemy.center_x)>.25f){
             off_obs[7]=1;
         }else{
             off_obs[8]=1;

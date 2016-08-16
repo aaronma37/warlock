@@ -22,6 +22,7 @@ public class Person {
     public float temp_sum=0;
     public int a1;
     public action_space_action a[] = new action_space_action[3];
+    public PhysicalState state = new PhysicalState();
 
     public action_space_action off_a[] = new action_space_action[3];
     public List<Integer> available_action_space = new ArrayList<>();
@@ -38,6 +39,7 @@ public class Person {
         height=10;
         width=6;
         busy=false;
+        state.setState(0,0,0,0);
 
         center_x=0;
         center_y=0;
@@ -60,6 +62,8 @@ public class Person {
         center_x=start_x;
         center_y=start_y;
         busy=false;
+        state.setState(0,0,0,0);
+
         for (int i=0;i<3;i++){
             a[i]=new action_space_action(i);
             off_a[i]=new action_space_action(i);
@@ -77,6 +81,8 @@ public class Person {
 
     public void cast(int meta_index, int action_index, Person target){
         busy=true;
+        state.setState(1,meta_index,action_index,0);
+
         fireball.reset();
         action.set(meta_index,action_index,projectile_fireball, target, this);
 
@@ -95,6 +101,15 @@ public class Person {
         if (projectile_index.damage-action.block > 0){
             health = health - (int)(projectile_index.damage - action.block);
         }
+        if (state.state==1){
+            if (state.interrupt_level <= projectile_index.interrupt_level){
+                action.cast_time=0;
+                state.setState(2,projectile_index.knock_back_time,projectile_index.knock_back_force, projectile_index.knockback_direction);
+            }
+        }
+
+
+
 
         checkVitals();
     }
@@ -163,7 +178,7 @@ public class Person {
         }else if (action_index==1){
             return true;
         }else if (action_index==2){
-            if (Math.abs(target.center_x-center_x)>.35f){
+            if (Math.abs(target.center_x-center_x)>.25f){
                 return false;
             }
         }
@@ -173,6 +188,27 @@ public class Person {
 
     public void motion(float speed, float direction){
         center_x=center_x+speed*direction;
+    }
+
+    public void setActionSpace(){
+        available_action_space.clear();
+
+        for (int i=0;i<3;i++){
+            a[i]=new action_space_action(i);
+            off_a[i]=new action_space_action(i);
+            available_action_space.add(i);
+        }
+    }
+
+    public void step(){
+        if (state.state==2){
+            state.time_in_state--;
+            if (state.time_in_state < 1){
+                state.state=0;
+            }else{
+                center_x=center_x+state.force*state.knock_back_direction;
+            }
+        }
     }
 
 

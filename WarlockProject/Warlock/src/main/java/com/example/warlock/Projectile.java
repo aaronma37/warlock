@@ -18,11 +18,15 @@ public class Projectile {
     public Hitbox hitbox=new Hitbox(2,2);
     public float location_x;
     public float location_y;
+    public float knock_back_time;
+    public float knock_back_force;
     public float direction;
     public List<Person> active_targets = new ArrayList<>();
     public int active_time;
     public int distance_from_target=2;
     public int time_active=0;
+    public int interrupt_level=0;
+    public int knockback_direction=0;
 
     public Projectile(){
         active=false;
@@ -87,11 +91,21 @@ public class Projectile {
             persistance=0;
             hitbox.set(2,2);
             direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+            if (target.center_x-origin.center_x>0){
+                knockback_direction=1;
+            }else{
+                knockback_direction=-1;
+            }
             //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
 
             active_targets.clear();
             active_targets.add(target);
             active_time=150;
+
+            knock_back_force=.01f;
+            knock_back_time=10;
+
+            interrupt_level=1;
         }
 
         if (spell_type==2){
@@ -107,10 +121,19 @@ public class Projectile {
             hitbox.set(3,2);
             direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
             //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-
+            if (target.center_x-origin.center_x>0){
+                knockback_direction=1;
+            }else{
+                knockback_direction=-1;
+            }
             active_targets.clear();
             active_targets.add(target);
             active_time=10;
+
+            knock_back_force=.01f;
+            knock_back_time=15;
+
+            interrupt_level=1;
         }
     }
 
