@@ -47,8 +47,10 @@ public class Rend implements GLSurfaceView.Renderer {
     private FloatBuffer textureBuffer;
     public Context context;
     public int game_state=0;
+    private boolean show_info=true;
 
     private List<Projectile> active_projectiles = new ArrayList<>();
+    private Projectile projectile_swap[] = new Projectile[50];
     private int active_projectile_count=0;
     private List<Person> active_people = new ArrayList<>();
 
@@ -78,10 +80,15 @@ public class Rend implements GLSurfaceView.Renderer {
     public GeneralGraphic red_dot, stage_1;
     public GeneralGraphic red_box;
     public GeneralGraphic blue_box;
+    public GeneralGraphic hp_box,cast_bar;
     public Person aaron, luke;
     public Projectile projectile_fireball;
     public Offensive_Physical_Actions fireball;
     private long start_time, end_time;
+    private int meta_obs[] = new int[10];
+    private int off_obs[] = new int[10];
+
+    private Person temp_person = new Person();
 
     private float width,height;
 
@@ -119,6 +126,8 @@ public class Rend implements GLSurfaceView.Renderer {
         red_dot = new GeneralGraphic(context,0);
         red_box = new GeneralGraphic(context,1);
         blue_box = new GeneralGraphic(context,2);
+        hp_box = new GeneralGraphic(context,4);
+        cast_bar = new GeneralGraphic(context,5);
         stage_1 = new GeneralGraphic(context,3);
 
         aaron = new Person("Aaron", -.5f, -.1f);
@@ -136,11 +145,37 @@ public class Rend implements GLSurfaceView.Renderer {
         active_people.add(aaron);
         active_people.add(luke);
 
+/*        aaron.cast(new Offensive_Physical_Actions(100f, 0, new Projectile(aaron.center_x, aaron.center_y, .001f,5,0,0,0f, new Hitbox(2,2), 0, 5),luke));
+        aaron.action.active=false;
+        aaron.busy=false;
+
+        luke.cast(new Offensive_Physical_Actions(100f, 0, new Projectile(luke.center_x, luke.center_y, .001f,5,0,0,0f, new Hitbox(2,2), 0, 5),aaron));
+        luke.action.active=false;
+        luke.busy=false;*/
         //active_projectiles.clear();
-/*        for (int i =0; i<50;i++){
-            active_projectiles[i]= new Projectile();
+
+        aaron.a[1].o[2]=0;
+        aaron.a[1].o[0]=0;
+        aaron.a[1].o[1]=0;
+
+        aaron.a[1].o[6]=0;
+        aaron.a[1].o[7]=0;
+        aaron.a[1].o[8]=0;
+
+        //OFFENSIVE
+
+        aaron.available_action_space.remove(0);
+        aaron.off_a[2].o[8]=100;
+        aaron.off_a[2].o[7]=100;
+
+        luke.available_action_space.remove(2);
+
+
+
+
+        for (int i =0; i<50;i++){
+            projectile_swap[i]= new Projectile();
         }
-        active_projectile_count=0;*/
     }
 
     public void exitArena(){
@@ -180,24 +215,53 @@ public class Rend implements GLSurfaceView.Renderer {
 
         if (game_state==0){
 
+
             for (int i = 0; i < active_people.size(); i++){
+                //temp_person = active_people.get(i);
                 if(!active_people.get(i).busy){
                     //Choose what to do::
                     if (i==0){
-                        active_people.get(i).cast(new Offensive_Physical_Actions(100f, 0, new Projectile(active_people.get(i).center_x, active_people.get(i).center_y, .001f,5,0,0,0f, new Hitbox(2,2), 0, 5),luke));
+                        calculateMetaObs(active_people.get(i),luke);
+                        calculateOffObs(active_people.get(i),luke);
+                        active_people.get(i).choose(meta_obs,off_obs,luke);
+                        //active_people.get(i).cast(new Offensive_Physical_Actions(100f, 0, new Projectile(active_people.get(i).center_x, active_people.get(i).center_y, .001f,5,0,0,0f, new Hitbox(2,2), 0, 5),luke));
+                       //active_people.get(i).cast(0,luke);
+                        // fireball.set(0,projectile_fireball, luke);
+                      //  active_people.get(i).cast(fireball);
+
                     }else{
-                        active_people.get(i).cast(new Offensive_Physical_Actions(100f, 0, new Projectile(active_people.get(i).center_x, active_people.get(i).center_y, .001f,5,0,0,0f, new Hitbox(2,2), 0, 5),aaron));
+                        calculateMetaObs(active_people.get(i),aaron);
+                        calculateOffObs(active_people.get(i),aaron);
+
+                        active_people.get(i).choose(meta_obs,off_obs,aaron);
+                        //active_people.get(i).cast(0,aaron);
+
+                       // active_people.get(i).cast(new Offensive_Physical_Actions(100f, 0, new Projectile(active_people.get(i).center_x, active_people.get(i).center_y, .001f,5,0,0,0f, new Hitbox(2,2), 0, 5),aaron));
+                    //    fireball.set(0,projectile_fireball, aaron);
+
+                //        active_people.get(i).cast(fireball);
                     }
                 }else if (active_people.get(i).action.active){
                     //Complete action
                     active_people.get(i).action.step();
+                    if (active_people.get(i).action.move_flag){
+                        active_people.get(i).motion(active_people.get(i).action.move_speed,active_people.get(i).action.move_direction);
+                    }
+                    if (active_people.get(i).action.facing_flag){
+                        active_people.get(i).facing_direction=active_people.get(i).action.facing_direction;
+                    }
                     if (active_people.get(i).action.make_active){
                         active_people.get(i).action.make_active=false;
                         active_people.get(i).busy=false;
                         //Add new projectile to list
+                        if (active_people.get(i).action.projectile_flag){
+                            projectile_swap[active_projectiles.size()].reset();
+                            projectile_swap[active_projectiles.size()].setSpell(active_people.get(i).action.target,active_people.get(i),active_people.get(i).action.spell_type);
+                            active_projectiles.add(projectile_swap[active_projectiles.size()]);
+                        }
 
-                        active_projectiles.add(new Projectile());
-                        active_projectiles.get(active_projectiles.size()-1).setSpell(active_people.get(i).action.target,active_people.get(i),0);
+
+                        //active_projectiles.get(active_projectiles.size()-1).setSpell(active_people.get(i).action.target,active_people.get(i),0);
                         //active_projectiles.get(active_projectiles.size()-1).addTarget(luke);
                     }
                 }
@@ -206,8 +270,8 @@ public class Rend implements GLSurfaceView.Renderer {
             for (int i = active_projectiles.size()-1; i >= 0;i--){
 
                 if (!active_projectiles.get(i).active){
+                    projectile_swap[i].reset();
                     active_projectiles.remove(i);
-                    System.out.println("Projectile: " + i + "deleted");
                     break;
                 }else{
                     active_projectiles.get(i).step();
@@ -216,7 +280,7 @@ public class Rend implements GLSurfaceView.Renderer {
                 for (int j = 0; j< active_projectiles.get(i).active_targets.size();j++){
                     if (checkCollision(active_projectiles.get(i).active_targets.get(j).hitbox,active_projectiles.get(i).active_targets.get(j).center_x,active_projectiles.get(i).active_targets.get(j).center_y,active_projectiles.get(i).hitbox,active_projectiles.get(i).location_x,active_projectiles.get(i).location_y)){
                         active_projectiles.get(i).on_hit();
-                        System.out.println("projectile hits: " + active_projectiles.get(i).active_targets.get(j).name);
+                        active_projectiles.get(i).active_targets.get(j).hitBy(active_projectiles.get(i));
                     }
                 }
 
@@ -235,6 +299,20 @@ public class Rend implements GLSurfaceView.Renderer {
                 Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y, 0);
                 Matrix.scaleM(scratch, 0, active_people.get(i).hitbox.x*2/100f,active_people.get(i).hitbox.y*2/100f,.5f);
                 blue_box.Draw(scratch,false);
+
+                if (show_info){
+                    Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                    Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).hitbox.x*2/100f-active_people.get(i).health/1600f, active_people.get(i).center_y+.15f, 0);
+                    Matrix.scaleM(scratch, 0, active_people.get(i).health/1600f,1/100f,.5f);
+                    hp_box.Draw(scratch,false);
+
+                    Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                    Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).hitbox.x*2/100f-active_people.get(i).action.cast_time/active_people.get(i).action.total_cast_time/16f, active_people.get(i).center_y+.12f, 0);
+                    Matrix.scaleM(scratch, 0, active_people.get(i).action.cast_time/active_people.get(i).action.total_cast_time/16f,1/100f,.5f);
+                    cast_bar.Draw(scratch,false);
+
+
+                }
 
             }
 
@@ -288,6 +366,82 @@ public class Rend implements GLSurfaceView.Renderer {
         while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
             Log.e(TAG, glOperation + ": glError " + error);
             throw new RuntimeException(glOperation + ": glError " + error);
+        }
+    }
+
+    public void calculateMetaObs(Person self, Person enemy){
+        //FOR META ~
+
+        for (int i = 0; i < 10; i++){
+            meta_obs[i]=0;
+        }
+
+        // HEALTHS
+        if (self.health >= 70){
+            meta_obs[0]=1;
+        }else if (self.health >= 30){
+            meta_obs[1]=1;
+        }else{
+            meta_obs[2]=1;
+        }
+
+        if (enemy.health >= 70){
+            meta_obs[3]=1;
+        }else if (enemy.health >= 30){
+            meta_obs[4]=1;
+        }else{
+            meta_obs[5]=1;
+        }
+
+        //DANGER
+        int danger_distance=3;
+        for (int i=0;i<active_projectiles.size();i++){
+            if (active_projectiles.get(i).active_targets.get(0).name==self.name){
+                if (active_projectiles.get(i).distance_from_target<danger_distance){
+                    danger_distance=active_projectiles.get(i).distance_from_target;
+                }
+            }
+        }
+        if (danger_distance==2){
+            meta_obs[6]=1;
+        }else if (danger_distance==1){
+            meta_obs[7]=1;
+        }else if (danger_distance==0){
+            meta_obs[8]=1;
+        }
+    }
+
+    public void calculateOffObs(Person self, Person enemy){
+        //FOR META ~
+
+        for (int i = 0; i < 10; i++){
+            off_obs[i]=0;
+        }
+
+        // HEALTHS
+        if (self.health >= 70){
+            off_obs[0]=1;
+        }else if (self.health >= 30){
+            off_obs[1]=1;
+        }else{
+            off_obs[2]=1;
+        }
+
+        if (enemy.health >= 70){
+            off_obs[3]=1;
+        }else if (enemy.health >= 30){
+            off_obs[4]=1;
+        }else{
+            off_obs[5]=1;
+        }
+
+        //DANGER
+        if (Math.abs(self.center_x-enemy.center_x)>.5f){
+            off_obs[6]=1;
+        }else if (Math.abs(self.center_x-enemy.center_x)>.35f){
+            off_obs[7]=1;
+        }else{
+            off_obs[8]=1;
         }
     }
 

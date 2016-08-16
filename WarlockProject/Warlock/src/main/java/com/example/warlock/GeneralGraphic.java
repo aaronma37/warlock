@@ -141,6 +141,14 @@ public class GeneralGraphic
             mTextureDataHandle = loadTexture(mActivityContext, R.drawable.stage_1);
             selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.stage_1);
         }
+        else if (s==4){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.hp_box);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.hp_box);
+        }
+        else if (s==5){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.yellow_box);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.yellow_box);
+        }
     }
 
 

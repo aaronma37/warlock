@@ -188,6 +188,7 @@ public class MainActivity extends ActionBarActivity {
                     }
                 });
 
+
     }
 
 
@@ -559,8 +560,6 @@ public class MainActivity extends ActionBarActivity {
         public Meta_Action a4 = new Meta_Action("Defensive Cast");
         public Meta_Action a5 = new Meta_Action("Supportive Physical");
         public Meta_Action a6 = new Meta_Action("Supportive Cast");
-
-
 
         public Meta_Decision() {}
         public Meta_Decision(String name) {

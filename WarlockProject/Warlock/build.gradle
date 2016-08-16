@@ -15,28 +15,35 @@ repositories {
 }
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('/home/aaron/.android/debug.keystore')
+            storePassword 'android'
+        }
+    }
     compileSdkVersion 24
     buildToolsVersion "24"
     useLibrary 'org.apache.http.legacy'
-
-
-
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 19
         applicationId "com.example.warlock"
     }
-
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE-FIREBASE.txt'
         exclude 'META-INF/NOTICE'
     }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
 }
 
 dependencies {
-
-
     compile 'com.android.support:appcompat-v7:24.1.0'
     compile 'com.google.firebase:firebase-auth:9.4.0'
     compile 'com.google.firebase:firebase-database:9.4.0'
