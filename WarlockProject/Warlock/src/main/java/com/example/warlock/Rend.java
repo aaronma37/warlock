@@ -77,6 +77,7 @@ public class Rend implements GLSurfaceView.Renderer {
     private final float[] mViewMatrix = new float[16];
     private final float[] mRotationMatrix = new float[16];
     private final float[] zeroRotationMatrix = new float[16];
+    private final float GROUND_LEVEL=-.15f;
     float[] scratch = new float[16];
     float[] scratch2 = new float[16];
     public GeneralGraphic red_dot, stage_1;
@@ -135,16 +136,20 @@ public class Rend implements GLSurfaceView.Renderer {
         stage_1 = new GeneralGraphic(context,3);
 
 
+
         enterArena();
         float start_time = System.currentTimeMillis();
+
 
 
     }
 
     public void enterArena(){
         game_state=0;
-        aaron = new Person("Aaron", -.5f, -.1f);
-        luke = new Person("Luke", .5f, -.1f);
+/*        aaron.reset(-.5f, GROUND_LEVEL);
+        luke.reset(.5f, GROUND_LEVEL);*/
+        aaron = new Person("Aaron", -.5f, GROUND_LEVEL);
+        luke = new Person("Luke", .5f, GROUND_LEVEL);
         projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0,100);
         fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball,aaron);
         active_people.clear();
@@ -181,11 +186,11 @@ public class Rend implements GLSurfaceView.Renderer {
 
         //OFFENSIVE
 
-        aaron.available_action_space.remove(0);
+        aaron.available_offensive_action_space.remove(0);
         aaron.off_a[2].o[8]=100;
         aaron.off_a[2].o[7]=100;
 
-        luke.available_action_space.remove(2);
+        luke.available_offensive_action_space.remove(2);
 
 
 
@@ -320,24 +325,8 @@ public class Rend implements GLSurfaceView.Renderer {
 
                 }else if (origin.state.state==1 && origin.action.active){
                     //Complete action
-                    origin.action.step();
-                    if (origin.action.move_flag){
-                        origin.motion(origin.action.move_speed,origin.action.move_direction);
-                    }
-                    if (origin.action.facing_flag){
-                        origin.facing_direction=origin.action.facing_direction;
-                    }
-                    if (origin.action.make_active){
-                        origin.action.make_active=false;
-                        origin.busy=false;
-                        origin.state.setState(0,0,0,0);
-                        //Add new projectile to list
-                        if (origin.action.projectile_flag){
-                            projectile_swap[active_projectiles.size()].reset();
-                            projectile_swap[active_projectiles.size()].setSpell(origin.action.target,origin,origin.action.spell_type);
-                            active_projectiles.add(projectile_swap[active_projectiles.size()]);
-                        }
-                    }
+                    origin.action.step(projectile_swap, active_projectiles);
+
                 }else if(origin.state.state==2){
                     origin.step();
                 }

@@ -8,6 +8,7 @@ public class action_space_action {
     public float o[] = new float[10];
     public boolean feasible = true;
     public int index;
+    public int cool_down_timer=0;
 
     public action_space_action(int ind){
         index=ind;
@@ -16,4 +17,11 @@ public class action_space_action {
             o[i]=1;
         }
     }
+
+    public void reset(){
+        cool_down_timer=0;
+    }
+
+
+
 }

@@ -1,5 +1,7 @@
 package com.example.warlock;
 
+import java.util.List;
+
 /**
  * Created by aaron on 8/9/16.
  */
@@ -23,6 +25,7 @@ public class Offensive_Physical_Actions {
     public int facing_direction=1;
     public float move_speed;
     public float move_direction;
+    public float cool_down;
 
 
     public Offensive_Physical_Actions(){
@@ -40,51 +43,88 @@ public class Offensive_Physical_Actions {
         active=true;
     }
 
-    public void step(){
+    public void step(Projectile projectile_swap[], List<Projectile> active_projectiles){
         cast_time=cast_time+1;
         if (cast_time>total_cast_time){
-            if (meta_type==0){
-                //OFF META TYPE
-                if (spell_type==0){
-                    //FIREBALL
-                    make_active=true;
-                    active=false;
-                    return;
-                }else if (spell_type==1){
-                    //APPROACH
-                    move_speed=.005f;
+            //finished casting
+            cast(projectile_swap, active_projectiles);
+        }else{
+            //casting
+            casting();
+        }
 
-                    if (origin.center_x-target.center_x>0){
-                        move_direction=-1;
-                    }else{
-                        move_direction=1;
-                    }
-                    make_active=true;
-                    active=false;
-                }else if (spell_type==2){
-                    make_active=true;
-                    active=false;
-                }
-            } else if (meta_type==1){
-                if (spell_type==0){
-                    make_active=true;
-                    active=false;
-                    block=0;
-                    return;
-                }
+
+
+    }
+
+
+    public void casting(){
+        if (meta_type==0){
+            //OFF META TYPE
+            if (spell_type==0){
+                //FIREBALL
+                setFacingDirection();
+            }else if (spell_type==1){
+                //APPROACH
+                setFacingDirection();
+                origin.motion(move_speed,move_direction);
+            }else if (spell_type==2){
             }
-
-            setFacingDirection();
-
-            make_active=true;
-            active=false;
+        } else if (meta_type==1){
+            if (spell_type==0){
+                //Block
+            }else if(spell_type==1){
+                //Teleport
+            }
         }
     }
+
+
+    public void cast(Projectile projectile_swap[], List<Projectile> active_projectiles){
+        if (meta_type==0){
+            //OFF META TYPE
+            if (spell_type==0){
+                //FIREBALL
+                setFacingDirection();
+                projectile_swap[active_projectiles.size()].reset();
+                projectile_swap[active_projectiles.size()].setSpell(target,origin,spell_type);
+                active_projectiles.add(projectile_swap[active_projectiles.size()]);
+
+            }else if (spell_type==1){
+                //APPROACH
+                setFacingDirection();
+                origin.motion(move_speed,move_direction);
+            }else if (spell_type==2){
+                projectile_swap[active_projectiles.size()].reset();
+                projectile_swap[active_projectiles.size()].setSpell(target,origin,spell_type);
+                active_projectiles.add(projectile_swap[active_projectiles.size()]);
+            }
+        } else if (meta_type==1){
+            if (spell_type==0){
+                //Block
+                block=0;
+            }else if(spell_type==1){
+                //Teleport
+                if (origin.center_x<0){
+                    origin.center_x=1.2f;
+                }else{
+                    origin.center_x=-1.2f;
+                }
+            }
+        }
+        active=false;
+        origin.state.setState(0,0,0,0);
+    }
+
+
+
 
     public void setFacingDirection(){
         if (facing_flag){
             if (origin.center_x-target.center_x>0){
-                facing_direction=-1;
+                origin.facing_direction=-1;
+            }else{
+                origin.facing_direction=1;
             }
         }
     }
@@ -108,15 +148,26 @@ public class Offensive_Physical_Actions {
                 //FIREBALL
                 projectile_flag=true;
                 total_cast_time=100f;
+                cool_down=0;
                 active=true;
             }else if (spell_type==1){
                 //APPROACH
+                move_speed=.005f;
+
+                if (origin.center_x-target.center_x>0){
+                    move_direction=-1;
+                }else{
+                    move_direction=1;
+                }
+
                 move_flag=true;
                 total_cast_time=10f;
+                cool_down=0;
                 active=true;
             }else if (spell_type==2){
                 total_cast_time=30f;
                 active=true;
+                cool_down=0;
                 projectile_flag=true;
             }
         }else if (meta_type==1){
@@ -124,11 +175,14 @@ public class Offensive_Physical_Actions {
             if (spell_type==0){
                 total_cast_time=30f;
                 block = 5;
+                cool_down=15;
+                active=true;
+            }else if (spell_type==1){
+                total_cast_time=15f;
+                cool_down=150;
                 active=true;
             }
         }
-
-
     }
 
     public void reset(){
@@ -136,5 +190,23 @@ public class Offensive_Physical_Actions {
         make_active=false;
         cast_time=0;
     }
+
+    public boolean returnFeasibility(Person origin, Person target, int init_meta_type, int init_spell_type){
+        if (init_meta_type==0){
+            if (init_spell_type==0){
+                return true;
+            }else if (init_spell_type==1){
+                return true;
+            }else if (init_spell_type==2){
+                if (Math.abs(target.center_x-origin.center_x)>.25f){
+                    return false;
+                }
+            }
+        }else if (init_meta_type==1){
+            return true;
+        }
+        return true;
+    }
+
 
 }

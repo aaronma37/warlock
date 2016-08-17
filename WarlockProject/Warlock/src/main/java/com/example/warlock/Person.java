@@ -25,7 +25,10 @@ public class Person {
     public PhysicalState state = new PhysicalState();
 
     public action_space_action off_a[] = new action_space_action[3];
-    public List<Integer> available_action_space = new ArrayList<>();
+    public action_space_action def_a[] = new action_space_action[3];
+
+    public List<Integer> available_offensive_action_space = new ArrayList<>();
+    public List<Integer> available_defensive_action_space = new ArrayList<>();
 
     public float max_sum=0;
     public Projectile projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0,100);
@@ -47,11 +50,31 @@ public class Person {
         for (int i=0;i<3;i++){
             a[i]=new action_space_action(i);
             off_a[i]=new action_space_action(i);
-            available_action_space.add(i);
+            def_a[i]=new action_space_action(i);
+            available_offensive_action_space.add(i);
+            available_defensive_action_space.add(i);
         }
 
 
     }
+
+    public void reset(float start_x, float start_y){
+        health=100;
+        height=10;
+        width=6;
+        hitbox = new Hitbox(3,5);
+        center_x=start_x;
+        center_y=start_y;
+        busy=false;
+        state.setState(0,0,0,0);
+
+        for (int i=0;i<3;i++){
+            available_offensive_action_space.add(i);
+            available_defensive_action_space.add(i);
+
+        }
+    }
+
 
     public Person(String given_name, float start_x, float start_y) {
         health=100;
@@ -67,7 +90,9 @@ public class Person {
         for (int i=0;i<3;i++){
             a[i]=new action_space_action(i);
             off_a[i]=new action_space_action(i);
-            available_action_space.add(i);
+            def_a[i]=new action_space_action(i);
+            available_offensive_action_space.add(i);
+            available_defensive_action_space.add(i);
 
         }
     }
@@ -144,7 +169,8 @@ public class Person {
             //Calculate feasible
             max_sum=0;
             for (int i =0;i<3;i++){
-                if (checkFeasibility(off_a[i].index, target)){
+                //if (checkFeasibility(off_a[i].index, target, available_offensive_action_space)){
+                if (checkFeasibility(0,i,target,available_offensive_action_space)){
                     temp_sum=0;
                     for (int j=0;j<10;j++){
                         temp_sum+=off_a[i].o[j]*off_o[j];
@@ -167,20 +193,14 @@ public class Person {
         //choose action
     }
 
-    public boolean checkFeasibility(int action_index, Person target){
+    public boolean checkFeasibility(int meta_type, int spell_type, Person target, List<Integer> action_list){
 
-        if (!available_action_space.contains(action_index)){
+        if (!action_list.contains(spell_type)){
             return false;
         }
 
-        if (action_index==0){
-            return true;
-        }else if (action_index==1){
-            return true;
-        }else if (action_index==2){
-            if (Math.abs(target.center_x-center_x)>.25f){
-                return false;
-            }
+        if (!action.returnFeasibility(this,target,meta_type,spell_type)){
+            return false;
         }
 
         return true;
@@ -188,28 +208,50 @@ public class Person {
 
     public void motion(float speed, float direction){
         center_x=center_x+speed*direction;
+        OOB();
     }
 
     public void setActionSpace(){
-        available_action_space.clear();
+        available_offensive_action_space.clear();
 
         for (int i=0;i<3;i++){
             a[i]=new action_space_action(i);
             off_a[i]=new action_space_action(i);
-            available_action_space.add(i);
+            def_a[i]=new action_space_action(i);
+            available_offensive_action_space.add(i);
+            available_defensive_action_space.add(i);
         }
     }
 
     public void step(){
+        //reset cooldowns
+        for (int i=0;i<3;i++){
+            if (off_a[i].cool_down_timer>0){
+                off_a[i].cool_down_timer--;
+            }else if (def_a[i].cool_down_timer>0){
+                def_a[i].cool_down_timer--;
+            }
+        }
+
         if (state.state==2){
             state.time_in_state--;
             if (state.time_in_state < 1){
                 state.state=0;
             }else{
                 center_x=center_x+state.force*state.knock_back_direction;
+                OOB();
             }
         }
     }
+
+    public void OOB(){
+        if (center_x<-1.3f){
+            center_x=-1.3f;
+        }else if (center_x>1.3f){
+            center_x=1.3f;
+        }
+    }
+
 
 
 
