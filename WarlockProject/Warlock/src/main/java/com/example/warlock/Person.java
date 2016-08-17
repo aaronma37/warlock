@@ -17,15 +17,17 @@ public class Person {
     public float center_y;
     public int facing_direction=1;
     public boolean busy;
+    private final int ACTION_SPACE_SIZE=10;
+    private final int META_SIZE=3;
     public Offensive_Physical_Actions action = new Offensive_Physical_Actions();
     public RlData belief = new RlData();
     public float temp_sum=0;
     public int a1;
-    public action_space_action a[] = new action_space_action[3];
+    public action_space_action a[] = new action_space_action[META_SIZE];
     public PhysicalState state = new PhysicalState();
 
-    public action_space_action off_a[] = new action_space_action[3];
-    public action_space_action def_a[] = new action_space_action[3];
+    public action_space_action off_a[] = new action_space_action[ACTION_SPACE_SIZE];
+    public action_space_action def_a[] = new action_space_action[ACTION_SPACE_SIZE];
 
     public List<Integer> available_offensive_action_space = new ArrayList<>();
     public List<Integer> available_defensive_action_space = new ArrayList<>();
@@ -47,8 +49,10 @@ public class Person {
         center_x=0;
         center_y=0;
 
-        for (int i=0;i<3;i++){
+        for (int i=0;i<META_SIZE;i++){
             a[i]=new action_space_action(i);
+        }
+        for (int i=0;i<ACTION_SPACE_SIZE;i++){
             off_a[i]=new action_space_action(i);
             def_a[i]=new action_space_action(i);
             available_offensive_action_space.add(i);
@@ -61,6 +65,7 @@ public class Person {
     public void reset(float start_x, float start_y){
         health=100;
         height=10;
+        alive=true;
         width=6;
         hitbox = new Hitbox(3,5);
         center_x=start_x;
@@ -68,7 +73,7 @@ public class Person {
         busy=false;
         state.setState(0,0,0,0);
 
-        for (int i=0;i<3;i++){
+        for (int i=0;i<ACTION_SPACE_SIZE;i++){
             available_offensive_action_space.add(i);
             available_defensive_action_space.add(i);
 
@@ -87,8 +92,11 @@ public class Person {
         busy=false;
         state.setState(0,0,0,0);
 
-        for (int i=0;i<3;i++){
+        for (int i=0;i<META_SIZE;i++){
             a[i]=new action_space_action(i);
+        }
+
+        for (int i=0;i<ACTION_SPACE_SIZE;i++){
             off_a[i]=new action_space_action(i);
             def_a[i]=new action_space_action(i);
             available_offensive_action_space.add(i);
@@ -153,7 +161,7 @@ public class Person {
         int action_decision=0;
 
         max_sum=0;
-        for (int i=0; i< 2; i++){
+        for (int i=0; i< META_SIZE; i++){
             temp_sum=0;
             for (int j=0;j<10;j++){
                 temp_sum+=a[i].o[j]*o[j];
@@ -168,7 +176,7 @@ public class Person {
 
             //Calculate feasible
             max_sum=0;
-            for (int i =0;i<3;i++){
+            for (int i =0;i<ACTION_SPACE_SIZE;i++){
                 //if (checkFeasibility(off_a[i].index, target, available_offensive_action_space)){
                 if (checkFeasibility(0,i,target,available_offensive_action_space)){
                     temp_sum=0;
@@ -214,8 +222,11 @@ public class Person {
     public void setActionSpace(){
         available_offensive_action_space.clear();
 
-        for (int i=0;i<3;i++){
+
+        for (int i=0;i<META_SIZE;i++){
             a[i]=new action_space_action(i);
+        }
+        for (int i=0;i<ACTION_SPACE_SIZE;i++){
             off_a[i]=new action_space_action(i);
             def_a[i]=new action_space_action(i);
             available_offensive_action_space.add(i);
@@ -225,7 +236,7 @@ public class Person {
 
     public void step(){
         //reset cooldowns
-        for (int i=0;i<3;i++){
+        for (int i=0;i<ACTION_SPACE_SIZE;i++){
             if (off_a[i].cool_down_timer>0){
                 off_a[i].cool_down_timer--;
             }else if (def_a[i].cool_down_timer>0){

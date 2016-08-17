@@ -101,7 +101,8 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public Rend(Context context1) {
         context = context1;
-
+        aaron = new Person("Aaron", -.5f, GROUND_LEVEL);
+        luke = new Person("Luke", .5f, GROUND_LEVEL);
     }
 
     @Override
@@ -145,11 +146,12 @@ public class Rend implements GLSurfaceView.Renderer {
     }
 
     public void enterArena(){
+        aaron.reset(-.5f, GROUND_LEVEL);
+        luke.reset(.5f, GROUND_LEVEL);
+
         game_state=0;
-/*        aaron.reset(-.5f, GROUND_LEVEL);
-        luke.reset(.5f, GROUND_LEVEL);*/
-        aaron = new Person("Aaron", -.5f, GROUND_LEVEL);
-        luke = new Person("Luke", .5f, GROUND_LEVEL);
+
+
         projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0,100);
         fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball,aaron);
         active_people.clear();

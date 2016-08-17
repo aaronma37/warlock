@@ -167,17 +167,25 @@ public class MainActivity extends ActionBarActivity {
         sView = new SurfaceView(this);
         setContentView(sView);
 
+        Firebase ref = new Firebase("https://arms-bb507.firebaseio.com");
+
+
         mDatabase.child("users").child(userId).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user value
-                        User x = dataSnapshot.getValue(User.class);
-                        System.out.println("FULL NAME IS " + x.getFullName());
-                        System.out.println("Offense physical is called:  " + x.player1.offense_physical.getName());
+                        System.out.println("VALUE AT:: "+dataSnapshot.child("player1").child("ma").child("0").child("o").child("0").getValue(Observation.class).val);
+                        //User x = dataSnapshot.getValue(User.class);
+//                        System.out.println("FULL NAME IS " + x.getFullName());
+                        //System.out.println("Offense physical is called:  " + x.player1.offense_physical.getName());
 
+                        System.out.println(sView.mRenderer.aaron.off_a[0].o[0]);
+                        for (int i=0;i<10;i++){
+                            sView.mRenderer.aaron.off_a[0].o[i]=dataSnapshot.child("player1").child("ma").child("0").child("a").child("0").child("o").child(Integer.toString(i)).getValue(Observation.class).val;
+                        }
 
-                        sView.mRenderer.aaron.off_a[0].o[0]=x.player1.offense_cast.a1.o1.getVal();
+/*                        sView.mRenderer.aaron.off_a[0].o[0]=x.player1.offense_cast.a1.o1.getVal();
                         sView.mRenderer.aaron.off_a[0].o[1]=x.player1.offense_cast.a1.o2.getVal();
                         sView.mRenderer.aaron.off_a[0].o[2]=x.player1.offense_cast.a1.o3.getVal();
                         sView.mRenderer.aaron.off_a[0].o[3]=x.player1.offense_cast.a1.o4.getVal();
@@ -199,10 +207,10 @@ public class MainActivity extends ActionBarActivity {
                         sView.mRenderer.aaron.off_a[2].o[3]=x.player1.offense_cast.a3.o4.getVal();
                         sView.mRenderer.aaron.off_a[2].o[4]=x.player1.offense_cast.a3.o5.getVal();
                         sView.mRenderer.aaron.off_a[2].o[5]=x.player1.offense_cast.a3.o6.getVal();
-                        sView.mRenderer.aaron.off_a[2].o[6]=x.player1.offense_cast.a3.o7.getVal();
-                        sView.mRenderer.aaron.off_a[2].o[7]=100;
-                        sView.mRenderer.aaron.off_a[2].o[8]=100;
-                        sView.mRenderer.aaron.off_a[2].o[9]=100;
+                        sView.mRenderer.aaron.off_a[2].o[6]=x.player1.offense_cast.a3.o7.getVal();*/
+//                        sView.mRenderer.aaron.off_a[2].o[7]=100;
+//                        sView.mRenderer.aaron.off_a[2].o[8]=100;
+//                        sView.mRenderer.aaron.off_a[2].o[9]=100;
 
 
 
@@ -331,212 +339,68 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    public static class O1{
-        private String name="hp";
-        private int val=1;
-        public O1(){}
-        public O1(String name) {
+    public static class Observation{
+        public String name="hp";
+        public int val=1;
+        public Observation(){}
+        public Observation(String name) {
             this.name = name;
         }
 
         public String getName() {
             return name;
         }
-
-        public int getVal() {
-            return val;
-        }
     }
 
-//    public class o2{
-//        private String name="distance";
-//        public o2(){}
-//        public o2(String name) {
-//            this.name = name;
-//        }
-//    }
 
-    public static class Offensive_Physical_Action{
+    public static class Action{
         private String name="basic attack";
-        public   O1 o1 = new O1("hp");
-        public   O1 o2 = new O1("action");
-        public   O1 o3 = new O1("distance");
-        public   O1 o4 = new O1("resistance: fire");
-        public   O1 o5 = new O1("resistance: water");
-        public   O1 o6 = new O1("etc");
-        public   O1 o7 = new O1("hp");
-        public    O1 o8 = new O1("hp");
-        public   O1 o9 = new O1("hp");
-        public   O1 o10 = new O1("hp");
-        //o2 distance = new o2("distance");
+        public Observation o[] = new Observation[10];
 
-        public Offensive_Physical_Action() {}
-        public Offensive_Physical_Action(String name) {
+        public Action() {
+            for (int i =0;i<10;i++){
+                o[i]=new Observation("hp");
+            }
+        }
+        public Action(String name) {
+            for (int i =0;i<10;i++){
+                o[i]=new Observation("hp");
+            }
             this.name = name;
         }
 
         public String getName() {
             return name;
         }
-
     }
 
-    public static class Meta_Action{
-        private String name="basic attack";
-        public   O1 o1 = new O1("hp");
-        public   O1 o2 = new O1("action");
-        public   O1 o3 = new O1("distance");
-        public   O1 o4 = new O1("resistance: fire");
-        public   O1 o5 = new O1("resistance: water");
-        public    O1 o6 = new O1("etc");
-        public   O1 o7 = new O1("hp");
-        public   O1 o8 = new O1("hp");
-        public   O1 o9 = new O1("hp");
-        public   O1 o10 = new O1("hp");
-        //o2 distance = new o2("distance");
 
-        public Meta_Action() {}
+
+
+    public static class Meta_Action {
+        private String name;
+        public Action a[] = new Action[10];
+        public Action t[] = new Action[4];
+        public Observation o[] = new Observation[10];
+
+
+        public Meta_Action() {
+            for (int i =0;i<10;i++){
+                a[i]=new Action("hp");
+                o[i]=new Observation("hp");
+            }
+            for (int i =0;i<4;i++){
+                t[i]=new Action("hp");
+            }
+        }
         public Meta_Action(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-    }
-
-    public static class Defensive_Physical_Action{
-        private String name="basic attack";
-        public     O1 o1 = new O1("hp");
-        public     O1 o2 = new O1("action");
-        public    O1 o3 = new O1("distance");
-        public   O1 o4 = new O1("resistance: fire");
-        public  O1 o5 = new O1("resistance: water");
-        public   O1 o6 = new O1("etc");
-        public  O1 o7 = new O1("hp");
-        public   O1 o8 = new O1("hp");
-        public   O1 o9 = new O1("hp");
-        public   O1 o10 = new O1("hp");
-        //o2 distance = new o2("distance");
-
-        public Defensive_Physical_Action() {}
-        public Defensive_Physical_Action(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
-
-    public static class Offensive_Cast_Action{
-        private String name="basic attack";
-        public  O1 o1 = new O1("hp");
-        public  O1 o2 = new O1("action");
-        public  O1 o3 = new O1("distance");
-        public  O1 o4 = new O1("resistance: fire");
-        public O1 o5 = new O1("resistance: water");
-        public  O1 o6 = new O1("etc");
-        public  O1 o7 = new O1("hp");
-        public  O1 o8 = new O1("hp");
-        public  O1 o9 = new O1("hp");
-        public  O1 o10 = new O1("hp");
-        //o2 distance = new o2("distance");
-
-        public Offensive_Cast_Action() {}
-        public Offensive_Cast_Action(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
-
-    public static class Defensive_Cast_Action{
-        private String name="basic attack";
-        public  O1 o1 = new O1("hp");
-        public  O1 o2 = new O1("action");
-        public  O1 o3 = new O1("distance");
-        public  O1 o4 = new O1("resistance: fire");
-        public   O1 o5 = new O1("resistance: water");
-        public  O1 o6 = new O1("etc");
-        public   O1 o7 = new O1("hp");
-        public  O1 o8 = new O1("hp");
-        public   O1 o9 = new O1("hp");
-        public   O1 o10 = new O1("hp");
-        //o2 distance = new o2("distance");
-
-        public Defensive_Cast_Action() {}
-        public Defensive_Cast_Action(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
-
-    public static class Supportive_Physical_Action{
-        private String name="basic attack";
-        public O1 o1 = new O1("hp");
-        public O1 o2 = new O1("action");
-        public O1 o3 = new O1("distance");
-        public O1 o4 = new O1("resistance: fire");
-        public O1 o5 = new O1("resistance: water");
-        public O1 o6 = new O1("etc");
-        public O1 o7 = new O1("hp");
-        public O1 o8 = new O1("hp");
-        public O1 o9 = new O1("hp");
-        public O1 o10 = new O1("hp");
-        //o2 distance = new o2("distance");
-
-        public Supportive_Physical_Action() {}
-        public Supportive_Physical_Action(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
-
-    public static class Supportive_Cast_Action{
-        private String name="basic attack";
-        public O1 o1 = new O1("hp");
-        public O1 o2 = new O1("action");
-        public O1 o3 = new O1("distance");
-        public O1 o4 = new O1("resistance: fire");
-        public O1 o5 = new O1("resistance: water");
-        public O1 o6 = new O1("etc");
-        public O1 o7 = new O1("hp");
-        public O1 o8 = new O1("hp");
-        public O1 o9 = new O1("hp");
-        public O1 o10 = new O1("hp");
-        //o2 distance = new o2("distance");
-
-        public Supportive_Cast_Action() {}
-        public Supportive_Cast_Action(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
-
-    public static class Meta_Offense_Physical {
-        private String name;
-        public Offensive_Physical_Action a1 = new Offensive_Physical_Action("basic attack");
-        public Offensive_Physical_Action a2 = new Offensive_Physical_Action("small attack");
-        public Offensive_Physical_Action a3 = new Offensive_Physical_Action("basic attack");
-        public Offensive_Physical_Action a4 = new Offensive_Physical_Action("basic attack");
-        public Offensive_Physical_Action a5 = new Offensive_Physical_Action("basic attack");
-        public Offensive_Physical_Action a6 = new Offensive_Physical_Action("basic attack");
-
-        public Meta_Offense_Physical() {}
-        public Meta_Offense_Physical(String name) {
+            for (int i =0;i<10;i++){
+                a[i]=new Action("hp");
+                o[i]=new Observation("hp");
+            }
+            for (int i =0;i<4;i++){
+                t[i]=new Action("hp");
+            }
             this.name = name;
         }
         public String getName() {
@@ -544,123 +408,23 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    public static class Meta_Offense_Cast {
-        private String name;
-        public Offensive_Cast_Action a1 = new Offensive_Cast_Action("basic attack");
-        public Offensive_Cast_Action a2 = new Offensive_Cast_Action("small attack");
-        public Offensive_Cast_Action a3 = new Offensive_Cast_Action("basic attack");
-        public Offensive_Cast_Action a4 = new Offensive_Cast_Action("basic attack");
-        public Offensive_Cast_Action a5 = new Offensive_Cast_Action("basic attack");
-        public Offensive_Cast_Action a6 = new Offensive_Cast_Action("basic attack");
-        public Offensive_Cast_Action a7 = new Offensive_Cast_Action("basic attack");
-        public Offensive_Cast_Action a8 = new Offensive_Cast_Action("basic attack");
-        public Offensive_Cast_Action a9 = new Offensive_Cast_Action("basic attack");
-
-        public Meta_Offense_Cast() {}
-        public Meta_Offense_Cast(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
-        }
-    }
-
-    public static class Meta_Defense_Cast {
-        private String name;
-        public Defensive_Cast_Action a1 = new Defensive_Cast_Action("basic attack");
-
-
-        public Meta_Defense_Cast() {}
-        public Meta_Defense_Cast(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
-        }
-    }
-
-    public static class Meta_Decision{
-        private String name;
-        public Meta_Action a1 = new Meta_Action("Offensive Physical");
-        public Meta_Action a2 = new Meta_Action("Offensive Cast");
-        public Meta_Action a3 = new Meta_Action("Defensive Physical");
-        public Meta_Action a4 = new Meta_Action("Defensive Cast");
-        public Meta_Action a5 = new Meta_Action("Supportive Physical");
-        public Meta_Action a6 = new Meta_Action("Supportive Cast");
-
-        public Meta_Decision() {}
-        public Meta_Decision(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
-        }
-    }
-
-    public static class Meta_Defense_Physical {
-        private String name;
-        public Defensive_Physical_Action a1 = new Defensive_Physical_Action("dodge");
-        public Defensive_Physical_Action a2 = new Defensive_Physical_Action("block");
-        public Defensive_Physical_Action a3 = new Defensive_Physical_Action("jump");
-        public Defensive_Physical_Action a4 = new Defensive_Physical_Action("run");
-
-
-        public Meta_Defense_Physical() {}
-        public Meta_Defense_Physical(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
-        }
-    }
-
-    public static class Meta_Support_Physical {
-        private String name;
-        public Supportive_Physical_Action a1 = new Supportive_Physical_Action("dodge");
-        public Supportive_Physical_Action a2 = new Supportive_Physical_Action("block");
-        public Supportive_Physical_Action a3 = new Supportive_Physical_Action("jump");
-        public Supportive_Physical_Action a4 = new Supportive_Physical_Action("run");
-
-
-        public Meta_Support_Physical() {}
-        public Meta_Support_Physical(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
-        }
-    }
-
-    public static class Meta_Support_Cast {
-        private String name;
-        public Supportive_Cast_Action a1 = new Supportive_Cast_Action("dodge");
-        public Supportive_Cast_Action a2 = new Supportive_Cast_Action("block");
-        public Supportive_Cast_Action a3 = new Supportive_Cast_Action("jump");
-        public Supportive_Cast_Action a4 = new Supportive_Cast_Action("run");
-
-
-        public Meta_Support_Cast() {}
-        public Meta_Support_Cast(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
-        }
-    }
 
     public static class Player{
         private String name;
 
-        public Meta_Offense_Physical offense_physical = new Meta_Offense_Physical("Offense Physical");
-        public Meta_Defense_Physical defense_physical  = new Meta_Defense_Physical("Defense Physical");
-        public Meta_Support_Physical support_physical  = new Meta_Support_Physical("Support Physical");
-        public Meta_Offense_Cast offense_cast = new Meta_Offense_Cast("Offense Cast");
-        public Meta_Defense_Cast defense_cast = new Meta_Defense_Cast("Defense Cast");
-        public Meta_Support_Cast support_cast = new Meta_Support_Cast("Support Cast");
-        public Meta_Decision meta_decision = new Meta_Decision("Meta_choices");
+        public Meta_Action ma[] = new Meta_Action[3];
 
-        public Player(){}
-        public Player(String name){this.name = name;}
+        public Player(){
+            for (int i =0;i<3;i++){
+                ma[i]=new Meta_Action("hp");
+            }
+        }
+        public Player(String name){
+            for (int i =0;i<3;i++){
+                ma[i]=new Meta_Action("hp");
+            }
+            this.name = name;
+        }
         public String getName(){return name;}
     }
 
@@ -672,12 +436,6 @@ public class MainActivity extends ActionBarActivity {
 
         public Player player1 = new Player("Aaron");
         public Player player2 = new Player("Luke");
-
-
-
-
-
-
 
 
         public User() {}
@@ -701,11 +459,6 @@ public class MainActivity extends ActionBarActivity {
         public void setG(int g) {
             this.g=g;
         }
-/*        public Meta_Offense_Physical getOffense_physical() {
-            return offense_physical;
-        }*/
-
-        // [END post_to_map]
 
     }
 
