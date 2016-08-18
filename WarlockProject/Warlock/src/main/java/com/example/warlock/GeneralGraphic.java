@@ -25,6 +25,7 @@ public class GeneralGraphic
     private final int mTextureCoordinateDataSize = 2;
     private int mTextureDataHandle, selectedTextureDataHandle;
     public float left,right,up,down;
+    public float width, height, y,x;
     public boolean active=false;
     public int s;
 
@@ -149,19 +150,22 @@ public class GeneralGraphic
             mTextureDataHandle = loadTexture(mActivityContext, R.drawable.yellow_box);
             selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.yellow_box);
         }
+        else if (s==6){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.start_button_temp);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.start_button_temp);
+        }
     }
 
 
 
 
-    public GeneralGraphic(final Context activityContext, float c[],int k, float left1, float right1, float up1, float down1)
+    public GeneralGraphic(final Context activityContext, int k, float in_width, float in_height, float in_y, float in_x)
     {
         mActivityContext = activityContext;
-        left=left1;
-        right=right1;
-        up=up1;
-        down=down1;
-        spriteCoords=c;
+        width=in_width;
+        height=in_height;
+        y=in_y;
+        x=in_x;
 
         s = k;
 
@@ -221,6 +225,9 @@ public class GeneralGraphic
         else if (s==2){
             mTextureDataHandle = loadTexture(mActivityContext, R.drawable.blue_box);
             selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.blue_box);
+        }else if (s==6){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.start_button_temp);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.start_button_temp);
         }
 
     }

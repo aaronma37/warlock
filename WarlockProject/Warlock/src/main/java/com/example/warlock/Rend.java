@@ -83,7 +83,7 @@ public class Rend implements GLSurfaceView.Renderer {
     public GeneralGraphic red_dot, stage_1;
     public GeneralGraphic red_box;
     public GeneralGraphic blue_box;
-    public GeneralGraphic hp_box,cast_bar;
+    public GeneralGraphic hp_box,cast_bar,start_button;
     public Person aaron, luke;
     public Projectile projectile_fireball;
     public Offensive_Physical_Actions fireball;
@@ -123,10 +123,10 @@ public class Rend implements GLSurfaceView.Renderer {
         sTemp[6]=width/height;;sTemp[7]=-height/(height*2);
         sTemp[9]=width/height;sTemp[10]=height/height;
 
-        sTemp[0]=-(width-100)/height;sTemp[1]=(height-5)/height;
-        sTemp[3]=-(width-100)/height;sTemp[4]=-(height-10)/(height*2);
-        sTemp[6]=(width-100)/height;;sTemp[7]=-(height-10)/(height*2);
-        sTemp[9]=(width-100)/height;sTemp[10]=(height-5)/height;
+        sTemp[0]=-.1f;sTemp[1]=.1f;
+        sTemp[3]=-.1f;sTemp[4]=-.1f;
+        sTemp[6]=.1f;sTemp[7]=-.1f;
+        sTemp[9]=.1f;sTemp[10]=.1f;
 
         c[0]=255;c[1]=255;c[2]=255;c[3]=.2f;
         red_dot = new GeneralGraphic(context,0);
@@ -135,9 +135,10 @@ public class Rend implements GLSurfaceView.Renderer {
         hp_box = new GeneralGraphic(context,4);
         cast_bar = new GeneralGraphic(context,5);
         stage_1 = new GeneralGraphic(context,3);
+        start_button= new GeneralGraphic(context,6, .3f, .1f,0,0);
 
-
-
+        projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0,100);
+        fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball,aaron);
         enterArena();
         float start_time = System.currentTimeMillis();
 
@@ -152,8 +153,7 @@ public class Rend implements GLSurfaceView.Renderer {
         game_state=0;
 
 
-        projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0,100);
-        fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball,aaron);
+
         active_people.clear();
         active_people.add(aaron);
         active_people.add(luke);
@@ -166,14 +166,6 @@ public class Rend implements GLSurfaceView.Renderer {
 
         victory=0;
 
-/*        aaron.cast(new Offensive_Physical_Actions(100f, 0, new Projectile(aaron.center_x, aaron.center_y, .001f,5,0,0,0f, new Hitbox(2,2), 0, 5),luke));
-        aaron.action.active=false;
-        aaron.busy=false;
-
-        luke.cast(new Offensive_Physical_Actions(100f, 0, new Projectile(luke.center_x, luke.center_y, .001f,5,0,0,0f, new Hitbox(2,2), 0, 5),aaron));
-        luke.action.active=false;
-        luke.busy=false;*/
-        //active_projectiles.clear();
 
         aaron.setActionSpace();
         luke.setActionSpace();
@@ -235,14 +227,18 @@ public class Rend implements GLSurfaceView.Renderer {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
         if (game_state==0){
-
             update_battle();
-
             draw_battle();
-
         }else if (game_state==1){
-            enterArena();
+            draw_pre_battle();
         }
+    }
+
+    public void draw_pre_battle(){
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+        Matrix.translateM(scratch, 0, start_button.x,start_button.y, 0);
+        Matrix.scaleM(scratch, 0, start_button.width,start_button.height, 1f);
+        start_button.Draw(scratch,false);
     }
 
     public void draw_battle(){
