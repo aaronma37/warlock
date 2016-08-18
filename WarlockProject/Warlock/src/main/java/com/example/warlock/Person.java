@@ -16,6 +16,7 @@ public class Person {
     public float center_x;
     public float center_y;
     public int facing_direction=1;
+    public int animation=0;
     public boolean busy;
     private final int ACTION_SPACE_SIZE=10;
     private final int META_SIZE=3;
@@ -260,6 +261,18 @@ public class Person {
             center_x=-1.3f;
         }else if (center_x>1.3f){
             center_x=1.3f;
+        }
+    }
+
+    public void animate(){
+        if (state.state==0){
+        }else if (state.state==1){
+            if (action.meta_type==0 && action.spell_type==1){
+                this.animation++;
+                if (this.animation>4){
+                    this.animation=0;
+                }
+            }
         }
     }
 

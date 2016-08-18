@@ -77,6 +77,8 @@ public class Rend implements GLSurfaceView.Renderer {
     private final float[] mViewMatrix = new float[16];
     private final float[] mRotationMatrix = new float[16];
     private final float[] zeroRotationMatrix = new float[16];
+    private final float[] simpleRotationMatrix = new float[4];
+
     private final float GROUND_LEVEL=-.15f;
     float[] scratch = new float[16];
     float[] scratch2 = new float[16];
@@ -84,6 +86,9 @@ public class Rend implements GLSurfaceView.Renderer {
     public GeneralGraphic red_box;
     public GeneralGraphic blue_box;
     public GeneralGraphic hp_box,cast_bar,start_button;
+
+    public Sprite sprite;
+
     public Person aaron, luke;
     public Projectile projectile_fireball;
     public Offensive_Physical_Actions fireball;
@@ -136,6 +141,8 @@ public class Rend implements GLSurfaceView.Renderer {
         cast_bar = new GeneralGraphic(context,5);
         stage_1 = new GeneralGraphic(context,3);
         start_button= new GeneralGraphic(context,6, .3f, .1f,0,0);
+
+        sprite = new Sprite(context,0);
 
         projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0,100);
         fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball,aaron);
@@ -252,12 +259,20 @@ public class Rend implements GLSurfaceView.Renderer {
 
         //Load characters
         for (int i = 0; i< active_people.size();i++){
+
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y, 0);
-            Matrix.scaleM(scratch, 0, active_people.get(i).hitbox.x*2/100f,active_people.get(i).hitbox.y*2/100f,.5f);
-            blue_box.Draw(scratch,false);
+            Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y, .01f);
+            Matrix.scaleM(scratch, 0, active_people.get(i).hitbox.x*5.5f/100f,active_people.get(i).hitbox.y*4/100f,1f);
+            Matrix.rotateM(scratch, 0, 90-active_people.get(i).facing_direction*90, 0, 1f, 0);
+            sprite.Draw(scratch,false,active_people.get(i).animation);
 
             if (show_info){
+                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y, 0);
+                Matrix.scaleM(scratch, 0, active_people.get(i).hitbox.x*2/100f,active_people.get(i).hitbox.y*2/100f,.5f);
+
+                blue_box.Draw(scratch,false);
+
                 Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
                 Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).hitbox.x*2/100f-active_people.get(i).health/1600f, active_people.get(i).center_y+.15f, 0);
                 Matrix.scaleM(scratch, 0, active_people.get(i).health/1600f,1/100f,.5f);
@@ -312,6 +327,7 @@ public class Rend implements GLSurfaceView.Renderer {
     }
 
     public boolean resolve_people(Person origin, Person target){
+        origin.animate();
             if (origin.alive){
                 //temp_person = active_people.get(i);
                 if(origin.state.state==0){

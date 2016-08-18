@@ -185,36 +185,7 @@ public class MainActivity extends ActionBarActivity {
                             sView.mRenderer.aaron.off_a[0].o[i]=dataSnapshot.child("player1").child("ma").child("0").child("a").child("0").child("o").child(Integer.toString(i)).getValue(Observation.class).val;
                         }
 
-/*                        sView.mRenderer.aaron.off_a[0].o[0]=x.player1.offense_cast.a1.o1.getVal();
-                        sView.mRenderer.aaron.off_a[0].o[1]=x.player1.offense_cast.a1.o2.getVal();
-                        sView.mRenderer.aaron.off_a[0].o[2]=x.player1.offense_cast.a1.o3.getVal();
-                        sView.mRenderer.aaron.off_a[0].o[3]=x.player1.offense_cast.a1.o4.getVal();
-                        sView.mRenderer.aaron.off_a[0].o[4]=x.player1.offense_cast.a1.o5.getVal();
-                        sView.mRenderer.aaron.off_a[0].o[5]=x.player1.offense_cast.a1.o6.getVal();
-                        sView.mRenderer.aaron.off_a[0].o[6]=x.player1.offense_cast.a1.o7.getVal();
 
-                        sView.mRenderer.aaron.off_a[1].o[0]=x.player1.offense_cast.a2.o1.getVal();
-                        sView.mRenderer.aaron.off_a[1].o[1]=x.player1.offense_cast.a2.o2.getVal();
-                        sView.mRenderer.aaron.off_a[1].o[2]=x.player1.offense_cast.a2.o3.getVal();
-                        sView.mRenderer.aaron.off_a[1].o[3]=x.player1.offense_cast.a2.o4.getVal();
-                        sView.mRenderer.aaron.off_a[1].o[4]=x.player1.offense_cast.a2.o5.getVal();
-                        sView.mRenderer.aaron.off_a[1].o[5]=x.player1.offense_cast.a2.o6.getVal();
-                        sView.mRenderer.aaron.off_a[1].o[6]=x.player1.offense_cast.a2.o7.getVal();
-
-                        sView.mRenderer.aaron.off_a[2].o[0]=x.player1.offense_cast.a3.o1.getVal();
-                        sView.mRenderer.aaron.off_a[2].o[1]=x.player1.offense_cast.a3.o2.getVal();
-                        sView.mRenderer.aaron.off_a[2].o[2]=x.player1.offense_cast.a3.o3.getVal();
-                        sView.mRenderer.aaron.off_a[2].o[3]=x.player1.offense_cast.a3.o4.getVal();
-                        sView.mRenderer.aaron.off_a[2].o[4]=x.player1.offense_cast.a3.o5.getVal();
-                        sView.mRenderer.aaron.off_a[2].o[5]=x.player1.offense_cast.a3.o6.getVal();
-                        sView.mRenderer.aaron.off_a[2].o[6]=x.player1.offense_cast.a3.o7.getVal();*/
-//                        sView.mRenderer.aaron.off_a[2].o[7]=100;
-//                        sView.mRenderer.aaron.off_a[2].o[8]=100;
-//                        sView.mRenderer.aaron.off_a[2].o[9]=100;
-
-
-
-                        // ...
                     }
 
                     @Override
