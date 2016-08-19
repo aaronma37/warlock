@@ -152,7 +152,7 @@ public class Offensive_Physical_Actions {
                 active=true;
             }else if (spell_type==1){
                 //APPROACH
-                move_speed=.005f;
+                move_speed=.01f;
 
                 if (origin.center_x-target.center_x>0){
                     move_direction=-1;

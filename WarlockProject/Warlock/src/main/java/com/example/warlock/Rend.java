@@ -79,13 +79,14 @@ public class Rend implements GLSurfaceView.Renderer {
     private final float[] zeroRotationMatrix = new float[16];
     private final float[] simpleRotationMatrix = new float[4];
 
-    private final float GROUND_LEVEL=-.15f;
+    private final float GROUND_LEVEL=-.1f;
     float[] scratch = new float[16];
     float[] scratch2 = new float[16];
     public GeneralGraphic red_dot, stage_1;
     public GeneralGraphic red_box;
     public GeneralGraphic blue_box;
     public GeneralGraphic hp_box,cast_bar,start_button;
+    public GeneralGraphic castle_background;
     public User user_information = new User();
 
     public Sprite sprite;
@@ -144,6 +145,7 @@ public class Rend implements GLSurfaceView.Renderer {
         start_button= new GeneralGraphic(context,6, .3f, .1f,0,0);
 
         sprite = new Sprite(context,0);
+        castle_background = new GeneralGraphic(context,7);
 
         projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0,100);
         fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball,aaron);
@@ -252,9 +254,11 @@ public class Rend implements GLSurfaceView.Renderer {
     public void draw_battle(){
         //Load stage
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-        Matrix.scaleM(scratch, 0, 2f,1f, 1f);
-        stage_1.Draw(scratch,false);
+       // Matrix.translateM(scratch, 0, 0, 0f, .01f);
 
+        Matrix.scaleM(scratch, 0, 1.8f,1.4f, 1f);
+        //battle_backgrounds.Draw(scratch,false,0);
+        castle_background.Draw(scratch,false);
 
 
 
@@ -265,7 +269,7 @@ public class Rend implements GLSurfaceView.Renderer {
             Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y, .01f);
             Matrix.scaleM(scratch, 0, active_people.get(i).hitbox.x*5.5f/100f,active_people.get(i).hitbox.y*4/100f,1f);
             Matrix.rotateM(scratch, 0, 90-active_people.get(i).facing_direction*90, 0, 1f, 0);
-            sprite.Draw(scratch,false,active_people.get(i).animation);
+            sprite.Draw(scratch,false,(int)active_people.get(i).animation/5);
 
             if (show_info){
                 Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);

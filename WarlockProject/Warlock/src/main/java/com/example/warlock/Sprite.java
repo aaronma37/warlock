@@ -32,6 +32,7 @@ public class Sprite
 
 
 
+
     private final String vertexShaderCode =
 //Test
             "attribute vec2 a_TexCoordinate;" +
@@ -97,29 +98,19 @@ public class Sprite
 
 
         final float cubeTextureCoordinateData[] = new float[5*8];
-
-
         for (int j=0;j<5;j++){
-                cubeTextureCoordinateData[8*j+0]=.075f+.079f*j;
-                cubeTextureCoordinateData[8*j+2]=cubeTextureCoordinateData[8*j+0];
-                cubeTextureCoordinateData[8*j+4]=cubeTextureCoordinateData[8*j+0]-.075f;
-                cubeTextureCoordinateData[8*j+6]=cubeTextureCoordinateData[8*j+0]-.075f;
+            cubeTextureCoordinateData[8*j+0]=.075f+.079f*j;
+            cubeTextureCoordinateData[8*j+2]=cubeTextureCoordinateData[8*j+0];
+            cubeTextureCoordinateData[8*j+4]=cubeTextureCoordinateData[8*j+0]-.075f;
+            cubeTextureCoordinateData[8*j+6]=cubeTextureCoordinateData[8*j+0]-.075f;
 
 
-                cubeTextureCoordinateData[8*j+1]=.131f;
+            cubeTextureCoordinateData[8*j+1]=.131f;
             cubeTextureCoordinateData[8*j+3]=.231f;
             cubeTextureCoordinateData[8*j+5]=.231f;
             cubeTextureCoordinateData[8*j+7]=.131f;
 
-/*
-            cubeTextureCoordinateData[8*j+7]=cubeTextureCoordinateData[8*j+1];
-                cubeTextureCoordinateData[8*j+3]=cubeTextureCoordinateData[8*j+1]+.1f;
-                cubeTextureCoordinateData[8*j+5]=cubeTextureCoordinateData[8*j+1]+.1f;*/
-
-            }
-
-
-
+        }
 
 
         mCubeTextureCoordinates = ByteBuffer.allocateDirect(cubeTextureCoordinateData.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
@@ -147,85 +138,27 @@ public class Sprite
         //Load the texture
         if (s==0){
             mTextureDataHandle = loadTexture(mActivityContext, R.drawable.maple);
-        }
+
+        }/*else if (s==1){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.castle_background);
+
+            for (int j=0;j<5;j++){
+*//*                cubeTextureCoordinateData[8*j+0]=1;
+                cubeTextureCoordinateData[8*j+2]=cubeTextureCoordinateData[8*j+0];
+                cubeTextureCoordinateData[8*j+4]=cubeTextureCoordinateData[8*j+0]-1;
+                cubeTextureCoordinateData[8*j+6]=cubeTextureCoordinateData[8*j+0]-1;
+
+
+                cubeTextureCoordinateData[8*j+1]=.0f;
+                cubeTextureCoordinateData[8*j+3]=1;
+                cubeTextureCoordinateData[8*j+5]=1;
+                cubeTextureCoordinateData[8*j+7]=.0f;*//*
+
+            }
+        }*/
 
     }
 
-
-
-
-    public Sprite(final Context activityContext, int k, float in_width, float in_height, float in_y, float in_x)
-    {
-        mActivityContext = activityContext;
-        width=in_width;
-        height=in_height;
-        y=in_y;
-        x=in_x;
-
-        s = k;
-
-        //Initialize Vertex Byte Buffer for Shape Coordinates / # of coordinate values * 4 bytes per float
-        ByteBuffer bb = ByteBuffer.allocateDirect(spriteCoords.length * 4);
-        //Use the Device's Native Byte Order
-        bb.order(ByteOrder.nativeOrder());
-        //Create a floating point buffer from the ByteBuffer
-        vertexBuffer = bb.asFloatBuffer();
-        //Add the coordinates to the FloatBuffer
-        vertexBuffer.put(spriteCoords);
-        //Set the Buffer to Read the first coordinate
-        vertexBuffer.position(0);
-
-
-        final float[] cubeTextureCoordinateData =
-                {
-                        1f,  0f,
-                        1f, 1f,
-                        0f, 1f,
-                        0f, 0f
-                };
-
-
-
-        mCubeTextureCoordinates = ByteBuffer.allocateDirect(cubeTextureCoordinateData.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
-        mCubeTextureCoordinates.put(cubeTextureCoordinateData).position(0);
-
-        //Initialize byte buffer for the draw list
-        ByteBuffer dlb = ByteBuffer.allocateDirect(spriteCoords.length * 2);
-        dlb.order(ByteOrder.nativeOrder());
-        drawListBuffer = dlb.asShortBuffer();
-        drawListBuffer.put(drawOrder);
-        drawListBuffer.position(0);
-
-        int vertexShader = Rend.loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
-        int fragmentShader = Rend.loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
-
-        shaderProgram = GLES20.glCreateProgram();
-        GLES20.glAttachShader(shaderProgram, vertexShader);
-        GLES20.glAttachShader(shaderProgram, fragmentShader);
-
-        //Texture Code
-        GLES20.glBindAttribLocation(shaderProgram, 0, "a_TexCoordinate");
-
-        GLES20.glLinkProgram(shaderProgram);
-
-        //Load the texture
-        if (s==0){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.castle_1);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.castle_1);
-        }
-        else if (s==1){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.redbox);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.redbox);
-        }
-        else if (s==2){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.blue_box);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.blue_box);
-        }else if (s==6){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.start_button_temp);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.start_button_temp);
-        }
-
-    }
 
     public void Draw(float[] mvpMatrix, boolean k, int i)
     {

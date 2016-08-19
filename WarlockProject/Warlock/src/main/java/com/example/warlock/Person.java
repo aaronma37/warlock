@@ -269,7 +269,7 @@ public class Person {
         }else if (state.state==1){
             if (action.meta_type==0 && action.spell_type==1){
                 this.animation++;
-                if (this.animation>4){
+                if (this.animation>20){
                     this.animation=0;
                 }
             }

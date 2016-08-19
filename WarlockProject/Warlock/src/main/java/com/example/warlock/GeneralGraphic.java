@@ -154,6 +154,10 @@ public class GeneralGraphic
             mTextureDataHandle = loadTexture(mActivityContext, R.drawable.start_button_temp);
             selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.start_button_temp);
         }
+        else if (s==7){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.castle_background);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.castle_background);
+        }
     }
 
 
