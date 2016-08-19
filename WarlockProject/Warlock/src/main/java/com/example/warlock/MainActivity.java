@@ -52,6 +52,7 @@ public class MainActivity extends ActionBarActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabase;
+    private final int NUMBER_OF_UNITS=2;
 
 
     CallbackManager callbackManager;
@@ -175,14 +176,23 @@ public class MainActivity extends ActionBarActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user value
-                        System.out.println("VALUE AT:: "+dataSnapshot.child("player1").child("ma").child("0").child("o").child("0").getValue(Observation.class).val);
+//                        System.out.println("VALUE AT:: "+dataSnapshot.child("player1").child("ma").child("0").child("o").child("0").getValue(Observation.class).val);
                         //User x = dataSnapshot.getValue(User.class);
 //                        System.out.println("FULL NAME IS " + x.getFullName());
                         //System.out.println("Offense physical is called:  " + x.player1.offense_physical.getName());
 
                         System.out.println(sView.mRenderer.aaron.off_a[0].o[0]);
-                        for (int i=0;i<10;i++){
-                            sView.mRenderer.aaron.off_a[0].o[i]=dataSnapshot.child("player1").child("ma").child("0").child("a").child("0").child("o").child(Integer.toString(i)).getValue(Observation.class).val;
+
+                            sView.mRenderer.user_information.fullName=dataSnapshot.child("fullname").getValue(String.class);
+                            sView.mRenderer.user_information.g=dataSnapshot.child("g").getValue(int.class);
+
+                        for (int i=0;i<NUMBER_OF_UNITS;i++){
+                            sView.mRenderer.user_information.playa[i].name=dataSnapshot.child("player1").child("name").getValue(String.class);
+                            for (int k=0;k<10;k++){
+                                sView.mRenderer.user_information.playa[k].ma.name=dataSnapshot.child("player1").child("name").getValue(String.class);
+                            }
+
+                            //sView.mRenderer.aaron.off_a[0].o[i]=dataSnapshot.child("player1").child("ma").child("0").child("a").child("0").child("o").child(Integer.toString(i)).getValue(Observation.class).val;
                         }
 
 
@@ -405,14 +415,22 @@ public class MainActivity extends ActionBarActivity {
         private String fullName;
         private int g;
 
-        public Player player1 = new Player("Aaron");
-        public Player player2 = new Player("Luke");
+        public Player playa[] = new Player[NUMBER_OF_UNITS];
 
+        public User() {
 
-        public User() {}
+            for (int i=0; i<NUMBER_OF_UNITS;i++){
+                playa[i] = new Player("Aaron");
+            }
+
+        }
         public User(String fullName) {
             this.fullName = fullName;
             this.g=0;
+            for (int i=0; i<NUMBER_OF_UNITS;i++){
+                playa[i] = new Player("Aaron");
+            }
+
         }
 
         public String getFullName() {

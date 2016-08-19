@@ -86,6 +86,7 @@ public class Rend implements GLSurfaceView.Renderer {
     public GeneralGraphic red_box;
     public GeneralGraphic blue_box;
     public GeneralGraphic hp_box,cast_bar,start_button;
+    public User user_information = new User();
 
     public Sprite sprite;
 
