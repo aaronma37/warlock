@@ -90,7 +90,9 @@ public class Rend implements GLSurfaceView.Renderer {
     public GeneralGraphic castle_background;
     public GeneralGraphic ice_shard;
     public GeneralGraphic water_symbol;
-    public GeneralGraphic water_circle;
+    public GeneralGraphic blue_apparition;
+
+    public SpellCircle water_circle;
 
     public User user_information = new User();
 
@@ -150,7 +152,8 @@ public class Rend implements GLSurfaceView.Renderer {
         start_button= new GeneralGraphic(context,6, .3f, .1f,0,0);
         ice_shard = new GeneralGraphic(context,8,.15f, .05f,0,0);
         water_symbol= new GeneralGraphic(context,9);
-        water_circle= new GeneralGraphic(context,10,.3f, .3f,0,0);
+        blue_apparition= new GeneralGraphic(context,10);
+        water_circle= new SpellCircle(context,10,.3f, .3f,0,0);
 
         sprite = new Sprite(context,0);
         castle_background = new GeneralGraphic(context,7);
@@ -275,18 +278,48 @@ public class Rend implements GLSurfaceView.Renderer {
         //Load characters
         for (int i = 0; i< active_people.size();i++){
             float ratio = (float) width / height;
-            if (active_people.get(i).state.state==1 && active_people.get(i).action.meta_type==0 && active_people.get(i).action.spell_type==0 || 1==1){
+            if (active_people.get(i).state.state==1 && active_people.get(i).action.meta_type==0 && active_people.get(i).action.spell_type==0){
                 Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
                 //Matrix.orthoM(scratch,0,-ratio,ratio,-1,1,-1,1);
-
                 Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y-active_people.get(i).height*1.5f/100f, 1f);
-
-                Matrix.scaleM(scratch, 0, 25/100f,25 /100f,1f);
-                Matrix.rotateM(scratch, 0, 85, 1f, 0, 0);
-                Matrix.rotateM(scratch, 0, active_people.get(i).center_x*10, 0f, 1f, 0);
-                //Matrix.rotateM(scratch, 0, active_people.get(i).animation, 0f, 0, 1f);
+                Matrix.scaleM(scratch, 0, water_circle.size_animation*25/100f,water_circle.size_animation*25/100f,1f);
+                Matrix.rotateM(scratch, 0, 70, 1f, 0, 0);
+                //Matrix.rotateM(scratch, 0, active_people.get(i).center_x*10, 0f, 1f, 0);
+                Matrix.rotateM(scratch, 0, water_circle.spin_animation, 0f, 0, 1f);
 
                 water_circle.Draw(scratch,false);
+
+
+
+
+                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y-active_people.get(i).height*1.5f/100f, 1f);
+                Matrix.scaleM(scratch, 0, water_circle.size_animation*5/100f,water_circle.size_animation*5/100f,1f);
+                Matrix.translateM(scratch, 0, (float)Math.cos((float)(water_circle.spin_animation+5)*3.14f/180f)*2.5f, (float)Math.sin((float)(water_circle.spin_animation+5)*3.14f/180f)*.8f, 0);
+
+                blue_apparition.Draw(scratch,false);
+
+                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y-active_people.get(i).height*1.5f/100f, 1f);
+                Matrix.scaleM(scratch, 0, water_circle.size_animation*5/100f,water_circle.size_animation*5/100f,1f);
+                Matrix.translateM(scratch, 0, (float)Math.cos((float)(water_circle.spin_animation+5+90)*3.14f/180f)*2.5f, (float)Math.sin((float)(water_circle.spin_animation+5+90)*3.14f/180f)*.8f, 0);
+
+                blue_apparition.Draw(scratch,false);
+
+                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y-active_people.get(i).height*1.5f/100f, 1f);
+                Matrix.scaleM(scratch, 0, water_circle.size_animation*5/100f,water_circle.size_animation*5/100f,1f);
+                Matrix.translateM(scratch, 0, (float)Math.cos((float)(water_circle.spin_animation+5+180)*3.14f/180)*2.5f, (float)Math.sin((float)(water_circle.spin_animation+5+180)*3.14f/180f)*.8f, 0);
+
+                blue_apparition.Draw(scratch,false);
+
+                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y-active_people.get(i).height*1.5f/100f, 1f);
+                Matrix.scaleM(scratch, 0, water_circle.size_animation*5/100f,water_circle.size_animation*5/100f,1f);
+                Matrix.translateM(scratch, 0, (float)Math.cos((float)(water_circle.spin_animation+5+270)*3.14f/180f)*2.5f, (float)Math.sin((float)(water_circle.spin_animation+5+270)*3.14f/180f)*.8f, 0);
+
+                blue_apparition.Draw(scratch,false);
+
             }
 
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
@@ -368,7 +401,7 @@ public class Rend implements GLSurfaceView.Renderer {
     }
 
     public boolean resolve_people(Person origin, Person target){
-        origin.animate();
+        origin.animate(water_circle);
             if (origin.alive){
                 //temp_person = active_people.get(i);
                 if(origin.state.state==0){
@@ -418,6 +451,7 @@ public class Rend implements GLSurfaceView.Renderer {
         // this projection matrix is applied to object coordinates
         // in the onDrawFrame() method
         Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
+        Matrix.orthoM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
 
     }
 

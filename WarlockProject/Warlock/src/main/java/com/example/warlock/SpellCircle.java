@@ -13,7 +13,7 @@ import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public class GeneralGraphic
+public class SpellCircle
 {
     //Reference to Activity Context
     private final Context mActivityContext;
@@ -28,6 +28,8 @@ public class GeneralGraphic
     public float width, height, y,x;
     public boolean active=false;
     public int s;
+    public int spin_animation=0;
+    public float size_animation=0;
 
 
     private final String vertexShaderCode =
@@ -77,7 +79,7 @@ public class GeneralGraphic
     // Set color with red, green, blue and alpha (opacity) values
     float color[] = { 1f, 1f, 1f, 1f };
 
-    public GeneralGraphic(final Context activityContext, int k)
+    public SpellCircle(final Context activityContext, int k)
     {
         mActivityContext = activityContext;
         s = k;
@@ -168,16 +170,31 @@ public class GeneralGraphic
             float color[] = { 1f, 0f, 1f, 1f };
 
         }
-        else if (s==10){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.blue_apparition);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.blue_apparition);
+    }
+
+    public void animate(float completion){
+        spin_animation=spin_animation+Math.round(completion*25);
+        if (spin_animation>360){
+            spin_animation=0;
         }
+        if (completion<.9f){
+            size_animation=completion*3;
+            if (size_animation>1){
+                size_animation=1;
+            }
+        }else{
+            size_animation=(1-completion)*10;
+            if (size_animation>1){
+                size_animation=1;
+            }
+        }
+
     }
 
 
 
 
-    public GeneralGraphic(final Context activityContext, int k, float in_width, float in_height, float in_y, float in_x)
+    public SpellCircle(final Context activityContext, int k, float in_width, float in_height, float in_y, float in_x)
     {
         mActivityContext = activityContext;
         width=in_width;
@@ -304,9 +321,7 @@ public class GeneralGraphic
 
         //Apply the projection and view transformation
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mvpMatrix, 0);
-        //GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-        GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-
+        GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
         GLES20.glEnable(GLES20.GL_BLEND);
         //Draw the triangle
         GLES20.glDrawElements(GLES20.GL_TRIANGLES, drawOrder.length, GLES20.GL_UNSIGNED_SHORT, drawListBuffer);

@@ -264,13 +264,18 @@ public class Person {
         }
     }
 
-    public void animate(){
+    public void animate(SpellCircle circle){
         if (state.state==0){
         }else if (state.state==1){
-            if (action.meta_type==0 && action.spell_type==1){
-                this.animation++;
-                if (this.animation>20){
-                    this.animation=0;
+            if (action.meta_type==0){
+                if (action.spell_type==0){
+                    circle.animate(action.cast_time/action.total_cast_time);
+                }
+                if (action.spell_type==1){
+                    this.animation++;
+                    if (this.animation>20){
+                        this.animation=0;
+                    }
                 }
             }
         }
