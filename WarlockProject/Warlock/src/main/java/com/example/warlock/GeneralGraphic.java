@@ -158,6 +158,16 @@ public class GeneralGraphic
             mTextureDataHandle = loadTexture(mActivityContext, R.drawable.castle_background);
             selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.castle_background);
         }
+        else if (s==8){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.ice_shard_attack);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.castle_background);
+        }
+        else if (s==9){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.water_symbol);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.water_symbol);
+            float color[] = { 1f, 0f, 1f, 1f };
+
+        }
     }
 
 
@@ -232,6 +242,12 @@ public class GeneralGraphic
         }else if (s==6){
             mTextureDataHandle = loadTexture(mActivityContext, R.drawable.start_button_temp);
             selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.start_button_temp);
+        }        else if (s==8){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.ice_shard_attack);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.castle_background);
+        }else if (s==10){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.water_circle);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.water_circle);
         }
 
     }

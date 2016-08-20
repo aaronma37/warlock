@@ -147,7 +147,7 @@ public class Offensive_Physical_Actions {
             if (spell_type==0){
                 //FIREBALL
                 projectile_flag=true;
-                total_cast_time=100f;
+                total_cast_time=45f;
                 cool_down=0;
                 active=true;
             }else if (spell_type==1){

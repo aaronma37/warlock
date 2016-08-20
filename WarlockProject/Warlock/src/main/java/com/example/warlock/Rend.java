@@ -5,6 +5,7 @@ package com.example.warlock;
         import javax.microedition.khronos.opengles.GL10;
 
         import android.content.Context;
+        import android.opengl.GLES10;
         import android.opengl.GLES20;
         import android.opengl.GLSurfaceView;
         import android.opengl.Matrix;
@@ -47,7 +48,7 @@ public class Rend implements GLSurfaceView.Renderer {
     private FloatBuffer textureBuffer;
     public Context context;
     public int game_state=0;
-    private boolean show_info=true;
+    private boolean show_info=false;
 
     private List<Projectile> active_projectiles = new ArrayList<>();
     private Projectile projectile_swap[] = new Projectile[50];
@@ -87,6 +88,10 @@ public class Rend implements GLSurfaceView.Renderer {
     public GeneralGraphic blue_box;
     public GeneralGraphic hp_box,cast_bar,start_button;
     public GeneralGraphic castle_background;
+    public GeneralGraphic ice_shard;
+    public GeneralGraphic water_symbol;
+    public GeneralGraphic water_circle;
+
     public User user_information = new User();
 
     public Sprite sprite;
@@ -116,7 +121,7 @@ public class Rend implements GLSurfaceView.Renderer {
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         // Set the background frame color
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
+        //GLES20.glOrthof(0,2f,1f,0,1f,1f);
 
         float sTemp[] = {
                 -0.5f,  0.5f, 0.0f,   // top left
@@ -143,6 +148,9 @@ public class Rend implements GLSurfaceView.Renderer {
         cast_bar = new GeneralGraphic(context,5);
         stage_1 = new GeneralGraphic(context,3);
         start_button= new GeneralGraphic(context,6, .3f, .1f,0,0);
+        ice_shard = new GeneralGraphic(context,8,.15f, .05f,0,0);
+        water_symbol= new GeneralGraphic(context,9);
+        water_circle= new GeneralGraphic(context,10,.3f, .3f,0,0);
 
         sprite = new Sprite(context,0);
         castle_background = new GeneralGraphic(context,7);
@@ -158,7 +166,7 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public void enterArena(){
         aaron.reset(-.5f, GROUND_LEVEL);
-        luke.reset(.5f, GROUND_LEVEL);
+        luke.reset(1f, GROUND_LEVEL);
 
         game_state=0;
 
@@ -254,37 +262,56 @@ public class Rend implements GLSurfaceView.Renderer {
     public void draw_battle(){
         //Load stage
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-       // Matrix.translateM(scratch, 0, 0, 0f, .01f);
+        Matrix.translateM(scratch, 0, 0, 0f, 0f);
 
         Matrix.scaleM(scratch, 0, 1.8f,1.4f, 1f);
         //battle_backgrounds.Draw(scratch,false,0);
         castle_background.Draw(scratch,false);
 
-
+/*        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+        Matrix.scaleM(scratch, 0, 10f/100f,10/100f,1f);
+        water_symbol.Draw(scratch,false);*/
 
         //Load characters
         for (int i = 0; i< active_people.size();i++){
+            float ratio = (float) width / height;
+            if (active_people.get(i).state.state==1 && active_people.get(i).action.meta_type==0 && active_people.get(i).action.spell_type==0 || 1==1){
+                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                //Matrix.orthoM(scratch,0,-ratio,ratio,-1,1,-1,1);
+
+                Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y-active_people.get(i).height*1.5f/100f, 1f);
+
+                Matrix.scaleM(scratch, 0, 25/100f,25 /100f,1f);
+                Matrix.rotateM(scratch, 0, 85, 1f, 0, 0);
+                Matrix.rotateM(scratch, 0, active_people.get(i).center_x*10, 0f, 1f, 0);
+                //Matrix.rotateM(scratch, 0, active_people.get(i).animation, 0f, 0, 1f);
+
+                water_circle.Draw(scratch,false);
+            }
 
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y, .01f);
+            Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).facing_direction*.05f, active_people.get(i).center_y, 1f);
             Matrix.scaleM(scratch, 0, active_people.get(i).hitbox.x*5.5f/100f,active_people.get(i).hitbox.y*4/100f,1f);
             Matrix.rotateM(scratch, 0, 90-active_people.get(i).facing_direction*90, 0, 1f, 0);
             sprite.Draw(scratch,false,(int)active_people.get(i).animation/5);
 
+
+
+
             if (show_info){
                 Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y, 0);
+                Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y, 1f);
                 Matrix.scaleM(scratch, 0, active_people.get(i).hitbox.x*2/100f,active_people.get(i).hitbox.y*2/100f,.5f);
 
                 blue_box.Draw(scratch,false);
 
                 Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).hitbox.x*2/100f-active_people.get(i).health/1600f, active_people.get(i).center_y+.15f, 0);
+                Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).hitbox.x*2/100f-active_people.get(i).health/1600f, active_people.get(i).center_y+.15f, 1f);
                 Matrix.scaleM(scratch, 0, active_people.get(i).health/1600f,1/100f,.5f);
                 hp_box.Draw(scratch,false);
 
                 Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).hitbox.x*2/100f-active_people.get(i).action.cast_time/active_people.get(i).action.total_cast_time/16f, active_people.get(i).center_y+.12f, 0);
+                Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).hitbox.x*2/100f-active_people.get(i).action.cast_time/active_people.get(i).action.total_cast_time/16f, active_people.get(i).center_y+.12f, 1f);
                 Matrix.scaleM(scratch, 0, active_people.get(i).action.cast_time/active_people.get(i).action.total_cast_time/16f,1/100f,.5f);
                 cast_bar.Draw(scratch,false);
 
@@ -294,13 +321,22 @@ public class Rend implements GLSurfaceView.Renderer {
         }
 
         for (int i = 0; i< active_projectiles.size();i++){
+            if (show_info){
+                if (active_projectiles.get(i).active){
+                    Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                    Matrix.translateM(scratch, 0, active_projectiles.get(i).location_x, active_projectiles.get(i).location_y, 1);
+                    Matrix.scaleM(scratch, 0, active_projectiles.get(i).hitbox.x*2/100f,active_projectiles.get(i).hitbox.y*2/100f,.5f);
+                    red_box.Draw(scratch,false);
+                }
+            }
             if (active_projectiles.get(i).active){
                 Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                Matrix.translateM(scratch, 0, active_projectiles.get(i).location_x, active_projectiles.get(i).location_y, 0);
-                Matrix.scaleM(scratch, 0, active_projectiles.get(i).hitbox.x*2/100f,active_projectiles.get(i).hitbox.y*2/100f,.5f);
-                red_box.Draw(scratch,false);
-            }
+                Matrix.translateM(scratch, 0, active_projectiles.get(i).location_x, active_projectiles.get(i).location_y, 1);
+                Matrix.scaleM(scratch, 0, ice_shard.width, ice_shard.height,.5f);
+                Matrix.rotateM(scratch, 0, -90, 0, 0, 1f);
 
+                ice_shard.Draw(scratch,false);
+            }
         }
     }
 
