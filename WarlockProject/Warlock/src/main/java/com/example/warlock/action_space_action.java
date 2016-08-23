@@ -6,6 +6,8 @@ package com.example.warlock;
 public class action_space_action {
 
     public float o[] = new float[10];
+    public float c[] = new float[10];
+
     public boolean feasible = true;
     public int index;
     public int cool_down_timer=0;
@@ -15,6 +17,7 @@ public class action_space_action {
 
         for (int i=0;i<10;i++){
             o[i]=1;
+            c[i]=1;
         }
     }
 

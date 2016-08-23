@@ -341,15 +341,20 @@ public class MainActivity extends ActionBarActivity {
     public static class Action{
         private String name="basic attack";
         public Observation o[] = new Observation[10];
+        public Observation c[] = new Observation[10];
 
         public Action() {
             for (int i =0;i<10;i++){
                 o[i]=new Observation("hp");
+                c[i]=new Observation("hp");
+
             }
         }
         public Action(String name) {
             for (int i =0;i<10;i++){
                 o[i]=new Observation("hp");
+                c[i]=new Observation("hp");
+
             }
             this.name = name;
         }
@@ -364,15 +369,17 @@ public class MainActivity extends ActionBarActivity {
 
     public static class Meta_Action {
         private String name;
-        public Action a[] = new Action[10];
+        public Action a[] = new Action[151];
         public Action t[] = new Action[4];
         public Observation o[] = new Observation[10];
-
+        public Observation c[] = new Observation[10];
 
         public Meta_Action() {
             for (int i =0;i<10;i++){
                 a[i]=new Action("hp");
                 o[i]=new Observation("hp");
+                c[i]=new Observation("hp");
+
             }
             for (int i =0;i<4;i++){
                 t[i]=new Action("hp");
@@ -382,6 +389,8 @@ public class MainActivity extends ActionBarActivity {
             for (int i =0;i<10;i++){
                 a[i]=new Action("hp");
                 o[i]=new Observation("hp");
+                c[i]=new Observation("hp");
+
             }
             for (int i =0;i<4;i++){
                 t[i]=new Action("hp");

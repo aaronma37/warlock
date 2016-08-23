@@ -81,6 +81,7 @@ public class Rend implements GLSurfaceView.Renderer {
     private final float[] simpleRotationMatrix = new float[4];
 
     private final float GROUND_LEVEL=-.1f;
+    private final int OFFENSIVE_SPELL_COUNT=150;
     float[] scratch = new float[16];
     float[] scratch2 = new float[16];
     public GeneralGraphic red_dot, stage_1;
@@ -91,8 +92,11 @@ public class Rend implements GLSurfaceView.Renderer {
     public GeneralGraphic ice_shard;
     public GeneralGraphic water_symbol;
     public GeneralGraphic blue_apparition;
+    public GeneralGraphic buttons;
+
 
     public SpellCircle water_circle;
+    public ProjectileSprite projectile_sprite[] = new ProjectileSprite[OFFENSIVE_SPELL_COUNT];
 
     public User user_information = new User();
 
@@ -151,6 +155,8 @@ public class Rend implements GLSurfaceView.Renderer {
         stage_1 = new GeneralGraphic(context,3);
         start_button= new GeneralGraphic(context,6, .3f, .1f,0,0);
         ice_shard = new GeneralGraphic(context,8,.15f, .05f,0,0);
+        buttons = new GeneralGraphic(context,11,.4f, .1f,-.4f,0);
+
         water_symbol= new GeneralGraphic(context,9);
         blue_apparition= new GeneralGraphic(context,10);
         water_circle= new SpellCircle(context,10,.3f, .3f,0,0);
@@ -162,6 +168,10 @@ public class Rend implements GLSurfaceView.Renderer {
         fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball,aaron);
         enterArena();
         float start_time = System.currentTimeMillis();
+
+        for (int i=0;i<OFFENSIVE_SPELL_COUNT;i++){
+            projectile_sprite[i] = new ProjectileSprite(context, i);
+        }
 
 
 
@@ -188,8 +198,8 @@ public class Rend implements GLSurfaceView.Renderer {
         victory=0;
 
 
-        aaron.setActionSpace();
-        luke.setActionSpace();
+        //aaron.setActionSpace();
+       // luke.setActionSpace();
 
         aaron.a[1].o[2]=0;
         aaron.a[1].o[0]=0;
@@ -201,11 +211,25 @@ public class Rend implements GLSurfaceView.Renderer {
 
         //OFFENSIVE
 
-        aaron.available_offensive_action_space.remove(0);
         aaron.off_a[2].o[8]=100;
         aaron.off_a[2].o[7]=100;
 
-        luke.available_offensive_action_space.remove(2);
+
+        aaron.attribute[0]=0;
+        aaron.attribute[1]=1;
+        aaron.attribute[2]=1;
+        aaron.attribute[3]=1;
+        aaron.attribute[4]=1;
+
+        luke.attribute[0]=0;
+        luke.attribute[1]=0;
+        luke.attribute[2]=0;
+        luke.attribute[3]=0;
+        luke.attribute[4]=0;
+
+        aaron.setAvailableOffensiveActionSpace();
+        luke.setAvailableOffensiveActionSpace();
+
 
 
 
@@ -250,6 +274,7 @@ public class Rend implements GLSurfaceView.Renderer {
         if (game_state==0){
             update_battle();
             draw_battle();
+            draw_battle_ui();
         }else if (game_state==1){
             draw_pre_battle();
         }
@@ -268,58 +293,13 @@ public class Rend implements GLSurfaceView.Renderer {
         Matrix.translateM(scratch, 0, 0, 0f, 0f);
 
         Matrix.scaleM(scratch, 0, 1.8f,1.4f, 1f);
-        //battle_backgrounds.Draw(scratch,false,0);
         castle_background.Draw(scratch,false);
-
-/*        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-        Matrix.scaleM(scratch, 0, 10f/100f,10/100f,1f);
-        water_symbol.Draw(scratch,false);*/
 
         //Load characters
         for (int i = 0; i< active_people.size();i++){
             float ratio = (float) width / height;
             if (active_people.get(i).state.state==1 && active_people.get(i).action.meta_type==0 && active_people.get(i).action.spell_type==0){
-                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                //Matrix.orthoM(scratch,0,-ratio,ratio,-1,1,-1,1);
-                Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y-active_people.get(i).height*1.5f/100f, 1f);
-                Matrix.scaleM(scratch, 0, water_circle.size_animation*25/100f,water_circle.size_animation*25/100f,1f);
-                Matrix.rotateM(scratch, 0, 70, 1f, 0, 0);
-                //Matrix.rotateM(scratch, 0, active_people.get(i).center_x*10, 0f, 1f, 0);
-                Matrix.rotateM(scratch, 0, water_circle.spin_animation, 0f, 0, 1f);
-
-                water_circle.Draw(scratch,false);
-
-
-
-
-                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y-active_people.get(i).height*1.5f/100f, 1f);
-                Matrix.scaleM(scratch, 0, water_circle.size_animation*5/100f,water_circle.size_animation*5/100f,1f);
-                Matrix.translateM(scratch, 0, (float)Math.cos((float)(water_circle.spin_animation+5)*3.14f/180f)*2.5f, (float)Math.sin((float)(water_circle.spin_animation+5)*3.14f/180f)*.8f, 0);
-
-                blue_apparition.Draw(scratch,false);
-
-                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y-active_people.get(i).height*1.5f/100f, 1f);
-                Matrix.scaleM(scratch, 0, water_circle.size_animation*5/100f,water_circle.size_animation*5/100f,1f);
-                Matrix.translateM(scratch, 0, (float)Math.cos((float)(water_circle.spin_animation+5+90)*3.14f/180f)*2.5f, (float)Math.sin((float)(water_circle.spin_animation+5+90)*3.14f/180f)*.8f, 0);
-
-                blue_apparition.Draw(scratch,false);
-
-                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y-active_people.get(i).height*1.5f/100f, 1f);
-                Matrix.scaleM(scratch, 0, water_circle.size_animation*5/100f,water_circle.size_animation*5/100f,1f);
-                Matrix.translateM(scratch, 0, (float)Math.cos((float)(water_circle.spin_animation+5+180)*3.14f/180)*2.5f, (float)Math.sin((float)(water_circle.spin_animation+5+180)*3.14f/180f)*.8f, 0);
-
-                blue_apparition.Draw(scratch,false);
-
-                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y-active_people.get(i).height*1.5f/100f, 1f);
-                Matrix.scaleM(scratch, 0, water_circle.size_animation*5/100f,water_circle.size_animation*5/100f,1f);
-                Matrix.translateM(scratch, 0, (float)Math.cos((float)(water_circle.spin_animation+5+270)*3.14f/180f)*2.5f, (float)Math.sin((float)(water_circle.spin_animation+5+270)*3.14f/180f)*.8f, 0);
-
-                blue_apparition.Draw(scratch,false);
-
+                draw_spell_circle(active_people.get(i));
             }
 
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
@@ -368,9 +348,50 @@ public class Rend implements GLSurfaceView.Renderer {
                 Matrix.scaleM(scratch, 0, ice_shard.width, ice_shard.height,.5f);
                 Matrix.rotateM(scratch, 0, -90, 0, 0, 1f);
 
-                ice_shard.Draw(scratch,false);
+                projectile_sprite[active_projectiles.get(i).spell_type].Draw(scratch,false,0);
             }
         }
+    }
+
+    public void draw_battle_ui(){
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+        //Matrix.orthoM(scratch,0,-ratio,ratio,-1,1,-1,1);
+        Matrix.translateM(scratch, 0, buttons.x, buttons.y, 1f);
+        Matrix.scaleM(scratch, 0, buttons.width,buttons.height,1f);
+        buttons.Draw(scratch,false);
+
+    }
+
+    public void draw_spell_circle(Person origin){
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+        //Matrix.orthoM(scratch,0,-ratio,ratio,-1,1,-1,1);
+        Matrix.translateM(scratch, 0, origin.center_x, origin.center_y-origin.height*1.5f/100f, 1f);
+        Matrix.scaleM(scratch, 0, water_circle.size_animation*25/100f,water_circle.size_animation*25/100f,1f);
+        Matrix.rotateM(scratch, 0, 70, 1f, 0, 0);
+        //Matrix.rotateM(scratch, 0, active_people.get(i).center_x*10, 0f, 1f, 0);
+        Matrix.rotateM(scratch, 0, water_circle.spin_animation, 0f, 0, 1f);
+
+        water_circle.Draw(scratch,false);
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+        Matrix.translateM(scratch, 0, origin.center_x, origin.center_y-origin.height*1.5f/100f, 1f);
+        Matrix.scaleM(scratch, 0, water_circle.size_animation*5/100f,water_circle.size_animation*5/100f,1f);
+        Matrix.translateM(scratch, 0, (float)Math.cos((float)(water_circle.spin_animation+5)*3.14f/180f)*2.5f, (float)Math.sin((float)(water_circle.spin_animation+5)*3.14f/180f)*.8f, 0);
+        blue_apparition.Draw(scratch,false);
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+        Matrix.translateM(scratch, 0, origin.center_x, origin.center_y-origin.height*1.5f/100f, 1f);
+        Matrix.scaleM(scratch, 0, water_circle.size_animation*5/100f,water_circle.size_animation*5/100f,1f);
+        Matrix.translateM(scratch, 0, (float)Math.cos((float)(water_circle.spin_animation+5+90)*3.14f/180f)*2.5f, (float)Math.sin((float)(water_circle.spin_animation+5+90)*3.14f/180f)*.8f, 0);
+        blue_apparition.Draw(scratch,false);
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+        Matrix.translateM(scratch, 0, origin.center_x, origin.center_y-origin.height*1.5f/100f, 1f);
+        Matrix.scaleM(scratch, 0, water_circle.size_animation*5/100f,water_circle.size_animation*5/100f,1f);
+        Matrix.translateM(scratch, 0, (float)Math.cos((float)(water_circle.spin_animation+5+180)*3.14f/180)*2.5f, (float)Math.sin((float)(water_circle.spin_animation+5+180)*3.14f/180f)*.8f, 0);
+        blue_apparition.Draw(scratch,false);
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+        Matrix.translateM(scratch, 0, origin.center_x, origin.center_y-origin.height*1.5f/100f, 1f);
+        Matrix.scaleM(scratch, 0, water_circle.size_animation*5/100f,water_circle.size_animation*5/100f,1f);
+        Matrix.translateM(scratch, 0, (float)Math.cos((float)(water_circle.spin_animation+5+270)*3.14f/180f)*2.5f, (float)Math.sin((float)(water_circle.spin_animation+5+270)*3.14f/180f)*.8f, 0);
+        blue_apparition.Draw(scratch,false);
     }
 
     public void update_battle(){
@@ -550,6 +571,10 @@ public class Rend implements GLSurfaceView.Renderer {
         }else{
             off_obs[8]=1;
         }
+    }
+
+    public void reward_event(int reward_type){
+        aaron.reward_function(reward_type);
     }
 
 }

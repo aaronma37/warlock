@@ -13,7 +13,7 @@ import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public class GeneralGraphic
+public class ProjectileSprite
 {
     //Reference to Activity Context
     private final Context mActivityContext;
@@ -28,6 +28,9 @@ public class GeneralGraphic
     public float width, height, y,x;
     public boolean active=false;
     public int s;
+
+
+
 
 
     private final String vertexShaderCode =
@@ -77,7 +80,7 @@ public class GeneralGraphic
     // Set color with red, green, blue and alpha (opacity) values
     float color[] = { 1f, 1f, 1f, 1f };
 
-    public GeneralGraphic(final Context activityContext, int k)
+    public ProjectileSprite(final Context activityContext, int k)
     {
         mActivityContext = activityContext;
         s = k;
@@ -94,14 +97,31 @@ public class GeneralGraphic
         vertexBuffer.position(0);
 
 
-        final float[] cubeTextureCoordinateData =
-                {
-                        1f,  0f,
-                        1f, 1f,
-                        0f, 1f,
-                        0f, 0f
-                };
+        final float cubeTextureCoordinateData[] = new float[5*8];
+        for (int j=0;j<5;j++){
+/*            cubeTextureCoordinateData[8*j+0]=.075f+.079f*j;
+            cubeTextureCoordinateData[8*j+2]=cubeTextureCoordinateData[8*j+0];
+            cubeTextureCoordinateData[8*j+4]=cubeTextureCoordinateData[8*j+0]-.075f;
+            cubeTextureCoordinateData[8*j+6]=cubeTextureCoordinateData[8*j+0]-.075f;
 
+
+            cubeTextureCoordinateData[8*j+1]=.131f;
+            cubeTextureCoordinateData[8*j+3]=.231f;
+            cubeTextureCoordinateData[8*j+5]=.231f;
+            cubeTextureCoordinateData[8*j+7]=.131f;*/
+
+            cubeTextureCoordinateData[8*j+0]=1f;
+            cubeTextureCoordinateData[8*j+2]=cubeTextureCoordinateData[8*j+0];
+            cubeTextureCoordinateData[8*j+4]=cubeTextureCoordinateData[8*j+0]-1f;
+            cubeTextureCoordinateData[8*j+6]=cubeTextureCoordinateData[8*j+0]-1f;
+
+
+            cubeTextureCoordinateData[8*j+1]=0;
+            cubeTextureCoordinateData[8*j+3]=1f;
+            cubeTextureCoordinateData[8*j+5]=1f;
+            cubeTextureCoordinateData[8*j+7]=0;
+
+        }
 
 
         mCubeTextureCoordinates = ByteBuffer.allocateDirect(cubeTextureCoordinateData.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
@@ -127,143 +147,46 @@ public class GeneralGraphic
         GLES20.glLinkProgram(shaderProgram);
 
         //Load the texture
-        if (s==0){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.castle_1);
-        }
-        else if (s==1){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.red_box);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.red_box);
-        }
-        else if (s==2){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.blue_box);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.blue_box);
-        }
-        else if (s==3){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.stage_1);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.stage_1);
-        }
-        else if (s==4){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.hp_box);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.hp_box);
-        }
-        else if (s==5){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.yellow_box);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.yellow_box);
-        }
-        else if (s==6){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.start_button_temp);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.start_button_temp);
-        }
-        else if (s==7){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.castle_background);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.castle_background);
-        }
-        else if (s==8){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.ice_shard_attack);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.castle_background);
-        }
-        else if (s==9){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.water_symbol);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.water_symbol);
-            float color[] = { 1f, 0f, 1f, 1f };
-
-        }
-        else if (s==10){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.blue_apparition);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.blue_apparition);
-        }
-    }
-
-
-
-
-    public GeneralGraphic(final Context activityContext, int k, float in_width, float in_height, float in_y, float in_x)
-    {
-        mActivityContext = activityContext;
-        width=in_width;
-        height=in_height;
-        y=in_y;
-        x=in_x;
-
-        s = k;
-
-        //Initialize Vertex Byte Buffer for Shape Coordinates / # of coordinate values * 4 bytes per float
-        ByteBuffer bb = ByteBuffer.allocateDirect(spriteCoords.length * 4);
-        //Use the Device's Native Byte Order
-        bb.order(ByteOrder.nativeOrder());
-        //Create a floating point buffer from the ByteBuffer
-        vertexBuffer = bb.asFloatBuffer();
-        //Add the coordinates to the FloatBuffer
-        vertexBuffer.put(spriteCoords);
-        //Set the Buffer to Read the first coordinate
-        vertexBuffer.position(0);
-
-
-        final float[] cubeTextureCoordinateData =
-                {
-                        1f,  0f,
-                        1f, 1f,
-                        0f, 1f,
-                        0f, 0f
-                };
-
-
-
-        mCubeTextureCoordinates = ByteBuffer.allocateDirect(cubeTextureCoordinateData.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
-        mCubeTextureCoordinates.put(cubeTextureCoordinateData).position(0);
-
-        //Initialize byte buffer for the draw list
-        ByteBuffer dlb = ByteBuffer.allocateDirect(spriteCoords.length * 2);
-        dlb.order(ByteOrder.nativeOrder());
-        drawListBuffer = dlb.asShortBuffer();
-        drawListBuffer.put(drawOrder);
-        drawListBuffer.position(0);
-
-        int vertexShader = Rend.loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
-        int fragmentShader = Rend.loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
-
-        shaderProgram = GLES20.glCreateProgram();
-        GLES20.glAttachShader(shaderProgram, vertexShader);
-        GLES20.glAttachShader(shaderProgram, fragmentShader);
-
-        //Texture Code
-        GLES20.glBindAttribLocation(shaderProgram, 0, "a_TexCoordinate");
-
-        GLES20.glLinkProgram(shaderProgram);
-
-        //Load the texture
-        if (s==0){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.castle_1);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.castle_1);
-        }
-        else if (s==1){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.redbox);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.redbox);
-        }
-        else if (s==2){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.blue_box);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.blue_box);
-        }else if (s==6){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.start_button_temp);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.start_button_temp);
-        }        else if (s==8){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.ice_shard_attack);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.castle_background);
-        }else if (s==10){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.water_circle);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.water_circle);
-        }        else if (s==10){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.buttons);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.buttons);
+        if (s<11){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.fire_projectile);
+        }else if (s < 21){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.water_projectile);
+        }else if (s < 31){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.nature_projectile);
+        }else if (s < 41){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.light_projectile);
+        }else if (s < 51){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.dark_projectile);
+        }else if (s < 61){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.fire_water_projectile);
+        }else if (s < 71){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.fire_nature_projectile);
+        }else if (s < 81){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.fire_light_projectile);
+        }else if (s < 91){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.fire_dark_projectile);
+        }else if (s < 101){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.water_nature_projectile);
+        }else if (s < 111){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.water_light_projectile);
+        }else if (s < 121){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.water_dark_projectile);
+        }else if (s < 131){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.nature_light_projectile);
+        }else if (s < 141){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.nature_dark_projectile);
+        }else if (s < 151){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.dark_light_projectile);
         }
 
     }
 
-    public void Draw(float[] mvpMatrix, boolean k)
+
+    public void Draw(float[] mvpMatrix, boolean k, int i)
     {
+
 
         GLES20.glUseProgram(shaderProgram);
-
         //Get handle to vertex shader's vPosition member
         mPositionHandle = GLES20.glGetAttribLocation(shaderProgram, "vPosition");
 
@@ -298,7 +221,7 @@ public class GeneralGraphic
         GLES20.glUniform1i(mTextureUniformHandle, 0);
 
         //Pass in the texture coordinate information
-        mCubeTextureCoordinates.position(0);
+        mCubeTextureCoordinates.position(i*8);
         GLES20.glVertexAttribPointer(mTextureCoordinateHandle, mTextureCoordinateDataSize, GLES20.GL_FLOAT, false, 0, mCubeTextureCoordinates);
         GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
 

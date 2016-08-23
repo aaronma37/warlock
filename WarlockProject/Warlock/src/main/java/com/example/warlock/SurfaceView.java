@@ -77,13 +77,19 @@ public class SurfaceView extends GLSurfaceView {
         switch (e.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 if (mRenderer.game_state==0){
+                    if (checkClick(modded_x,modded_y,mRenderer.buttons.width,mRenderer.buttons.height, mRenderer.buttons.x-mRenderer.buttons.x,mRenderer.buttons.y)){
+                        mRenderer.reward_event(1);
+                        vibrator.vibrate(200);
+
+                    }
 
                 }else if(mRenderer.game_state==1){
                     if (checkClick(modded_x,modded_y,mRenderer.start_button.width,mRenderer.start_button.height, mRenderer.start_button.x,mRenderer.start_button.y)){
                         mRenderer.enterArena();
+                        vibrator.vibrate(200);
+
                     }
                 }
-                vibrator.vibrate(200);
             case MotionEvent.ACTION_MOVE:
 
             case MotionEvent.ACTION_UP:
@@ -95,7 +101,7 @@ public class SurfaceView extends GLSurfaceView {
 
     public boolean checkClick(float click_x, float click_y, float width, float height, float center_x, float center_y){
 
-        System.out.println("click x: " + click_x + "y: " + click_y);
+        //System.out.println("click x: " + click_x + "y: " + click_y);
         if (click_x > center_x-width && click_x < center_x+width){
             if (click_y > center_y-height && click_y < center_y+height){
                 return true;
