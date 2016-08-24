@@ -252,8 +252,23 @@ public class GeneralGraphic
         }else if (s==10){
             mTextureDataHandle = loadTexture(mActivityContext, R.drawable.water_circle);
             selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.water_circle);
-        }        else if (s==10){
+        }        else if (s==11){
             mTextureDataHandle = loadTexture(mActivityContext, R.drawable.buttons);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.buttons);
+        }else if (s==12){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.fire_symbol);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.buttons);
+        }else if (s==13){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.water_symbol);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.buttons);
+        }else if (s==14){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.nature_symbol);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.buttons);
+        }else if (s==15){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.light_symbol);
+            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.buttons);
+        }else if (s==16){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.dark_symbol);
             selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.buttons);
         }
 

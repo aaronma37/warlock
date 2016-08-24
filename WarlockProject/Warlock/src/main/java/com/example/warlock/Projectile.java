@@ -78,7 +78,7 @@ public class Projectile {
         active_targets.add(target);
     }
 
-    public void setSpell(Person target, Person origin, int init_spell_type){
+    public void setSpell(Person target, Person origin, int init_spell_type, int init_spirit_type){
         active=true;
         spell_type=init_spell_type;
 
@@ -129,3908 +129,2089 @@ public class Projectile {
             type=15;
         }
 
-        if (init_spell_type==0){
+        if (init_spirit_type==0){
+            if (init_spell_type==0){
+                cast_location_x=origin.center_x;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=.025f;
+                damage=5;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(2,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=150;
 
-        }else if (init_spell_type==1){
-            cast_location_x=origin.center_x;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=.025f;
-            damage=5;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(2,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
+                knock_back_force=.01f;
+                knock_back_time=10;
+
+                interrupt_level=1;
+            }else if (init_spell_type==1){
+                cast_location_x=origin.center_x;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=.025f;
+                damage=5;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(2,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=150;
+
+                knock_back_force=.01f;
+                knock_back_time=10;
+
+                interrupt_level=1;
             }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=150;
+            else if (init_spell_type==2){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
 
-            knock_back_force=.01f;
-            knock_back_time=10;
+                knock_back_force=.01f;
+                knock_back_time=15;
 
-            interrupt_level=1;
+                interrupt_level=1;
+            }else if (init_spell_type==3){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==4){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==5){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==6){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==7){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==8){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==9){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==10){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==11){
+                cast_location_x=origin.center_x;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=.025f;
+                damage=5;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(2,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=150;
+
+                knock_back_force=.01f;
+                knock_back_time=10;
+
+                interrupt_level=1;
+            }else if (init_spell_type==12){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==13){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==14){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==15){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }
+        }else if (init_spirit_type==1){
+            if (init_spell_type==0){
+                cast_location_x=origin.center_x;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=.025f;
+                damage=5;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(2,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=150;
+
+                knock_back_force=.01f;
+                knock_back_time=10;
+
+                interrupt_level=1;
+            }else if (init_spell_type==1){
+                cast_location_x=origin.center_x;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=.025f;
+                damage=5;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(2,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=150;
+
+                knock_back_force=.01f;
+                knock_back_time=10;
+
+                interrupt_level=1;
+            }
+            else if (init_spell_type==2){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==3){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==4){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==5){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==6){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==7){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==8){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==9){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==10){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==11){
+                cast_location_x=origin.center_x;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=.025f;
+                damage=5;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(2,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=150;
+
+                knock_back_force=.01f;
+                knock_back_time=10;
+
+                interrupt_level=1;
+            }else if (init_spell_type==12){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==13){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==14){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==15){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }
+        }else if (init_spirit_type==2){
+            if (init_spell_type==0){
+                cast_location_x=origin.center_x;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=.025f;
+                damage=5;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(2,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=150;
+
+                knock_back_force=.01f;
+                knock_back_time=10;
+
+                interrupt_level=1;
+            }else if (init_spell_type==1){
+                cast_location_x=origin.center_x;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=.025f;
+                damage=5;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(2,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=150;
+
+                knock_back_force=.01f;
+                knock_back_time=10;
+
+                interrupt_level=1;
+            }
+            else if (init_spell_type==2){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==3){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==4){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==5){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==6){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==7){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==8){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==9){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==10){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==11){
+                cast_location_x=origin.center_x;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=.025f;
+                damage=5;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(2,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=150;
+
+                knock_back_force=.01f;
+                knock_back_time=10;
+
+                interrupt_level=1;
+            }else if (init_spell_type==12){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==13){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==14){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==15){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }
+        }else if (init_spirit_type==3){
+            if (init_spell_type==0){
+                cast_location_x=origin.center_x;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=.025f;
+                damage=5;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(2,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=150;
+
+                knock_back_force=.01f;
+                knock_back_time=10;
+
+                interrupt_level=1;
+            }else if (init_spell_type==1){
+                cast_location_x=origin.center_x;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=.025f;
+                damage=5;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(2,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=150;
+
+                knock_back_force=.01f;
+                knock_back_time=10;
+
+                interrupt_level=1;
+            }
+            else if (init_spell_type==2){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==3){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==4){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==5){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==6){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==7){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==8){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==9){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==10){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==11){
+                cast_location_x=origin.center_x;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=.025f;
+                damage=5;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(2,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=150;
+
+                knock_back_force=.01f;
+                knock_back_time=10;
+
+                interrupt_level=1;
+            }else if (init_spell_type==12){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==13){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==14){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==15){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }
+        }else if (init_spirit_type==4){
+            if (init_spell_type==0){
+                cast_location_x=origin.center_x;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=.025f;
+                damage=5;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(2,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=150;
+
+                knock_back_force=.01f;
+                knock_back_time=10;
+
+                interrupt_level=1;
+            }else if (init_spell_type==1){
+                cast_location_x=origin.center_x;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=.025f;
+                damage=5;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(2,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=150;
+
+                knock_back_force=.01f;
+                knock_back_time=10;
+
+                interrupt_level=1;
+            }
+            else if (init_spell_type==2){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==3){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==4){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==5){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==6){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==7){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==8){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==9){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==10){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==11){
+                cast_location_x=origin.center_x;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=.025f;
+                damage=5;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(2,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=150;
+
+                knock_back_force=.01f;
+                knock_back_time=10;
+
+                interrupt_level=1;
+            }else if (init_spell_type==12){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==13){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==14){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }else if (init_spell_type==15){
+                cast_location_x=origin.center_x+origin.facing_direction*.2f;
+                cast_location_y=origin.center_y;
+                location_x=cast_location_x;
+                location_y=cast_location_y;
+                speed=0f;
+                damage=7;
+                type=0;
+                debuff=0;
+                persistance=0;
+                hitbox.set(3,2);
+                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+                if (target.center_x-origin.center_x>0){
+                    knockback_direction=1;
+                }else{
+                    knockback_direction=-1;
+                }
+                active_targets.clear();
+                active_targets.add(target);
+                active_time=10;
+
+                knock_back_force=.01f;
+                knock_back_time=15;
+
+                interrupt_level=1;
+            }
         }
-        else if (init_spell_type==2){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
 
-            knock_back_force=.01f;
-            knock_back_time=15;
 
-            interrupt_level=1;
-        }else if (init_spell_type==3){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==4){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==5){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==6){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==7){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==8){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==9){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==10){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==11){
-            cast_location_x=origin.center_x;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=.025f;
-            damage=5;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(2,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=150;
-
-            knock_back_force=.01f;
-            knock_back_time=10;
-
-            interrupt_level=1;
-        }else if (init_spell_type==12){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==13){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==14){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==15){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==16){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==17){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==18){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==19){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==20){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==21){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==22){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==23){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==24){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==25){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==26){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==27){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==28){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==29){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==30){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==31){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==32){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==33){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==34){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==35){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==36){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==37){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==38){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==39){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==40){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==41){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==42){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==43){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==44){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==45){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==46){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==47){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==48){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==49){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==50){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==51){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==52){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==53){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==54){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==55){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==56){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==57){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==58){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==59){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==60){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==61){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==62){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==63){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==64){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==65){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==66){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==67){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==68){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==69){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==70){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==71){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==72){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==73){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==74){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==75){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==76){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==77){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==78){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==79){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==80){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==81){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==82){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==83){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==84){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==85){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==86){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==87){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==88){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==89){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==90){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==91){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==92){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==93){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==94){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==95){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==96){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==97){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==98){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==99){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==100){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==101){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==102){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==103){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==104){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==105){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==106){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==107){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==108){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==109){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==110){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==111){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==112){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==113){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==114){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==115){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==116){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==117){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==118){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==119){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==120){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==121){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==122){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==123){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==124){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==125){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==126){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==127){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==128){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==129){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==130){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==131){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==132){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==133){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==134){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==135){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==136){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==137){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==138){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==139){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==140){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==141){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==142){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==143){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==144){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==145){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==146){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==147){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==148){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==149){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }else if (init_spell_type==150){
-            cast_location_x=origin.center_x+origin.facing_direction*.2f;
-            cast_location_y=origin.center_y;
-            location_x=cast_location_x;
-            location_y=cast_location_y;
-            speed=0f;
-            damage=7;
-            type=0;
-            debuff=0;
-            persistance=0;
-            hitbox.set(3,2);
-            direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-            //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-            if (target.center_x-origin.center_x>0){
-                knockback_direction=1;
-            }else{
-                knockback_direction=-1;
-            }
-            active_targets.clear();
-            active_targets.add(target);
-            active_time=10;
-
-            knock_back_force=.01f;
-            knock_back_time=15;
-
-            interrupt_level=1;
-        }
     }
 
 

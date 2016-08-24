@@ -90,7 +90,7 @@ public class Rend implements GLSurfaceView.Renderer {
     public GeneralGraphic hp_box,cast_bar,start_button;
     public GeneralGraphic castle_background;
     public GeneralGraphic ice_shard;
-    public GeneralGraphic water_symbol;
+    public GeneralGraphic command_symbol[]= new GeneralGraphic[5];
     public GeneralGraphic blue_apparition;
     public GeneralGraphic buttons;
 
@@ -108,6 +108,11 @@ public class Rend implements GLSurfaceView.Renderer {
     private long start_time, end_time;
     private int meta_obs[] = new int[10];
     private int off_obs[] = new int[10];
+    private int target_obs[] = new int[10];
+    public float pointer[] = new float[2];
+
+
+
     private boolean blue_victory_flag, red_victory_flag;
     private int victory=0;
 
@@ -157,7 +162,10 @@ public class Rend implements GLSurfaceView.Renderer {
         ice_shard = new GeneralGraphic(context,8,.15f, .05f,0,0);
         buttons = new GeneralGraphic(context,11,.4f, .1f,-.4f,0);
 
-        water_symbol= new GeneralGraphic(context,9);
+        for (int i=0;i<5;i++){
+            command_symbol[i] = new GeneralGraphic(context,12+i,.1f, .1f,-.7f,-1.35f+i*.7f);
+        }
+
         blue_apparition= new GeneralGraphic(context,10);
         water_circle= new SpellCircle(context,10,.3f, .3f,0,0);
 
@@ -171,6 +179,9 @@ public class Rend implements GLSurfaceView.Renderer {
 
         for (int i=0;i<OFFENSIVE_SPELL_COUNT;i++){
             projectile_sprite[i] = new ProjectileSprite(context, i);
+        }
+        for (int i=0;i<2;i++){
+            pointer[i]=0;
         }
 
 
@@ -355,11 +366,23 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public void draw_battle_ui(){
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-        //Matrix.orthoM(scratch,0,-ratio,ratio,-1,1,-1,1);
         Matrix.translateM(scratch, 0, buttons.x, buttons.y, 1f);
         Matrix.scaleM(scratch, 0, buttons.width,buttons.height,1f);
         buttons.Draw(scratch,false);
 
+        for (int i=0;i<5;i++){
+            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+            Matrix.translateM(scratch, 0, command_symbol[i].x, command_symbol[i].y, 1f);
+            Matrix.scaleM(scratch, 0, command_symbol[i].width,command_symbol[i].height,1f);
+            command_symbol[i].Draw(scratch,false);
+        }
+
+        if (show_info){
+            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+            Matrix.translateM(scratch, 0, pointer[0], pointer[1], 1f);
+            Matrix.scaleM(scratch, 0, .1f,.1f,1f);
+            blue_apparition.Draw(scratch,false);
+        }
     }
 
     public void draw_spell_circle(Person origin){
@@ -430,7 +453,8 @@ public class Rend implements GLSurfaceView.Renderer {
 
                         calculateMetaObs(origin,target);
                         calculateOffObs(origin,target);
-                    origin.choose(meta_obs,off_obs,target);
+                        calculateTargetObs(origin,target);
+
 
                 }else if (origin.state.state==1 && origin.action.active){
                     //Complete action
@@ -445,7 +469,7 @@ public class Rend implements GLSurfaceView.Renderer {
     }
 
     public void resolve_projectile(Projectile inner_projectile, int i){
-        if (!inner_projectile.active){
+/*        if (!inner_projectile.active){
             projectile_swap[i].reset();
             active_projectiles.remove(i);
             return;
@@ -458,7 +482,11 @@ public class Rend implements GLSurfaceView.Renderer {
                 inner_projectile.on_hit();
                 inner_projectile.active_targets.get(j).hitBy(inner_projectile);
             }
-        }
+        }*/
+    }
+
+    public void command_spirit(int spirit_type){
+        aaron.command_spirit(meta_obs,target_obs, off_obs, luke,spirit_type);
     }
 
     @Override
@@ -497,11 +525,21 @@ public class Rend implements GLSurfaceView.Renderer {
         }
     }
 
-    public void calculateMetaObs(Person self, Person enemy){
+    public void calculateTargetObs(Person self, Person enemy){
+
+        for (int i = 0; i < 10; i++){
+            target_obs[i]=0;
+        }
+
+    }
+
+
+        public void calculateMetaObs(Person self, Person enemy){
         //FOR META ~
 
         for (int i = 0; i < 10; i++){
             meta_obs[i]=0;
+            target_obs[i]=0;
         }
 
         // HEALTHS

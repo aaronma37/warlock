@@ -71,18 +71,32 @@ public class SurfaceView extends GLSurfaceView {
         float x = e.getX();
         float y = e.getY();
 
-        float modded_x=(x-getMeasuredWidth()/2)/getMeasuredWidth();
-        float modded_y=(y-getMeasuredHeight()/2)/getMeasuredHeight();
+        float modded_x=-2*(x-getMeasuredWidth()/2)/getMeasuredHeight();
+        float modded_y=-2*(y-getMeasuredHeight()/2)/getMeasuredHeight();
 
         switch (e.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
+
+                mRenderer.pointer[0]=modded_x;
+                mRenderer.pointer[1]=modded_y;
+
+                System.out.println("command x: "+modded_x);
+                System.out.println("command y: "+modded_y);
+
                 if (mRenderer.game_state==0){
-                    if (checkClick(modded_x,modded_y,mRenderer.buttons.width,mRenderer.buttons.height, mRenderer.buttons.x-mRenderer.buttons.x,mRenderer.buttons.y)){
+                    if (checkClick(modded_x,modded_y,mRenderer.buttons.width,mRenderer.buttons.height, mRenderer.buttons.x,mRenderer.buttons.y)){
                         mRenderer.reward_event(1);
                         vibrator.vibrate(200);
-
                     }
 
+                    for (int i=0;i<5;i++){
+                        if (checkClick(modded_x,modded_y,mRenderer.command_symbol[i].width,mRenderer.command_symbol[i].height, mRenderer.command_symbol[i].x,mRenderer.command_symbol[i].y)){
+                            System.out.println("command spirit: "+ i);
+                            mRenderer.command_spirit(i);
+                            vibrator.vibrate(200);
+
+                        }
+                    }
                 }else if(mRenderer.game_state==1){
                     if (checkClick(modded_x,modded_y,mRenderer.start_button.width,mRenderer.start_button.height, mRenderer.start_button.x,mRenderer.start_button.y)){
                         mRenderer.enterArena();

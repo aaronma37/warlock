@@ -8,7 +8,10 @@ import java.util.List;
  */
 public class Person {
     private final int OFFENSIVE_OBSERVATION_SPACE_SIZE=10;
-    private final int ACTION_SPACE_SIZE=151;
+    private final int ACTION_SPACE_SIZE=50;
+    private final int SUPPORT_SPACE_SIZE=50;
+    private final int DEFENSE_SPACE_SIZE=50;
+
     private final int META_SIZE=3;
 
     public int health;
@@ -27,6 +30,8 @@ public class Person {
     public int last_spell=0;
     public float action_choose_index[]= new float[ACTION_SPACE_SIZE];
 
+    public Spirit spirit[] = new Spirit[15];
+
     public boolean busy;
     public Offensive_Physical_Actions action = new Offensive_Physical_Actions();
     public RlData belief = new RlData();
@@ -37,9 +42,14 @@ public class Person {
 
     public action_space_action off_a[] = new action_space_action[ACTION_SPACE_SIZE];
     public action_space_action def_a[] = new action_space_action[ACTION_SPACE_SIZE];
+    public int toCast[]= new int[4];
+    public int last_cast[] = new int[4];
+    public int last_spirit=0;
 
     public List<Integer> available_offensive_action_space = new ArrayList<>();
+    public List<Integer> available_support_action_space = new ArrayList<>();
     public List<Integer> available_defensive_action_space = new ArrayList<>();
+
 
     public float max_sum=0;
     public Projectile projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0,100);
@@ -70,6 +80,14 @@ public class Person {
             attribute[i]=0;
         }
 
+        for (int i=0;i<15;i++){
+            spirit[i]=new Spirit(i);
+        }
+
+        for (int i=0;i<4;i++){
+            toCast[i]=0;
+        }
+
         setAvailableOffensiveActionSpace();
 
     }
@@ -89,7 +107,14 @@ public class Person {
             attribute[i]=0;
         }
 
+        for (int i=0;i<4;i++){
+            toCast[i]=0;
+        }
+
         setAvailableOffensiveActionSpace();
+        for (int i=0;i<15;i++){
+            spirit[i].setAvailableOffensiveActionSpace();
+        }
     }
 
 
@@ -115,7 +140,16 @@ public class Person {
         for (int i=0;i<5;i++){
             attribute[i]=0;
         }
+        for (int i=0;i<15;i++){
+            spirit[i]=new Spirit(i);
+        }
+        for (int i=0;i<4;i++){
+            toCast[i]=0;
+        }
         setAvailableOffensiveActionSpace();
+        for (int i=0;i<15;i++){
+            spirit[i].setAvailableOffensiveActionSpace();
+        }
     }
 
 /*    public void cast(Offensive_Physical_Actions desired_action){
@@ -125,12 +159,12 @@ public class Person {
         //action.set(0,ini);
     }*/
 
-    public void cast(int meta_index, int action_index, Person target){
+    public void cast(int meta_index, int action_index, Person target, int spirit_type){
         busy=true;
         state.setState(1,meta_index,action_index,0);
 
         fireball.reset();
-        action.set(meta_index,action_index,projectile_fireball, target, this);
+        action.set(meta_index,action_index, spirit_type,projectile_fireball, target, this);
 
         //action= new Offensive_Physical_Actions();
 /*        if (action_index==0){
@@ -167,7 +201,15 @@ public class Person {
         }
     }
 
-    public void choose(int o[], int off_o[], Person target){
+    public void command_spirit(int meta_o[], int target_o[],int off_o[], Person target, int spirit_type){
+        toCast=spirit[spirit_type].choose(meta_o,target_o,off_o,target,this);
+        cast(toCast[0], toCast[2], target, toCast[3]);
+        last_cast=toCast;
+        last_spirit=spirit_type;
+    }
+
+
+    /*public void choose_spell(int o[], int off_o[], Person target){
         //choose meta
         reset_action_choose_index();
         int meta_decision=0;
@@ -236,7 +278,7 @@ public class Person {
         last_spell=action_decision;
         //System.out.println("Choose to: " + a1);
         //choose action
-    }
+    }*/
 
     public boolean checkFeasibility(int meta_type, int spell_type, Person target, List<Integer> action_list){
 
@@ -255,21 +297,6 @@ public class Person {
         center_x=center_x+speed*direction;
         OOB();
     }
-
-/*    public void setActionSpace(){
-        available_offensive_action_space.clear();
-
-
-        for (int i=0;i<META_SIZE;i++){
-            a[i]=new action_space_action(i);
-        }
-        for (int i=0;i<ACTION_SPACE_SIZE;i++){
-            off_a[i]=new action_space_action(i);
-            def_a[i]=new action_space_action(i);
-            available_offensive_action_space.add(i);
-            available_defensive_action_space.add(i);
-        }
-    }*/
 
     public void step(){
         //reset cooldowns
@@ -324,6 +351,10 @@ public class Person {
                 available_offensive_action_space.add(i);
             }
         }
+    }
+
+    public void reward_spirit(int reward_type){
+        spirit[last_spirit].reward_spirit(reward_type,last_cast);
     }
 
     public void reward_function(int reward_type){
