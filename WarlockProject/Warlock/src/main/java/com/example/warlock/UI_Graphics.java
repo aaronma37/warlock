@@ -17,7 +17,11 @@ public class UI_Graphics
 {
     //Reference to Activity Context
     private final Context mActivityContext;
+    public int COMMAND_SEAL=1,NOTHING=0,REWARD=2, START=3;
 
+    public int BUTTON=1,ADAPTIVE=2;
+
+    public int BATTLE=0, START_SCREEN=1, SECONDARY_SCREEN=2, DUNGEON=3, DUNGEONS_LEVEL=4;
     //Added for Textures
     private final FloatBuffer mCubeTextureCoordinates;
     private int mTextureUniformHandle;
@@ -132,14 +136,35 @@ public class UI_Graphics
         GLES20.glLinkProgram(shaderProgram);
 
 
+        if (k==0){
+            //BATTLE
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.ui_battle_bottom), 1.8f, .3f,-.8f,0,NOTHING,NOTHING,NOTHING);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.fire_symbol),.1f,.1f,-.85f,-1.35f+0*.7f,COMMAND_SEAL,0,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.water_symbol),.1f,.1f,-.55f,-1.35f+0*.3f,COMMAND_SEAL,1,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.nature_symbol),.1f,.1f,-.7f,-1.35f+1*.3f,COMMAND_SEAL,2,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.light_symbol),.1f,.1f,-.85f,-1.35f+2*.3f,COMMAND_SEAL,3,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.dark_symbol),.1f,.1f,-.55f,-1.35f+2*.3f,COMMAND_SEAL,4,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.red_button),.15f,.12f,-.85f,.15f,REWARD,0,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.green_button),.15f,.12f,-.85f,-.1f,REWARD,1,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.red_button),.15f,.12f,-.85f,.9f,REWARD,2,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.green_button),.15f,.12f,-.85f,.65f,REWARD,3,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.hp_box),.1f,.03f,-.91f,1.45f,NOTHING,NOTHING,ADAPTIVE);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.ui_battle_player_portrait),.23f,.23f,-.65f,1.45f,NOTHING,NOTHING,NOTHING);number_of_images++;
+        }else if (k==1){
+            //STARTING SCREEN
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.start_button_temp), 1.8f, .3f,-.8f,0,START,SECONDARY_SCREEN,BUTTON);number_of_images++;
+        }else if (k==2){
+            //SECONDARY SCREEN
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.ui_battle_player_portrait), 1f, .3f,.8f,.5f,START,DUNGEON,BUTTON);number_of_images++;
+        }else if (k==3){
+            //DUNGEON SCREEN
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.ui_battle_player_portrait),1f, .3f,.8f,.5f,START,DUNGEONS_LEVEL,BUTTON);number_of_images++;
+        }else if (k==4){
+            //DUNGEON LEVEL  SCREEN
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.ui_battle_player_portrait), 1f, .3f,.8f,.5f,START,BATTLE,BUTTON);number_of_images++;
+        }
 
-        images[0] = new Image_Info(loadTexture(mActivityContext, R.drawable.ui_battle_bottom), 1.8f, .4f,-.7f,0,0,0);number_of_images++;
-        images[1] = new Image_Info(loadTexture(mActivityContext, R.drawable.buttons),.4f, .1f,-.4f,0,2,0);number_of_images++;
-        images[2] = new Image_Info(loadTexture(mActivityContext, R.drawable.fire_symbol),.1f,.1f,-.85f,-1.35f+0*.7f,1,0);number_of_images++;
-        images[3] = new Image_Info(loadTexture(mActivityContext, R.drawable.water_symbol),.1f,.1f,-.55f,-1.35f+0*.3f,1,1);number_of_images++;
-        images[4] = new Image_Info(loadTexture(mActivityContext, R.drawable.nature_symbol),.1f,.1f,-.7f,-1.35f+1*.3f,1,2);number_of_images++;
-        images[5] = new Image_Info(loadTexture(mActivityContext, R.drawable.light_symbol),.1f,.1f,-.85f,-1.35f+2*.3f,1,3);number_of_images++;
-        images[6] = new Image_Info(loadTexture(mActivityContext, R.drawable.dark_symbol),.1f,.1f,-.55f,-1.35f+2*.3f,1,4);number_of_images++;
+
 
     }
 

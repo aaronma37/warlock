@@ -80,23 +80,23 @@ public class SurfaceView extends GLSurfaceView {
                 mRenderer.pointer[0]=modded_x;
                 mRenderer.pointer[1]=modded_y;
 
-                System.out.println("command x: "+modded_x);
-                System.out.println("command y: "+modded_y);
+                System.out.println("gamestate x: "+mRenderer.game_state);
 
-                if (mRenderer.game_state==0){
-
-                    for (int i=0;i<mRenderer.ui_graphics.number_of_images;i++){
-                        if (checkClick(modded_x,modded_y,mRenderer.ui_graphics.images[i].width,mRenderer.ui_graphics.images[i].height, mRenderer.ui_graphics.images[i].x,mRenderer.ui_graphics.images[i].y)){
-                            click_code(mRenderer.ui_graphics.images[i].click_code_1, mRenderer.ui_graphics.images[i].click_code_2);
-                        }
+                for (int i=0;i<mRenderer.ui_graphics[mRenderer.game_state].number_of_images;i++){
+                    if (checkClick(modded_x,modded_y,mRenderer.ui_graphics[mRenderer.game_state].images[i].width,mRenderer.ui_graphics[mRenderer.game_state].images[i].height, mRenderer.ui_graphics[mRenderer.game_state].images[i].x,mRenderer.ui_graphics[mRenderer.game_state].images[i].y)){
+                        click_code(mRenderer.ui_graphics[mRenderer.game_state].images[i].click_code_1, mRenderer.ui_graphics[mRenderer.game_state].images[i].click_code_2);
                     }
+                }
+
+/*                if (mRenderer.game_state==0){
+
                 }else if(mRenderer.game_state==1){
                     if (checkClick(modded_x,modded_y,mRenderer.start_button.width,mRenderer.start_button.height, mRenderer.start_button.x,mRenderer.start_button.y)){
                         mRenderer.enterArena();
                         vibrator.vibrate(200);
 
                     }
-                }
+                }*/
             case MotionEvent.ACTION_MOVE:
 
             case MotionEvent.ACTION_UP:
@@ -119,16 +119,26 @@ public class SurfaceView extends GLSurfaceView {
     }
 
     public void click_code(int c1, int c2){
-        if (c1==0){
+        System.out.println("C2: "+c2);
+        System.out.println("C1: "+c1);
+        if (c1==mRenderer.ui_graphics[0].NOTHING){
             //Do nothing
             return;
-        }else if (c1==1){
+        }else if (c1==mRenderer.ui_graphics[0].COMMAND_SEAL){
             //Command spirit summon:
             mRenderer.command_spirit(c2);
             vibrator.vibrate(200);
             return;
-        }else if (c1==2){
+        }else if (c1==mRenderer.ui_graphics[0].REWARD){
             mRenderer.reward_event(1);
+            vibrator.vibrate(200);
+            return;
+        }else if (c1==mRenderer.ui_graphics[0].START){
+            mRenderer.game_state=c2;
+            System.out.println("C2: "+c2);
+            if (c2==mRenderer.ui_graphics[0].BATTLE){
+                mRenderer.enterArena();
+            }
             vibrator.vibrate(200);
             return;
         }

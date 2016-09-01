@@ -6,9 +6,9 @@ package com.example.warlock;
 public class Image_Info {
     private int mTextureDataHandle;
     public float height, width, x,y;
-    public int click_code_1, click_code_2;
+    public int click_code_1, click_code_2, trigger;
 
-    public Image_Info(int link, float i_width, float i_height, float i_y, float i_x,int c1, int c2){
+    public Image_Info(int link, float i_width, float i_height, float i_y, float i_x,int c1, int c2, int i_trigger){
         mTextureDataHandle = link;
         this.width=i_width;
         this.height=i_height;
@@ -16,6 +16,7 @@ public class Image_Info {
         this.y=i_y;
         this.click_code_1=c1;
         this.click_code_2=c2;
+        this.trigger=i_trigger;
     }
 
     public int returnTextureData(){return mTextureDataHandle;}

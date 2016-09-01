@@ -39,6 +39,8 @@ package com.example.warlock;
  */
 public class Rend implements GLSurfaceView.Renderer {
 
+    private int BATTLE=0, STARTING_SCREEN=1, SECONDARY_SCREEN=2, DUNGEONS=3, DUNGEON_LEVEL=4;
+
     private static final String TAG = "MyGLRenderer";
 
     //FOR SURFACE PLOT
@@ -47,7 +49,6 @@ public class Rend implements GLSurfaceView.Renderer {
     public boolean SINFO_FLAG=true;
     private FloatBuffer textureBuffer;
     public Context context;
-    public int game_state=0;
     private boolean show_info=false;
 
     private List<Projectile> active_projectiles = new ArrayList<>();
@@ -93,7 +94,7 @@ public class Rend implements GLSurfaceView.Renderer {
     public GeneralGraphic command_symbol[]= new GeneralGraphic[5];
     public GeneralGraphic blue_apparition;
     public GeneralGraphic buttons;
-    public UI_Graphics ui_graphics;
+    public UI_Graphics ui_graphics[] = new UI_Graphics[5];
 
     public SpellCircle water_circle;
     public ProjectileSprite projectile_sprite[] = new ProjectileSprite[OFFENSIVE_SPELL_COUNT];
@@ -110,6 +111,11 @@ public class Rend implements GLSurfaceView.Renderer {
     private int off_obs[] = new int[10];
     private int target_obs[] = new int[10];
     public float pointer[] = new float[2];
+
+
+    //game_states!
+    public int game_state=STARTING_SCREEN;
+
 
 
 
@@ -161,7 +167,11 @@ public class Rend implements GLSurfaceView.Renderer {
         start_button= new GeneralGraphic(context,6, .3f, .1f,0,0);
         ice_shard = new GeneralGraphic(context,8,.15f, .05f,0,0);
         buttons = new GeneralGraphic(context,11,.4f, .1f,-.4f,0);
-        ui_graphics = new UI_Graphics(context,0);
+
+        for (int i=0;i<5;i++){
+            ui_graphics[i] = new UI_Graphics(context,i);
+        }
+
 
         for (int i=0;i<5;i++){
             command_symbol[i] = new GeneralGraphic(context,12+i,.1f, .1f,-.7f,-1.35f+i*.7f);
@@ -175,7 +185,6 @@ public class Rend implements GLSurfaceView.Renderer {
 
         projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0,100);
         fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball,aaron);
-        enterArena();
         float start_time = System.currentTimeMillis();
 
         for (int i=0;i<OFFENSIVE_SPELL_COUNT;i++){
@@ -192,10 +201,6 @@ public class Rend implements GLSurfaceView.Renderer {
     public void enterArena(){
         aaron.reset(-.5f, GROUND_LEVEL);
         luke.reset(1f, GROUND_LEVEL);
-
-        game_state=0;
-
-
 
         active_people.clear();
         active_people.add(aaron);
@@ -283,21 +288,18 @@ public class Rend implements GLSurfaceView.Renderer {
 
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
+
+
         if (game_state==0){
             update_battle();
             draw_battle();
-            draw_battle_ui();
         }else if (game_state==1){
-            draw_pre_battle();
         }
+
+        draw_ui(game_state);
     }
 
-    public void draw_pre_battle(){
-        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-        Matrix.translateM(scratch, 0, start_button.x,start_button.y, 0);
-        Matrix.scaleM(scratch, 0, start_button.width,start_button.height, 1f);
-        start_button.Draw(scratch,false);
-    }
+
 
     public void draw_battle(){
         //Load stage
@@ -365,13 +367,36 @@ public class Rend implements GLSurfaceView.Renderer {
         }
     }
 
-    public void draw_battle_ui(){
-
-        for (int i=0;i<ui_graphics.number_of_images;i++){
+    public void update_ui_image(int k, int i){
+        if (ui_graphics[k].images[i].trigger==0){
+            return;
+        }else if (ui_graphics[k].images[i].trigger==1){
+            //Button press
+            return;
+        }else if (ui_graphics[k].images[i].trigger==2){
+            //HP
+            ui_graphics[k].images[i].width = aaron.health/450f;
+/*
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, ui_graphics.images[i].x, ui_graphics.images[i].y, 1f);
-            Matrix.scaleM(scratch, 0, ui_graphics.images[i].width,ui_graphics.images[i].height,1f);
-            ui_graphics.Draw(scratch, false, i);
+            Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).hitbox.x*2/100f-active_people.get(i).health/1600f, active_people.get(i).center_y+.15f, 1f);
+            Matrix.scaleM(scratch, 0, active_people.get(i).health/1600f,1/100f,.5f);
+            hp_box.Draw(scratch,false);*/
+            return;
+        }
+    }
+
+    public void draw_ui(int k){
+
+
+
+        for (int i=0;i<ui_graphics[k].number_of_images;i++){
+
+            update_ui_image(k,i);
+
+            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+            Matrix.translateM(scratch, 0, ui_graphics[k].images[i].x, ui_graphics[k].images[i].y, 1f);
+            Matrix.scaleM(scratch, 0, ui_graphics[k].images[i].width,ui_graphics[k].images[i].height,1f);
+            ui_graphics[k].Draw(scratch, false, i);
         }
     }
 
