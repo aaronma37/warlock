@@ -13,7 +13,7 @@ import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public class GeneralGraphic
+public class UI_Graphics
 {
     //Reference to Activity Context
     private final Context mActivityContext;
@@ -23,8 +23,11 @@ public class GeneralGraphic
     private int mTextureUniformHandle;
     private int mTextureCoordinateHandle;
     private final int mTextureCoordinateDataSize = 2;
-    private int mTextureDataHandle, selectedTextureDataHandle;
+    private int mTextureDataHandle[] = new int[35];
+    private int selectedTextureDataHandle[] = new int[35];
+    public Image_Info images[] = new Image_Info[35];
     public float left,right,up,down;
+    public int number_of_images=0;
     public float width, height, y,x;
     public boolean active=false;
     public int s;
@@ -77,10 +80,12 @@ public class GeneralGraphic
     // Set color with red, green, blue and alpha (opacity) values
     float color[] = { 1f, 1f, 1f, 1f };
 
-    public GeneralGraphic(final Context activityContext, int k)
+    public UI_Graphics(final Context activityContext, int k)
     {
         mActivityContext = activityContext;
         s = k;
+
+
 
         //Initialize Vertex Byte Buffer for Shape Coordinates / # of coordinate values * 4 bytes per float
         ByteBuffer bb = ByteBuffer.allocateDirect(spriteCoords.length * 4);
@@ -126,158 +131,19 @@ public class GeneralGraphic
 
         GLES20.glLinkProgram(shaderProgram);
 
-        //Load the texture
-        if (s==0){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.castle_1);
-        }
-        else if (s==1){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.red_box);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.red_box);
-        }
-        else if (s==2){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.blue_box);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.blue_box);
-        }
-        else if (s==3){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.stage_1);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.stage_1);
-        }
-        else if (s==4){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.hp_box);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.hp_box);
-        }
-        else if (s==5){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.yellow_box);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.yellow_box);
-        }
-        else if (s==6){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.start_button_temp);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.start_button_temp);
-        }
-        else if (s==7){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.castle_background);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.castle_background);
-        }
-        else if (s==8){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.ice_shard_attack);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.castle_background);
-        }
-        else if (s==9){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.water_symbol);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.water_symbol);
-            float color[] = { 1f, 0f, 1f, 1f };
-
-        }
-        else if (s==10){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.blue_apparition);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.blue_apparition);
-        }
-    }
 
 
-
-
-    public GeneralGraphic(final Context activityContext, int k, float in_width, float in_height, float in_y, float in_x)
-    {
-        mActivityContext = activityContext;
-        width=in_width;
-        height=in_height;
-        y=in_y;
-        x=in_x;
-
-        s = k;
-
-        //Initialize Vertex Byte Buffer for Shape Coordinates / # of coordinate values * 4 bytes per float
-        ByteBuffer bb = ByteBuffer.allocateDirect(spriteCoords.length * 4);
-        //Use the Device's Native Byte Order
-        bb.order(ByteOrder.nativeOrder());
-        //Create a floating point buffer from the ByteBuffer
-        vertexBuffer = bb.asFloatBuffer();
-        //Add the coordinates to the FloatBuffer
-        vertexBuffer.put(spriteCoords);
-        //Set the Buffer to Read the first coordinate
-        vertexBuffer.position(0);
-
-
-        final float[] cubeTextureCoordinateData =
-                {
-                        1f,  0f,
-                        1f, 1f,
-                        0f, 1f,
-                        0f, 0f
-                };
-
-
-
-        mCubeTextureCoordinates = ByteBuffer.allocateDirect(cubeTextureCoordinateData.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
-        mCubeTextureCoordinates.put(cubeTextureCoordinateData).position(0);
-
-        //Initialize byte buffer for the draw list
-        ByteBuffer dlb = ByteBuffer.allocateDirect(spriteCoords.length * 2);
-        dlb.order(ByteOrder.nativeOrder());
-        drawListBuffer = dlb.asShortBuffer();
-        drawListBuffer.put(drawOrder);
-        drawListBuffer.position(0);
-
-        int vertexShader = Rend.loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
-        int fragmentShader = Rend.loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
-
-        shaderProgram = GLES20.glCreateProgram();
-        GLES20.glAttachShader(shaderProgram, vertexShader);
-        GLES20.glAttachShader(shaderProgram, fragmentShader);
-
-        //Texture Code
-        GLES20.glBindAttribLocation(shaderProgram, 0, "a_TexCoordinate");
-
-        GLES20.glLinkProgram(shaderProgram);
-
-        //Load the texture
-        if (s==0){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.castle_1);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.castle_1);
-        }
-        else if (s==1){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.redbox);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.redbox);
-        }
-        else if (s==2){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.blue_box);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.blue_box);
-        }else if (s==6){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.start_button_temp);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.start_button_temp);
-        }        else if (s==8){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.ice_shard_attack);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.castle_background);
-        }else if (s==10){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.water_circle);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.water_circle);
-        }        else if (s==11){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.buttons);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.buttons);
-        }else if (s==12){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.fire_symbol);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.buttons);
-        }else if (s==13){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.water_symbol);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.buttons);
-        }else if (s==14){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.nature_symbol);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.buttons);
-        }else if (s==15){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.light_symbol);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.buttons);
-        }else if (s==16){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.dark_symbol);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.buttons);
-        }else if (s==17){
-            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.ui_battle_bottom);
-            selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.ui_battle_bottom);
-        }
+        images[0] = new Image_Info(loadTexture(mActivityContext, R.drawable.ui_battle_bottom), 1.8f, .4f,-.7f,0,0,0);number_of_images++;
+        images[1] = new Image_Info(loadTexture(mActivityContext, R.drawable.buttons),.4f, .1f,-.4f,0,2,0);number_of_images++;
+        images[2] = new Image_Info(loadTexture(mActivityContext, R.drawable.fire_symbol),.1f,.1f,-.85f,-1.35f+0*.7f,1,0);number_of_images++;
+        images[3] = new Image_Info(loadTexture(mActivityContext, R.drawable.water_symbol),.1f,.1f,-.55f,-1.35f+0*.3f,1,1);number_of_images++;
+        images[4] = new Image_Info(loadTexture(mActivityContext, R.drawable.nature_symbol),.1f,.1f,-.7f,-1.35f+1*.3f,1,2);number_of_images++;
+        images[5] = new Image_Info(loadTexture(mActivityContext, R.drawable.light_symbol),.1f,.1f,-.85f,-1.35f+2*.3f,1,3);number_of_images++;
+        images[6] = new Image_Info(loadTexture(mActivityContext, R.drawable.dark_symbol),.1f,.1f,-.55f,-1.35f+2*.3f,1,4);number_of_images++;
 
     }
 
-    public void Draw(float[] mvpMatrix, boolean k)
+    public void Draw(float[] mvpMatrix, boolean k, int g)
     {
 
         GLES20.glUseProgram(shaderProgram);
@@ -306,10 +172,10 @@ public class GeneralGraphic
 
         //Bind the texture to this unit.
         if (k==false){
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandle);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, images[g].returnTextureData());
         }
         else{
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, selectedTextureDataHandle);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, selectedTextureDataHandle[0]);
         }
 
         //Tell the texture uniform sampler to use this texture in the shader by binding to texture unit 0.

@@ -93,7 +93,7 @@ public class Rend implements GLSurfaceView.Renderer {
     public GeneralGraphic command_symbol[]= new GeneralGraphic[5];
     public GeneralGraphic blue_apparition;
     public GeneralGraphic buttons;
-
+    public UI_Graphics ui_graphics;
 
     public SpellCircle water_circle;
     public ProjectileSprite projectile_sprite[] = new ProjectileSprite[OFFENSIVE_SPELL_COUNT];
@@ -161,6 +161,7 @@ public class Rend implements GLSurfaceView.Renderer {
         start_button= new GeneralGraphic(context,6, .3f, .1f,0,0);
         ice_shard = new GeneralGraphic(context,8,.15f, .05f,0,0);
         buttons = new GeneralGraphic(context,11,.4f, .1f,-.4f,0);
+        ui_graphics = new UI_Graphics(context,0);
 
         for (int i=0;i<5;i++){
             command_symbol[i] = new GeneralGraphic(context,12+i,.1f, .1f,-.7f,-1.35f+i*.7f);
@@ -365,23 +366,12 @@ public class Rend implements GLSurfaceView.Renderer {
     }
 
     public void draw_battle_ui(){
-        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-        Matrix.translateM(scratch, 0, buttons.x, buttons.y, 1f);
-        Matrix.scaleM(scratch, 0, buttons.width,buttons.height,1f);
-        buttons.Draw(scratch,false);
 
-        for (int i=0;i<5;i++){
+        for (int i=0;i<ui_graphics.number_of_images;i++){
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, command_symbol[i].x, command_symbol[i].y, 1f);
-            Matrix.scaleM(scratch, 0, command_symbol[i].width,command_symbol[i].height,1f);
-            command_symbol[i].Draw(scratch,false);
-        }
-
-        if (show_info){
-            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, pointer[0], pointer[1], 1f);
-            Matrix.scaleM(scratch, 0, .1f,.1f,1f);
-            blue_apparition.Draw(scratch,false);
+            Matrix.translateM(scratch, 0, ui_graphics.images[i].x, ui_graphics.images[i].y, 1f);
+            Matrix.scaleM(scratch, 0, ui_graphics.images[i].width,ui_graphics.images[i].height,1f);
+            ui_graphics.Draw(scratch, false, i);
         }
     }
 

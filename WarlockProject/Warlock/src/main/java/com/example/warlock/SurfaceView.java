@@ -84,17 +84,10 @@ public class SurfaceView extends GLSurfaceView {
                 System.out.println("command y: "+modded_y);
 
                 if (mRenderer.game_state==0){
-                    if (checkClick(modded_x,modded_y,mRenderer.buttons.width,mRenderer.buttons.height, mRenderer.buttons.x,mRenderer.buttons.y)){
-                        mRenderer.reward_event(1);
-                        vibrator.vibrate(200);
-                    }
 
-                    for (int i=0;i<5;i++){
-                        if (checkClick(modded_x,modded_y,mRenderer.command_symbol[i].width,mRenderer.command_symbol[i].height, mRenderer.command_symbol[i].x,mRenderer.command_symbol[i].y)){
-                            System.out.println("command spirit: "+ i);
-                            mRenderer.command_spirit(i);
-                            vibrator.vibrate(200);
-
+                    for (int i=0;i<mRenderer.ui_graphics.number_of_images;i++){
+                        if (checkClick(modded_x,modded_y,mRenderer.ui_graphics.images[i].width,mRenderer.ui_graphics.images[i].height, mRenderer.ui_graphics.images[i].x,mRenderer.ui_graphics.images[i].y)){
+                            click_code(mRenderer.ui_graphics.images[i].click_code_1, mRenderer.ui_graphics.images[i].click_code_2);
                         }
                     }
                 }else if(mRenderer.game_state==1){
@@ -124,6 +117,25 @@ public class SurfaceView extends GLSurfaceView {
 
         return false;
     }
+
+    public void click_code(int c1, int c2){
+        if (c1==0){
+            //Do nothing
+            return;
+        }else if (c1==1){
+            //Command spirit summon:
+            mRenderer.command_spirit(c2);
+            vibrator.vibrate(200);
+            return;
+        }else if (c1==2){
+            mRenderer.reward_event(1);
+            vibrator.vibrate(200);
+            return;
+        }
+
+    }
+
+
 
 
 }
