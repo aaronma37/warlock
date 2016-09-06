@@ -7,22 +7,27 @@ public class User {
     public String fullName;
     public int g;
 
-    public MainActivity.Player playa[] = new MainActivity.Player[2];
-
+    public MainActivity.Player player;
+    //public Spirit spirit[] = new Spirit[15];
 
     public User() {
 
-        for (int i=0; i<2;i++){
-            playa[i] = new MainActivity.Player("Aaron");
-        }
+
+            player = new MainActivity.Player("Aaron");
+/*        for (int i =0; i<15;i++){
+            spirit[i]= new Spirit(i);
+        }*/
 
     }
     public User(String fullName) {
         this.fullName = fullName;
         this.g=0;
-        for (int i=0; i<2;i++){
-            playa[i] = new MainActivity.Player("Aaron");
-        }
+
+            player = new MainActivity.Player("Aaron");
+/*        for (int i =0; i<15;i++){
+            spirit[i]= new Spirit(i);
+        }*/
+
 
     }
 

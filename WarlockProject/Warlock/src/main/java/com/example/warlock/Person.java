@@ -8,9 +8,9 @@ import java.util.List;
  */
 public class Person {
     private final int OFFENSIVE_OBSERVATION_SPACE_SIZE=10;
-    private final int ACTION_SPACE_SIZE=50;
-    private final int SUPPORT_SPACE_SIZE=50;
-    private final int DEFENSE_SPACE_SIZE=50;
+    private final int ACTION_SPACE_SIZE=15;
+    private final int SUPPORT_SPACE_SIZE=15;
+    private final int DEFENSE_SPACE_SIZE=15;
 
     private final int META_SIZE=3;
 

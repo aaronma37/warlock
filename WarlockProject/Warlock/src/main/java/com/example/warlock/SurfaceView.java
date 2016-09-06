@@ -16,6 +16,9 @@ package com.example.warlock;
         import android.view.WindowManager;
         import android.os.Vibrator;
 
+        import com.firebase.client.Firebase;
+        import com.google.firebase.database.DatabaseReference;
+
         import org.apache.http.HttpResponse;
         import org.apache.http.client.HttpClient;
         import org.apache.http.client.methods.HttpGet;
@@ -41,11 +44,14 @@ public class SurfaceView extends GLSurfaceView {
 
     public final Rend mRenderer;
     private Vibrator vibrator;
+    private DatabaseReference mDatabase;
+    private Firebase ref;
 
 
-    public SurfaceView(Context context) {
+    public SurfaceView(Context context, Firebase mref) {
         super(context);
         vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        ref=mref;
         DisplayMetrics metrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
@@ -53,7 +59,7 @@ public class SurfaceView extends GLSurfaceView {
         setEGLContextClientVersion(2);
 
         // Set the Renderer for drawing on the GLSurfaceView
-        mRenderer = new Rend(context);
+        mRenderer = new Rend(context, ref);
         //float posTemp[]=f;
         setRenderer(mRenderer);
 
@@ -138,8 +144,10 @@ public class SurfaceView extends GLSurfaceView {
             System.out.println("C2: "+c2);
             if (c2==mRenderer.ui_graphics[0].BATTLE){
                 mRenderer.enterArena();
-            }
+            }else if (c2==mRenderer.ui_graphics[0].START_SCREEN)
+                mRenderer.text_collection.add_to_active_text(0);
             vibrator.vibrate(200);
+            //mRenderer.text_collection.active_text.clear();
             return;
         }
 

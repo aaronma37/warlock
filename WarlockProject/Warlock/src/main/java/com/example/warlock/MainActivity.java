@@ -51,6 +51,7 @@ public class MainActivity extends ActionBarActivity {
     private SurfaceView sView;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private Firebase ref;
     private DatabaseReference mDatabase;
     private final int NUMBER_OF_UNITS=2;
 
@@ -132,7 +133,7 @@ public class MainActivity extends ActionBarActivity {
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LOW_PROFILE;
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         currentApiVersion = android.os.Build.VERSION.SDK_INT;
         if(currentApiVersion >= Build.VERSION_CODES.KITKAT)
         {
@@ -161,41 +162,65 @@ public class MainActivity extends ActionBarActivity {
 
         if (user!=null){
             final String userId = user.getUid();
+            Firebase.setAndroidContext(this);
+            ref = new Firebase("https://arms-bb507.firebaseio.com");
 
-            System.out.println("userID" + userId);
-
-            setFirstFirebase();
-
-
-            sView = new SurfaceView(this);
+            sView = new SurfaceView(this,ref);
             setContentView(sView);
 
-            //Firebase ref = new Firebase("https://arms-bb507.firebaseio.com");
 
 
             mDatabase.child("users").child(userId).addListenerForSingleValueEvent(
                     new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (!dataSnapshot.exists()){
+                                System.out.println("CREATING DIR");
+                                setFirstFirebase(ref);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.w("myTag", "getUser:onCancelled", databaseError.toException());
+                        }
+                    }
+            );
+
+
+
+
+
+/*            mDatabase.child("users").child(userId).addListenerForSingleValueEvent(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
                             // Get user value
 //                        System.out.println("VALUE AT:: "+dataSnapshot.child("player1").child("ma").child("0").child("o").child("0").getValue(Observation.class).val);
                             //User x = dataSnapshot.getValue(User.class);
 //                        System.out.println("FULL NAME IS " + x.getFullName());
                             //System.out.println("Offense physical is called:  " + x.player1.offense_physical.getName());
 
-                            System.out.println(sView.mRenderer.aaron.off_a[0].o[0]);
+*//*                            System.out.println(sView.mRenderer.player.off_a[0].o[0]);
 
                             sView.mRenderer.user_information.fullName=dataSnapshot.child("fullname").getValue(String.class);
                             sView.mRenderer.user_information.g=dataSnapshot.child("g").getValue(int.class);
+                            sView.mRenderer.user_information.player.name=dataSnapshot.child("player1").child("name").getValue(String.class);*//*
 
-                            for (int i=0;i<NUMBER_OF_UNITS;i++){
-                                sView.mRenderer.user_information.playa[i].name=dataSnapshot.child("player1").child("name").getValue(String.class);
-                                for (int k=0;k<10;k++){
-                                    //sView.mRenderer.user_information.playa[k].ma.name=dataSnapshot.child("player1").child("name").getValue(String.class);
+*//*                            for (int i=0;i<15;i++){//SPIRIT
+                                for (int k=0;k<3;k++){//META
+                                    for (int g=0;g<15;g++){//ACTION
+                                        for (int p=0;p<15;p++){
+                                            //sView.mRenderer.player.spirit[i].meta_a[k].c[g]=dataSnapshot.child("spirit").child(Integer.toString(i)).child("ma").child(Integer.toString(k)).child("a").child(Integer.toString(g)).child("c").child(Integer.toString(p)).getValue(Observation.class).val;
+                                            //sView.mRenderer.player.spirit[i].meta_a[k].o[g]=dataSnapshot.child("spirit").child(Integer.toString(i)).child("ma").child(Integer.toString(k)).child("a").child(Integer.toString(g)).child("o").child(Integer.toString(p)).getValue(Observation.class).val;
+                                        }
+                                    }
+
                                 }
 
                                 //sView.mRenderer.aaron.off_a[0].o[i]=dataSnapshot.child("player1").child("ma").child("0").child("a").child("0").child("o").child(Integer.toString(i)).getValue(Observation.class).val;
-                            }
+                            }*//*
 
 
                         }
@@ -204,7 +229,7 @@ public class MainActivity extends ActionBarActivity {
                         public void onCancelled(DatabaseError databaseError) {
                             Log.w("myTag", "getUser:onCancelled", databaseError.toException());
                         }
-                    });
+                    });*/
         }
 
 
@@ -309,10 +334,9 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    public void setFirstFirebase(){
+    public void setFirstFirebase(Firebase ref){
+        System.out.println("SETTING FIRST FB");
 
-        Firebase.setAndroidContext(this);
-        Firebase ref = new Firebase("https://arms-bb507.firebaseio.com");
         if (ref.getAuth()==null){
             System.out.print("got null");
         }
@@ -340,18 +364,18 @@ public class MainActivity extends ActionBarActivity {
 
     public static class Action{
         private String name="basic attack";
-        public Observation o[] = new Observation[10];
-        public Observation c[] = new Observation[10];
+        public Observation o[] = new Observation[15];
+        public Observation c[] = new Observation[15];
 
         public Action() {
-            for (int i =0;i<10;i++){
+            for (int i =0;i<15;i++){
                 o[i]=new Observation("hp");
                 c[i]=new Observation("hp");
 
             }
         }
         public Action(String name) {
-            for (int i =0;i<10;i++){
+            for (int i =0;i<15;i++){
                 o[i]=new Observation("hp");
                 c[i]=new Observation("hp");
 
@@ -369,13 +393,13 @@ public class MainActivity extends ActionBarActivity {
 
     public static class Meta_Action {
         private String name;
-        public Action a[] = new Action[151];
+        public Action a[] = new Action[15];
         public Action t[] = new Action[4];
-        public Observation o[] = new Observation[10];
-        public Observation c[] = new Observation[10];
+        public Observation o[] = new Observation[15];
+        public Observation c[] = new Observation[15];
 
         public Meta_Action() {
-            for (int i =0;i<10;i++){
+            for (int i =0;i<15;i++){
                 a[i]=new Action("hp");
                 o[i]=new Observation("hp");
                 c[i]=new Observation("hp");
@@ -386,7 +410,7 @@ public class MainActivity extends ActionBarActivity {
             }
         }
         public Meta_Action(String name) {
-            for (int i =0;i<10;i++){
+            for (int i =0;i<15;i++){
                 a[i]=new Action("hp");
                 o[i]=new Observation("hp");
                 c[i]=new Observation("hp");
@@ -406,14 +430,27 @@ public class MainActivity extends ActionBarActivity {
     public static class Player{
         private String name;
 
+        public Player(){
+
+        }
+        public Player(String name){
+
+            this.name = name;
+        }
+        public String getName(){return name;}
+    }
+
+    public static class Spirit_Data{
+        private String name;
+
         public Meta_Action ma[] = new Meta_Action[3];
 
-        public Player(){
+        public Spirit_Data(){
             for (int i =0;i<3;i++){
                 ma[i]=new Meta_Action("hp");
             }
         }
-        public Player(String name){
+        public Spirit_Data(String name){
             for (int i =0;i<3;i++){
                 ma[i]=new Meta_Action("hp");
             }
@@ -428,21 +465,27 @@ public class MainActivity extends ActionBarActivity {
         private String fullName;
         private int g;
 
-        public Player playa[] = new Player[2];
+        public Player player;
+        public Spirit_Data spirit[] = new Spirit_Data[15];
 
         public User() {
 
-            for (int i=0; i<2;i++){
-                playa[i] = new Player("Aaron");
-            }
+                player = new Player("Default");
+
+                for (int i =0; i<15;i++){
+                    spirit[i]= new Spirit_Data();
+                }
 
         }
         public User(String fullName) {
             this.fullName = fullName;
             this.g=0;
-            for (int i=0; i<2;i++){
-                playa[i] = new Player("Aaron");
-            }
+
+                player = new Player("Default");
+
+                for (int i =0; i<15;i++){
+                    spirit[i]= new Spirit_Data();
+                }
 
         }
 

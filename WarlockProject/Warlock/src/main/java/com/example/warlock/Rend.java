@@ -9,6 +9,7 @@ package com.example.warlock;
         import android.opengl.GLES20;
         import android.opengl.GLSurfaceView;
         import android.opengl.Matrix;
+        import android.provider.ContactsContract;
         import android.util.Log;
 
 /*        import org.ros.node.ConnectedNode;
@@ -17,6 +18,11 @@ package com.example.warlock;
         import org.ros.node.NodeConfiguration;
         import org.ros.node.NodeFactory;*/
 
+
+        import com.firebase.client.Firebase;
+        import com.google.firebase.auth.FirebaseAuth;
+        import com.google.firebase.auth.FirebaseUser;
+        import com.google.firebase.database.DatabaseReference;
 
         import java.lang.reflect.Array;
         import java.nio.FloatBuffer;
@@ -50,6 +56,7 @@ public class Rend implements GLSurfaceView.Renderer {
     private FloatBuffer textureBuffer;
     public Context context;
     private boolean show_info=false;
+    private Firebase ref;
 
     private List<Projectile> active_projectiles = new ArrayList<>();
     private Projectile projectile_swap[] = new Projectile[50];
@@ -94,7 +101,11 @@ public class Rend implements GLSurfaceView.Renderer {
     public GeneralGraphic command_symbol[]= new GeneralGraphic[5];
     public GeneralGraphic blue_apparition;
     public GeneralGraphic buttons;
+    public GeneralGraphic text_box;
     public UI_Graphics ui_graphics[] = new UI_Graphics[5];
+    public Cont_Font font_1;
+    public Text_Collection text_collection;
+    private List<Hard_Text> active_text = new ArrayList<>();
 
     public SpellCircle water_circle;
     public ProjectileSprite projectile_sprite[] = new ProjectileSprite[OFFENSIVE_SPELL_COUNT];
@@ -103,7 +114,7 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public Sprite sprite;
 
-    public Person aaron, luke;
+    public Person player, luke;
     public Projectile projectile_fireball;
     public Offensive_Physical_Actions fireball;
     private long start_time, end_time;
@@ -128,9 +139,10 @@ public class Rend implements GLSurfaceView.Renderer {
 
     private float mAngle;
 
-    public Rend(Context context1) {
+    public Rend(Context context1, Firebase mref) {
         context = context1;
-        aaron = new Person("Aaron", -.5f, GROUND_LEVEL);
+        ref=mref;
+        player = new Person("Aaron", -.5f, GROUND_LEVEL);
         luke = new Person("Luke", .5f, GROUND_LEVEL);
     }
 
@@ -167,6 +179,9 @@ public class Rend implements GLSurfaceView.Renderer {
         start_button= new GeneralGraphic(context,6, .3f, .1f,0,0);
         ice_shard = new GeneralGraphic(context,8,.15f, .05f,0,0);
         buttons = new GeneralGraphic(context,11,.4f, .1f,-.4f,0);
+        font_1 = new Cont_Font(context,0);
+        text_box = new GeneralGraphic(context,18);
+        text_collection=new Text_Collection();
 
         for (int i=0;i<5;i++){
             ui_graphics[i] = new UI_Graphics(context,i);
@@ -184,7 +199,7 @@ public class Rend implements GLSurfaceView.Renderer {
         castle_background = new GeneralGraphic(context,7);
 
         projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0,100);
-        fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball,aaron);
+        fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball,player);
         float start_time = System.currentTimeMillis();
 
         for (int i=0;i<OFFENSIVE_SPELL_COUNT;i++){
@@ -199,15 +214,15 @@ public class Rend implements GLSurfaceView.Renderer {
     }
 
     public void enterArena(){
-        aaron.reset(-.5f, GROUND_LEVEL);
+        player.reset(-.5f, GROUND_LEVEL);
         luke.reset(1f, GROUND_LEVEL);
 
         active_people.clear();
-        active_people.add(aaron);
+        active_people.add(player);
         active_people.add(luke);
 
         blue_team.clear();
-        blue_team.add(aaron);
+        blue_team.add(player);
 
         red_team.clear();
         red_team.add(luke);
@@ -218,25 +233,25 @@ public class Rend implements GLSurfaceView.Renderer {
         //aaron.setActionSpace();
        // luke.setActionSpace();
 
-        aaron.a[1].o[2]=0;
-        aaron.a[1].o[0]=0;
-        aaron.a[1].o[1]=0;
+        player.a[1].o[2]=0;
+        player.a[1].o[0]=0;
+        player.a[1].o[1]=0;
 
-        aaron.a[1].o[6]=0;
-        aaron.a[1].o[7]=0;
-        aaron.a[1].o[8]=0;
+        player.a[1].o[6]=0;
+        player.a[1].o[7]=0;
+        player.a[1].o[8]=0;
 
         //OFFENSIVE
 
-        aaron.off_a[2].o[8]=100;
-        aaron.off_a[2].o[7]=100;
+        player.off_a[2].o[8]=100;
+        player.off_a[2].o[7]=100;
 
 
-        aaron.attribute[0]=0;
-        aaron.attribute[1]=1;
-        aaron.attribute[2]=1;
-        aaron.attribute[3]=1;
-        aaron.attribute[4]=1;
+        player.attribute[0]=0;
+        player.attribute[1]=1;
+        player.attribute[2]=1;
+        player.attribute[3]=1;
+        player.attribute[4]=1;
 
         luke.attribute[0]=0;
         luke.attribute[1]=0;
@@ -244,11 +259,13 @@ public class Rend implements GLSurfaceView.Renderer {
         luke.attribute[3]=0;
         luke.attribute[4]=0;
 
-        aaron.setAvailableOffensiveActionSpace();
+        player.setAvailableOffensiveActionSpace();
         luke.setAvailableOffensiveActionSpace();
 
 
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Firebase sref = ref.child("users").child(user.getUid()).child("spirit").child("0").child("ma").child("0").child("a").child("0").child("c").child("0").child("val");
+        sref.setValue(25);
 
 
         for (int i =0; i<50;i++){
@@ -258,6 +275,14 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public void exitArena(){
         active_people.clear();
+    }
+
+    public void enter_game_state(int i){
+        if (i==1){
+
+
+            game_state=1;
+        }
     }
 
     public boolean checkCollision(Hitbox hbox1, float x_1, float y_1, Hitbox hbox2, float x_2, float y_2){
@@ -294,18 +319,42 @@ public class Rend implements GLSurfaceView.Renderer {
             update_battle();
             draw_battle();
         }else if (game_state==1){
+            text_collection.add_to_active_text(0);
+
         }
 
         draw_ui(game_state);
+        draw_text();
+
     }
 
+    public void draw_text(){
 
+        for (int i = 0;i<text_collection.active_text.size();i++){
+            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+            Matrix.translateM(scratch, 0, text_collection.active_text.get(i).x, text_collection.active_text.get(i).y, 0f);
+            Matrix.scaleM(scratch, 0,text_collection.active_text.get(i).width,text_collection.active_text.get(i).height, 1f);
+            text_box.Draw(scratch,false);
+
+
+            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+            Matrix.translateM(scratch, 0, text_collection.active_text.get(i).x+text_collection.active_text.get(i).width-.1f, text_collection.active_text.get(i).y, 0f);
+            Matrix.scaleM(scratch, 0, .05f,.05f, 1f);
+
+            for (int j=0;j<text_collection.active_text.get(i).str.length();j++){
+                font_1.Draw_Word(scratch,text_collection.active_text.get(i).str.charAt(j));
+                Matrix.translateM(scratch, 0, -1.2f, 0f, 0f);
+            }
+
+        }
+
+
+    }
 
     public void draw_battle(){
         //Load stage
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
         Matrix.translateM(scratch, 0, 0, 0f, 0f);
-
         Matrix.scaleM(scratch, 0, 1.8f,1.4f, 1f);
         castle_background.Draw(scratch,false);
 
@@ -375,7 +424,7 @@ public class Rend implements GLSurfaceView.Renderer {
             return;
         }else if (ui_graphics[k].images[i].trigger==2){
             //HP
-            ui_graphics[k].images[i].width = aaron.health/450f;
+            ui_graphics[k].images[i].width = player.health/450f;
 /*
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
             Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).hitbox.x*2/100f-active_people.get(i).health/1600f, active_people.get(i).center_y+.15f, 1f);
@@ -449,9 +498,9 @@ public class Rend implements GLSurfaceView.Renderer {
         }
 
         if (blue_victory_flag==true){
-            game_state=1;
+            enter_game_state(1);
         }else if (red_victory_flag==true){
-            game_state=1;
+            enter_game_state(1);
         }
 
         for (int i = active_projectiles.size()-1; i >= 0;i--){
@@ -501,7 +550,7 @@ public class Rend implements GLSurfaceView.Renderer {
     }
 
     public void command_spirit(int spirit_type){
-        aaron.command_spirit(meta_obs,target_obs, off_obs, luke,spirit_type);
+        player.command_spirit(meta_obs,target_obs, off_obs, luke,spirit_type);
     }
 
     @Override
@@ -627,7 +676,7 @@ public class Rend implements GLSurfaceView.Renderer {
     }
 
     public void reward_event(int reward_type){
-        aaron.reward_function(reward_type);
+        player.reward_function(reward_type);
     }
 
 }

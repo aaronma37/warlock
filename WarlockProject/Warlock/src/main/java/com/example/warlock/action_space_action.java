@@ -5,8 +5,8 @@ package com.example.warlock;
  */
 public class action_space_action {
 
-    public float o[] = new float[10];
-    public float c[] = new float[10];
+    public float o[] = new float[15];
+    public float c[] = new float[15];
 
     public boolean feasible = true;
     public int index;
@@ -15,7 +15,7 @@ public class action_space_action {
     public action_space_action(int ind){
         index=ind;
 
-        for (int i=0;i<10;i++){
+        for (int i=0;i<15;i++){
             o[i]=1;
             c[i]=1;
         }

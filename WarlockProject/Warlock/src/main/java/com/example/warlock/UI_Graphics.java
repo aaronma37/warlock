@@ -152,7 +152,7 @@ public class UI_Graphics
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.ui_battle_player_portrait),.23f,.23f,-.65f,1.45f,NOTHING,NOTHING,NOTHING);number_of_images++;
         }else if (k==1){
             //STARTING SCREEN
-            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.start_button_temp), 1.8f, .3f,-.8f,0,START,SECONDARY_SCREEN,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.red_dot), .3f, .3f,-.8f,0,START,SECONDARY_SCREEN,BUTTON);number_of_images++;
         }else if (k==2){
             //SECONDARY SCREEN
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.ui_battle_player_portrait), 1f, .3f,.8f,.5f,START,DUNGEON,BUTTON);number_of_images++;

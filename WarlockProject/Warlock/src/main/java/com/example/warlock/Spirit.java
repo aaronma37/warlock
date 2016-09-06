@@ -9,14 +9,14 @@ import java.util.List;
 public class Spirit {
 
     private final int META_SIZE=3;
-    private final int ACTION_SPACE_SIZE=50;
-    private final int SUPPORT_SPACE_SIZE=50;
-    private final int DEFENSE_SPACE_SIZE=50;
+    private final int ACTION_SPACE_SIZE=15;
+    private final int SUPPORT_SPACE_SIZE=15;
+    private final int DEFENSE_SPACE_SIZE=15;
 
-    private final int OBSERVATION_META_SIZE=10;
-    private final int OBSERVATION_ACTION_SIZE=10;
-    private final int OBSERVATION_SUPPORT_SIZE=10;
-    private final int OBSERVATION_DEFENSE_SIZE=10;
+    private final int OBSERVATION_META_SIZE=15;
+    private final int OBSERVATION_ACTION_SIZE=15;
+    private final int OBSERVATION_SUPPORT_SIZE=15;
+    private final int OBSERVATION_DEFENSE_SIZE=15;
 
     public List<Integer> available_offensive_action_space = new ArrayList<>();
     public List<Integer> available_support_action_space = new ArrayList<>();
@@ -78,7 +78,7 @@ public class Spirit {
                 temp_sum=0;
                 if (checkFeasibility(0,i,target, origin,available_offensive_action_space)){
 
-                    for (int j=0;j<10;j++){
+                    for (int j=0;j<15;j++){
                         if (off_a[i].o[j]/off_a[i].c[j]>5){
                             temp_sum+=off_a[i].o[j]*off_o[j];
                         }{

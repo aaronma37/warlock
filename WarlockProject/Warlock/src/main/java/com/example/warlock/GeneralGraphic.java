@@ -171,6 +171,8 @@ public class GeneralGraphic
         else if (s==10){
             mTextureDataHandle = loadTexture(mActivityContext, R.drawable.blue_apparition);
             selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.blue_apparition);
+        }else if (s==18){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.text_box);
         }
     }
 
@@ -273,6 +275,8 @@ public class GeneralGraphic
         }else if (s==17){
             mTextureDataHandle = loadTexture(mActivityContext, R.drawable.ui_battle_bottom);
             selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.ui_battle_bottom);
+        }else if (s==18){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.text_box);
         }
 
     }
