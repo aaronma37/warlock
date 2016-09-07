@@ -364,6 +364,12 @@ public class MainActivity extends ActionBarActivity {
 
         alanRef.setValue(alan);
 
+
+/*        Map<String, String> post1 = new HashMap<String, String>();
+        Firebase inv = ref.child("users").child(user.getUid()).child("inventory");
+        inv.push().setValue(1);*/
+
+
     }
 
 
@@ -435,10 +441,15 @@ public class MainActivity extends ActionBarActivity {
         public String getName(){return name;}
     }
 
+    public static class Inventory{
+
+    }
+
 
     @IgnoreExtraProperties
     public static class User {
         private String fullName;
+        public Inventory inventory;
         private int g;
 
         public Player player;
