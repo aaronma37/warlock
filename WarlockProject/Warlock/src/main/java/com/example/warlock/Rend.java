@@ -331,24 +331,26 @@ public class Rend implements GLSurfaceView.Renderer {
     public void draw_text(){
 
         for (int i = 0;i<text_collection.active_text.size();i++){
-            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, text_collection.active_text.get(i).x, text_collection.active_text.get(i).y, 0f);
-            Matrix.scaleM(scratch, 0,text_collection.active_text.get(i).width,text_collection.active_text.get(i).height, 1f);
-            text_box.Draw(scratch,false);
-
-
-            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, text_collection.active_text.get(i).x+text_collection.active_text.get(i).width-.1f, text_collection.active_text.get(i).y, 0f);
-            Matrix.scaleM(scratch, 0, .05f,.05f, 1f);
-
-            for (int j=0;j<text_collection.active_text.get(i).str.length();j++){
-                font_1.Draw_Word(scratch,text_collection.active_text.get(i).str.charAt(j));
-                Matrix.translateM(scratch, 0, -1.2f, 0f, 0f);
-            }
-
+            draw_word(text_collection.active_text.get(i));
         }
+    }
+
+    public void draw_word(Hard_Text hard_text){
+
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+        Matrix.translateM(scratch, 0, hard_text.x, hard_text.y, 0f);
+        Matrix.scaleM(scratch, 0,hard_text.width,hard_text.height, 1f);
+        text_box.Draw(scratch,false);
 
 
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+        Matrix.translateM(scratch, 0, hard_text.x+hard_text.width-.1f, hard_text.y, 0f);
+        Matrix.scaleM(scratch, 0, .05f,.05f, 1f);
+
+        for (int j=0;j<hard_text.str.length();j++){
+            font_1.Draw_Word(scratch,hard_text.str.charAt(j));
+            Matrix.translateM(scratch, 0, -1.2f, 0f, 0f);
+        }
     }
 
     public void draw_battle(){

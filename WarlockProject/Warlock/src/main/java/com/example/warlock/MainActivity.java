@@ -178,6 +178,24 @@ public class MainActivity extends ActionBarActivity {
                                 System.out.println("CREATING DIR");
                                 setFirstFirebase(ref);
                             }
+
+
+                            //SET NETWORK
+                            for (int i=0;i<15;i++) {//SPIRIT
+                                for (int k = 0; k < 3; k++) {//META
+                                    for (int g = 0; g < 10; g++) {//ACTION
+                                        for (int p = 0; p < 15; p++) {
+                                            sView.mRenderer.player.spirit[i].meta_a[k].c[g]=dataSnapshot.child("spirit").child(Integer.toString(i)).child("ma").child(Integer.toString(k)).child("a").child(Integer.toString(g)).child("c").child(Integer.toString(p)).getValue(float.class).floatValue();
+                                            sView.mRenderer.player.spirit[i].meta_a[k].o[g]=dataSnapshot.child("spirit").child(Integer.toString(i)).child("ma").child(Integer.toString(k)).child("a").child(Integer.toString(g)).child("o").child(Integer.toString(p)).getValue(float.class).floatValue();
+                                        }
+                                    }
+
+                                }
+                            }
+
+
+
+
                         }
 
                         @Override
@@ -348,43 +366,16 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    public static class Observation{
-        public String name="hp";
-        public int val=1;
-        public Observation(){}
-        public Observation(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
-
 
     public static class Action{
-        private String name="basic attack";
-        public Observation o[] = new Observation[15];
-        public Observation c[] = new Observation[15];
-
+        public float o[] = new float[15];
+        public float c[] = new float[15];
         public Action() {
             for (int i =0;i<15;i++){
-                o[i]=new Observation("hp");
-                c[i]=new Observation("hp");
+                o[i]=1;
+                c[i]=1;
 
             }
-        }
-        public Action(String name) {
-            for (int i =0;i<15;i++){
-                o[i]=new Observation("hp");
-                c[i]=new Observation("hp");
-
-            }
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
         }
     }
 
@@ -392,37 +383,22 @@ public class MainActivity extends ActionBarActivity {
 
 
     public static class Meta_Action {
-        private String name;
-        public Action a[] = new Action[15];
+
+        public Action a[] = new Action[10];
         public Action t[] = new Action[4];
-        public Observation o[] = new Observation[15];
-        public Observation c[] = new Observation[15];
+        public float o[] = new float[15];
+        public float c[] = new float[15];
 
         public Meta_Action() {
-            for (int i =0;i<15;i++){
-                a[i]=new Action("hp");
-                o[i]=new Observation("hp");
-                c[i]=new Observation("hp");
+            for (int i =0;i<10;i++){
+                a[i]=new Action();
+                o[i]=1;
+                c[i]=1;
 
             }
             for (int i =0;i<4;i++){
-                t[i]=new Action("hp");
+                t[i]=new Action();
             }
-        }
-        public Meta_Action(String name) {
-            for (int i =0;i<15;i++){
-                a[i]=new Action("hp");
-                o[i]=new Observation("hp");
-                c[i]=new Observation("hp");
-
-            }
-            for (int i =0;i<4;i++){
-                t[i]=new Action("hp");
-            }
-            this.name = name;
-        }
-        public String getName() {
-            return name;
         }
     }
 
@@ -447,12 +423,12 @@ public class MainActivity extends ActionBarActivity {
 
         public Spirit_Data(){
             for (int i =0;i<3;i++){
-                ma[i]=new Meta_Action("hp");
+                ma[i]=new Meta_Action();
             }
         }
         public Spirit_Data(String name){
             for (int i =0;i<3;i++){
-                ma[i]=new Meta_Action("hp");
+                ma[i]=new Meta_Action();
             }
             this.name = name;
         }

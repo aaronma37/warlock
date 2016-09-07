@@ -147,7 +147,7 @@ public class SurfaceView extends GLSurfaceView {
             }else if (c2==mRenderer.ui_graphics[0].START_SCREEN)
                 mRenderer.text_collection.add_to_active_text(0);
             vibrator.vibrate(200);
-            //mRenderer.text_collection.active_text.clear();
+            mRenderer.text_collection.active_text.clear();
             return;
         }
 
