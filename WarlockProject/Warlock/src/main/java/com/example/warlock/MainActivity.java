@@ -54,6 +54,7 @@ public class MainActivity extends ActionBarActivity {
     private Firebase ref;
     private DatabaseReference mDatabase;
     private final int NUMBER_OF_UNITS=2;
+    private static int NUMBER_OF_SPIRITS=15;
 
 
     CallbackManager callbackManager;
@@ -180,8 +181,8 @@ public class MainActivity extends ActionBarActivity {
                             }
 
 
-                            //SET NETWORK
-                            for (int i=0;i<15;i++) {//SPIRIT
+/*                            //SET NETWORK
+                            for (int i=0;i<NUMBER_OF_SPIRITS;i++) {//SPIRIT
                                 for (int k = 0; k < 3; k++) {//META
                                     for (int g = 0; g < 10; g++) {//ACTION
                                         for (int p = 0; p < 15; p++) {
@@ -191,7 +192,7 @@ public class MainActivity extends ActionBarActivity {
                                     }
 
                                 }
-                            }
+                            }*/
 
 
 
@@ -364,10 +365,16 @@ public class MainActivity extends ActionBarActivity {
 
         alanRef.setValue(alan);
 
+/*        Firebase inv = ref.child("users").child(user.getUid()).child("inventory");
+        Firebase inv_to_push = inv.push();
+        Map<Integer, Integer> inv_item = new HashMap<Integer, Integer>();
+        inv_item.put(0,1);
+        inv_item.put(1,1);
+        inv_item.put(2,1);
 
-/*        Map<String, String> post1 = new HashMap<String, String>();
-        Firebase inv = ref.child("users").child(user.getUid()).child("inventory");
-        inv.push().setValue(1);*/
+        inv_to_push.setValue(inv_item);*/
+
+
 
 
     }
@@ -442,7 +449,16 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public static class Inventory{
+        public int item[] = new int[50];
 
+        public Inventory(){
+            item[0]=1;
+            item[1]=2;
+            item[2]=3;
+            for(int i=3;i<50;i++){
+                item[i]=0;
+            }
+        }
     }
 
 

@@ -11,6 +11,11 @@ public class Person {
     private final int ACTION_SPACE_SIZE=15;
     private final int SUPPORT_SPACE_SIZE=15;
     private final int DEFENSE_SPACE_SIZE=15;
+    private static int NUMBER_OF_SPIRITS=15;
+    private static int NUMBER_OF_EQUIPMENT_SLOTS=3;
+    private static int NUMBER_OF_ATTRIBUTES=5;
+
+
 
     private final int META_SIZE=3;
 
@@ -24,13 +29,14 @@ public class Person {
     public float center_y;
     public int facing_direction=1;
     public int animation=0;
-    public int attribute[] = new int[5];
+    public int attribute[] = new int[NUMBER_OF_ATTRIBUTES];
     public int last_meta=0;
     //public Person last_target=new Person();
     public int last_spell=0;
     public float action_choose_index[]= new float[ACTION_SPACE_SIZE];
+    //public Wardrobe wardrobe;
 
-    public Spirit spirit[] = new Spirit[15];
+    public Spirit spirit[] = new Spirit[NUMBER_OF_SPIRITS];
 
     public boolean busy;
     public Offensive_Physical_Actions action = new Offensive_Physical_Actions();
@@ -76,11 +82,11 @@ public class Person {
             def_a[i]=new action_space_action(i);
         }
 
-        for (int i=0;i<5;i++){
+        for (int i=0;i<NUMBER_OF_ATTRIBUTES;i++){
             attribute[i]=0;
         }
 
-        for (int i=0;i<15;i++){
+        for (int i=0;i<NUMBER_OF_SPIRITS;i++){
             spirit[i]=new Spirit(i);
         }
 
@@ -88,6 +94,8 @@ public class Person {
             toCast[i]=0;
         }
 
+       // wardrobe= new Wardrobe();
+        //recalculate_attributes(wardrobe);
         setAvailableOffensiveActionSpace();
 
     }
@@ -103,7 +111,7 @@ public class Person {
         busy=false;
         state.setState(0,0,0,0);
 
-        for (int i=0;i<5;i++){
+        for (int i=0;i<NUMBER_OF_ATTRIBUTES;i++){
             attribute[i]=0;
         }
 
@@ -111,12 +119,22 @@ public class Person {
             toCast[i]=0;
         }
 
-        setAvailableOffensiveActionSpace();
-        for (int i=0;i<15;i++){
+        //setAvailableOffensiveActionSpace();
+       // recalculate_attributes(wardrobe);
+        for (int i=0;i<NUMBER_OF_SPIRITS;i++){
             spirit[i].setAvailableOffensiveActionSpace();
         }
+
+
     }
 
+    public void recalculate_attributes(Wardrobe w){
+        for (int i =0;i<NUMBER_OF_ATTRIBUTES;i++){
+            for (int j=0;j<NUMBER_OF_EQUIPMENT_SLOTS;j++){
+                spirit[i].attribute+=w.currently_equipped[j].attributes[i];
+            }
+        }
+    }
 
     public Person(String given_name, float start_x, float start_y) {
         health=100;
@@ -137,19 +155,19 @@ public class Person {
             off_a[i]=new action_space_action(i);
             def_a[i]=new action_space_action(i);
         }
-        for (int i=0;i<5;i++){
+        for (int i=0;i<NUMBER_OF_ATTRIBUTES;i++){
             attribute[i]=0;
         }
-        for (int i=0;i<15;i++){
+        for (int i=0;i<NUMBER_OF_SPIRITS;i++){
             spirit[i]=new Spirit(i);
         }
         for (int i=0;i<4;i++){
             toCast[i]=0;
         }
         setAvailableOffensiveActionSpace();
-        for (int i=0;i<15;i++){
+/*        for (int i=0;i<NUMBER_OF_SPIRITS;i++){
             spirit[i].setAvailableOffensiveActionSpace();
-        }
+        }*/
     }
 
 /*    public void cast(Offensive_Physical_Actions desired_action){
