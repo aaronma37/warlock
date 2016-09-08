@@ -47,6 +47,8 @@ public class Spirit {
             def_a[k]=new action_space_action(k);
         }
 
+        attribute=0;
+
     }
 
 

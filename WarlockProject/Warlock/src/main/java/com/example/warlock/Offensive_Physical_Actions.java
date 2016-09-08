@@ -8,6 +8,7 @@ import java.util.List;
 public class Offensive_Physical_Actions {
 
     // cast time, animation, projectile information, damage, debuffs
+    public String spell_name="default";
     public float cast_time;
     public float total_cast_time;
     public int animation;
@@ -68,7 +69,7 @@ public class Offensive_Physical_Actions {
             if (spell_type==0){
                 //Approach
                 setFacingDirection();
-                origin.motion(move_speed,move_direction);
+                //origin.motion(move_speed,move_direction);
             }else if (spell_type==1){
                 //APPROACH
                 setFacingDirection();
@@ -87,17 +88,17 @@ public class Offensive_Physical_Actions {
 
         if (meta_type==0){
             //OFF META TYPE
-            if (spell_type==0){
+            if (spell_type==-1){
                 //APPROACH
                 setFacingDirection();
                 origin.motion(move_speed,move_direction);
-            }else if (spell_type==1){
+            }else if (spell_type==0){
             //FIREBALL
             setFacingDirection();
             projectile_swap[active_projectiles.size()].reset();
             projectile_swap[active_projectiles.size()].setSpell(target,origin,spell_type,spirit_type);
             active_projectiles.add(projectile_swap[active_projectiles.size()]);
-            }else if (spell_type==2){
+            }else if (spell_type==1){
                 projectile_swap[active_projectiles.size()].reset();
                 projectile_swap[active_projectiles.size()].setSpell(target,origin,spell_type,spirit_type);
                 active_projectiles.add(projectile_swap[active_projectiles.size()]);
@@ -160,51 +161,58 @@ public class Offensive_Physical_Actions {
             //OFF META TYPE
             if (spirit_type==0){
                 if (spell_type==0){
-                    //APPROACH
-                    move_speed=.01f;
 
-                    if (origin.center_x-target.center_x>0){
-                        move_direction=-1;
-                    }else{
-                        move_direction=1;
-                    }
+                    spell_name="Not designated";
 
-                    move_flag=true;
-                    total_cast_time=10f;
+                    //FIREBALL
+                    projectile_flag=true;
+                    total_cast_time=45f;
                     cool_down=0;
                     active=true;
 
                 }else if (spell_type==1){
+                    spell_name="Not designated";
+
                     //FIREBALL
                     projectile_flag=true;
                     total_cast_time=45f;
                     cool_down=0;
                     active=true;
                 }else if (spell_type==2){
+                    spell_name="Not designated";
+
                     //FIREBALL  /0
                     projectile_flag=true;
                     total_cast_time=45f;
                     cool_down=0;
                     active=true;
                 }else if (spell_type==3){
+                    spell_name="Not designated";
+
                     //flamethrower /0
                     projectile_flag=true;
                     total_cast_time=45f;
                     cool_down=0;
                     active=true;
                 }else if (spell_type==4){
+                    spell_name="Not designated";
+
                     //FIRESTORM  /0
                     projectile_flag=true;
                     total_cast_time=45f;
                     cool_down=0;
                     active=true;
                 }else if (spell_type==5){
+                    spell_name="Not designated";
+
                     //immolate  /0
                     projectile_flag=true;
                     total_cast_time=45f;
                     cool_down=0;
                     active=true;
                 }else if (spell_type==6){
+                    spell_name="Not designated";
+
                     //immolate  /0
                     projectile_flag=true;
                     total_cast_time=45f;
@@ -212,6 +220,8 @@ public class Offensive_Physical_Actions {
                     active=true;
                 }
                 else if (spell_type==7){
+                    spell_name="Not designated";
+
                     //blank  /0
                     projectile_flag=true;
                     total_cast_time=45f;
@@ -219,6 +229,8 @@ public class Offensive_Physical_Actions {
                     active=true;
                 }
                 else if (spell_type==8){
+                    spell_name="Not designated";
+
                     //blank  /0
                     projectile_flag=true;
                     total_cast_time=45f;
@@ -226,6 +238,8 @@ public class Offensive_Physical_Actions {
                     active=true;
                 }
                 else if (spell_type==9){
+                    spell_name="Not designated";
+
                     //blank  /0
                     projectile_flag=true;
                     total_cast_time=45f;
@@ -233,12 +247,16 @@ public class Offensive_Physical_Actions {
                     active=true;
 
                 }else if (spell_type==10){
+                    spell_name="Not designated";
+
                     //blank  /0
                     projectile_flag=true;
                     total_cast_time=45f;
                     cool_down=0;
                     active=true;
                 }else if (spell_type==11){
+                    spell_name="Not designated";
+
                     //icebolt  /0
                     projectile_flag=true;
                     total_cast_time=45f;
@@ -247,6 +265,8 @@ public class Offensive_Physical_Actions {
 
                 }
                 else if (spell_type==12){
+                    spell_name="Not designated";
+
                     //icebolt SPAM /0
                     projectile_flag=true;
                     total_cast_time=45f;
@@ -254,18 +274,24 @@ public class Offensive_Physical_Actions {
                     active=true;
 
                 }else if (spell_type==13){
+                    spell_name="Not designated";
+
                     //mist  /0
                     projectile_flag=true;
                     total_cast_time=45f;
                     cool_down=0;
                     active=true;
                 }else if (spell_type==14){
+                    spell_name="Not designated";
+
                     //bubble beam  /0
                     projectile_flag=true;
                     total_cast_time=45f;
                     cool_down=0;
                     active=true;
                 }else if (spell_type==15){
+                    spell_name="Not designated";
+
                     //blank  /0
                     projectile_flag=true;
                     total_cast_time=45f;
@@ -276,16 +302,8 @@ public class Offensive_Physical_Actions {
             if (spirit_type==1){
                 if (spell_type==0){
                     //APPROACH
-                    move_speed=.01f;
-
-                    if (origin.center_x-target.center_x>0){
-                        move_direction=-1;
-                    }else{
-                        move_direction=1;
-                    }
-
-                    move_flag=true;
-                    total_cast_time=10f;
+                    projectile_flag=true;
+                    total_cast_time=45f;
                     cool_down=0;
                     active=true;
 
@@ -390,17 +408,8 @@ public class Offensive_Physical_Actions {
             }
             if (spirit_type==2){
                 if (spell_type==0){
-                    //APPROACH
-                    move_speed=.01f;
-
-                    if (origin.center_x-target.center_x>0){
-                        move_direction=-1;
-                    }else{
-                        move_direction=1;
-                    }
-
-                    move_flag=true;
-                    total_cast_time=10f;
+                    projectile_flag=true;
+                    total_cast_time=45f;
                     cool_down=0;
                     active=true;
 
@@ -505,17 +514,8 @@ public class Offensive_Physical_Actions {
             }
             if (spirit_type==3){
                 if (spell_type==0){
-                    //APPROACH
-                    move_speed=.01f;
-
-                    if (origin.center_x-target.center_x>0){
-                        move_direction=-1;
-                    }else{
-                        move_direction=1;
-                    }
-
-                    move_flag=true;
-                    total_cast_time=10f;
+                    projectile_flag=true;
+                    total_cast_time=45f;
                     cool_down=0;
                     active=true;
 
@@ -620,17 +620,8 @@ public class Offensive_Physical_Actions {
             }
             if (spirit_type==5){
                 if (spell_type==0){
-                    //APPROACH
-                    move_speed=.01f;
-
-                    if (origin.center_x-target.center_x>0){
-                        move_direction=-1;
-                    }else{
-                        move_direction=1;
-                    }
-
-                    move_flag=true;
-                    total_cast_time=10f;
+                    projectile_flag=true;
+                    total_cast_time=45f;
                     cool_down=0;
                     active=true;
 
@@ -742,17 +733,8 @@ public class Offensive_Physical_Actions {
             //SUPPORT META TYPE
             if (spirit_type==0){
                 if (spell_type==0){
-                    //APPROACH
-                    move_speed=.01f;
-
-                    if (origin.center_x-target.center_x>0){
-                        move_direction=-1;
-                    }else{
-                        move_direction=1;
-                    }
-
-                    move_flag=true;
-                    total_cast_time=10f;
+                    projectile_flag=true;
+                    total_cast_time=45f;
                     cool_down=0;
                     active=true;
 
@@ -857,17 +839,8 @@ public class Offensive_Physical_Actions {
             }
             if (spirit_type==1){
                 if (spell_type==0){
-                    //APPROACH
-                    move_speed=.01f;
-
-                    if (origin.center_x-target.center_x>0){
-                        move_direction=-1;
-                    }else{
-                        move_direction=1;
-                    }
-
-                    move_flag=true;
-                    total_cast_time=10f;
+                    projectile_flag=true;
+                    total_cast_time=45f;
                     cool_down=0;
                     active=true;
 
@@ -972,17 +945,8 @@ public class Offensive_Physical_Actions {
             }
             if (spirit_type==2){
                 if (spell_type==0){
-                    //APPROACH
-                    move_speed=.01f;
-
-                    if (origin.center_x-target.center_x>0){
-                        move_direction=-1;
-                    }else{
-                        move_direction=1;
-                    }
-
-                    move_flag=true;
-                    total_cast_time=10f;
+                    projectile_flag=true;
+                    total_cast_time=45f;
                     cool_down=0;
                     active=true;
 
@@ -1087,20 +1051,10 @@ public class Offensive_Physical_Actions {
             }
             if (spirit_type==3){
                 if (spell_type==0){
-                    //APPROACH
-                    move_speed=.01f;
-
-                    if (origin.center_x-target.center_x>0){
-                        move_direction=-1;
-                    }else{
-                        move_direction=1;
-                    }
-
-                    move_flag=true;
-                    total_cast_time=10f;
+                    projectile_flag=true;
+                    total_cast_time=45f;
                     cool_down=0;
                     active=true;
-
                 }else if (spell_type==1){
                     //FIREBALL
                     projectile_flag=true;
@@ -1202,17 +1156,8 @@ public class Offensive_Physical_Actions {
             }
             if (spirit_type==5){
                 if (spell_type==0){
-                    //APPROACH
-                    move_speed=.01f;
-
-                    if (origin.center_x-target.center_x>0){
-                        move_direction=-1;
-                    }else{
-                        move_direction=1;
-                    }
-
-                    move_flag=true;
-                    total_cast_time=10f;
+                    projectile_flag=true;
+                    total_cast_time=45f;
                     cool_down=0;
                     active=true;
 
@@ -1319,17 +1264,8 @@ public class Offensive_Physical_Actions {
             //DEFENSIVE
             if (spirit_type==0){
                 if (spell_type==0){
-                    //APPROACH
-                    move_speed=.01f;
-
-                    if (origin.center_x-target.center_x>0){
-                        move_direction=-1;
-                    }else{
-                        move_direction=1;
-                    }
-
-                    move_flag=true;
-                    total_cast_time=10f;
+                    projectile_flag=true;
+                    total_cast_time=45f;
                     cool_down=0;
                     active=true;
 
@@ -1434,17 +1370,8 @@ public class Offensive_Physical_Actions {
             }
             if (spirit_type==1){
                 if (spell_type==0){
-                    //APPROACH
-                    move_speed=.01f;
-
-                    if (origin.center_x-target.center_x>0){
-                        move_direction=-1;
-                    }else{
-                        move_direction=1;
-                    }
-
-                    move_flag=true;
-                    total_cast_time=10f;
+                    projectile_flag=true;
+                    total_cast_time=45f;
                     cool_down=0;
                     active=true;
 
@@ -1549,17 +1476,8 @@ public class Offensive_Physical_Actions {
             }
             if (spirit_type==2){
                 if (spell_type==0){
-                    //APPROACH
-                    move_speed=.01f;
-
-                    if (origin.center_x-target.center_x>0){
-                        move_direction=-1;
-                    }else{
-                        move_direction=1;
-                    }
-
-                    move_flag=true;
-                    total_cast_time=10f;
+                    projectile_flag=true;
+                    total_cast_time=45f;
                     cool_down=0;
                     active=true;
 
@@ -1664,20 +1582,10 @@ public class Offensive_Physical_Actions {
             }
             if (spirit_type==3){
                 if (spell_type==0){
-                    //APPROACH
-                    move_speed=.01f;
-
-                    if (origin.center_x-target.center_x>0){
-                        move_direction=-1;
-                    }else{
-                        move_direction=1;
-                    }
-
-                    move_flag=true;
-                    total_cast_time=10f;
+                    projectile_flag=true;
+                    total_cast_time=45f;
                     cool_down=0;
                     active=true;
-
                 }else if (spell_type==1){
                     //FIREBALL
                     projectile_flag=true;
@@ -1779,20 +1687,10 @@ public class Offensive_Physical_Actions {
             }
             if (spirit_type==5){
                 if (spell_type==0){
-                    //APPROACH
-                    move_speed=.01f;
-
-                    if (origin.center_x-target.center_x>0){
-                        move_direction=-1;
-                    }else{
-                        move_direction=1;
-                    }
-
-                    move_flag=true;
-                    total_cast_time=10f;
+                    projectile_flag=true;
+                    total_cast_time=45f;
                     cool_down=0;
                     active=true;
-
                 }else if (spell_type==1){
                     //FIREBALL
                     projectile_flag=true;

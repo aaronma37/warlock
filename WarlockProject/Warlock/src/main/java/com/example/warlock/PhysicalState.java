@@ -10,6 +10,10 @@ public class PhysicalState {
     public float force=0;
     public float interrupt_level=0;
     public int knock_back_direction=0;
+    public float destination_x=0;
+    public float ms=0;
+
+
     //0 ready, 1 busy, 2 knockback
     public PhysicalState(){
 
@@ -30,6 +34,10 @@ public class PhysicalState {
             time_in_state=val1;
             force=val2;
             knock_back_direction=val3;
+        }else if (state==3){
+            //Moving state
+            ms=.01f;
+            destination_x=val1;
         }
     }
 }

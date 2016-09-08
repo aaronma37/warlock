@@ -34,7 +34,7 @@ public class Person {
     //public Person last_target=new Person();
     public int last_spell=0;
     public float action_choose_index[]= new float[ACTION_SPACE_SIZE];
-    //public Wardrobe wardrobe;
+    public Wardrobe wardrobe;
 
     public Spirit spirit[] = new Spirit[NUMBER_OF_SPIRITS];
 
@@ -94,7 +94,7 @@ public class Person {
             toCast[i]=0;
         }
 
-       // wardrobe= new Wardrobe();
+        wardrobe= new Wardrobe();
         //recalculate_attributes(wardrobe);
         setAvailableOffensiveActionSpace();
 
@@ -119,12 +119,12 @@ public class Person {
             toCast[i]=0;
         }
 
-        //setAvailableOffensiveActionSpace();
-       // recalculate_attributes(wardrobe);
+        setAvailableOffensiveActionSpace();
+
         for (int i=0;i<NUMBER_OF_SPIRITS;i++){
             spirit[i].setAvailableOffensiveActionSpace();
         }
-
+        recalculate_attributes(wardrobe);
 
     }
 
@@ -165,6 +165,7 @@ public class Person {
             toCast[i]=0;
         }
         setAvailableOffensiveActionSpace();
+        wardrobe= new Wardrobe();
 /*        for (int i=0;i<NUMBER_OF_SPIRITS;i++){
             spirit[i].setAvailableOffensiveActionSpace();
         }*/
@@ -224,6 +225,7 @@ public class Person {
         cast(toCast[0], toCast[2], target, toCast[3]);
         last_cast=toCast;
         last_spirit=spirit_type;
+
     }
 
 
@@ -334,6 +336,21 @@ public class Person {
                 center_x=center_x+state.force*state.knock_back_direction;
                 OOB();
             }
+        }else if (state.state==3){
+            if (Math.abs(center_x-state.destination_x)>.01f){
+                facing_direction=return_direction(center_x,state.destination_x);
+                motion(state.ms,return_direction(center_x,state.destination_x));
+            }else{
+                state.setState(0,0,0,0);
+            }
+        }
+    }
+
+    public int return_direction(float x_1, float x_2){
+        if (x_1>x_2){
+            return -1;
+        }else{
+            return 1;
         }
     }
 
@@ -353,11 +370,13 @@ public class Person {
                     circle.animate(action.cast_time/action.total_cast_time);
                 }
                 if (action.spell_type==1){
-                    this.animation++;
-                    if (this.animation>20){
-                        this.animation=0;
-                    }
+
                 }
+            }
+        }else if (state.state==3){
+            this.animation++;
+            if (this.animation>20){
+                this.animation=0;
             }
         }
     }

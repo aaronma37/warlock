@@ -271,6 +271,9 @@ public class Rend implements GLSurfaceView.Renderer {
         for (int i =0; i<50;i++){
             projectile_swap[i]= new Projectile();
         }
+
+        text_collection.add_to_active_text(10);
+        text_collection.add_to_active_text(11);
     }
 
     public void exitArena(){
@@ -320,7 +323,6 @@ public class Rend implements GLSurfaceView.Renderer {
             draw_battle();
         }else if (game_state==1){
             text_collection.add_to_active_text(0);
-
         }
 
         draw_ui(game_state);
@@ -329,9 +331,14 @@ public class Rend implements GLSurfaceView.Renderer {
     }
 
     public void draw_text(){
-
         for (int i = 0;i<text_collection.active_text.size();i++){
             draw_word(text_collection.active_text.get(i));
+        }
+
+        if (game_state==0){
+            for (int i =0;i<10;i++){
+                draw_word(text_collection.active_area_text[i]);
+            }
         }
     }
 
@@ -345,7 +352,7 @@ public class Rend implements GLSurfaceView.Renderer {
 
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
         Matrix.translateM(scratch, 0, hard_text.x+hard_text.width-.1f, hard_text.y, 0f);
-        Matrix.scaleM(scratch, 0, .05f,.05f, 1f);
+        Matrix.scaleM(scratch, 0, .05f*hard_text.text_size,.05f*hard_text.text_size, 1f);
 
         for (int j=0;j<hard_text.str.length();j++){
             font_1.Draw_Word(scratch,hard_text.str.charAt(j));
@@ -487,6 +494,7 @@ public class Rend implements GLSurfaceView.Renderer {
         //Update game
         victory=1;
         red_victory_flag=true;
+        blue_victory_flag=true;
         for (int i =0; i<blue_team.size();i++){
             if (resolve_people(blue_team.get(i),red_team.get(0))){
                 red_victory_flag=false;
@@ -508,6 +516,13 @@ public class Rend implements GLSurfaceView.Renderer {
         for (int i = active_projectiles.size()-1; i >= 0;i--){
             resolve_projectile(active_projectiles.get(i),i);
         }
+
+        //TEAM RED MAKE DECISIONS
+        for (int i =0; i<red_team.size();i++){
+            if (red_team.get(i).state.state==0){
+                red_team.get(i).cast(0,0,blue_team.get(0),0);
+            }
+        }
     }
 
     public boolean resolve_people(Person origin, Person target){
@@ -526,7 +541,7 @@ public class Rend implements GLSurfaceView.Renderer {
                     //Complete action
                     origin.action.step(projectile_swap, active_projectiles);
 
-                }else if(origin.state.state==2){
+                }else if(origin.state.state==2 || origin.state.state==3){
                     origin.step();
                 }
                 return true;
@@ -534,8 +549,9 @@ public class Rend implements GLSurfaceView.Renderer {
         return false;
     }
 
+
     public void resolve_projectile(Projectile inner_projectile, int i){
-/*        if (!inner_projectile.active){
+        if (!inner_projectile.active){
             projectile_swap[i].reset();
             active_projectiles.remove(i);
             return;
@@ -548,7 +564,8 @@ public class Rend implements GLSurfaceView.Renderer {
                 inner_projectile.on_hit();
                 inner_projectile.active_targets.get(j).hitBy(inner_projectile);
             }
-        }*/
+        }
+
     }
 
     public void command_spirit(int spirit_type){
