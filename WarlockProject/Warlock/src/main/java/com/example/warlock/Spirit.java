@@ -101,15 +101,22 @@ public class Spirit {
                 }else{
                     action_choose_index[i]=action_choose_index[i-1]+temp_sum;
                 }
+
             }
 
-            action_decision=(int)Math.floor(Math.random()*action_choose_index[ACTION_SPACE_SIZE-1]);
-            for(int i=0;i<ACTION_SPACE_SIZE;i++){
-                if (action_decision<action_choose_index[i]){
-                    action_decision=i;
-                    break;
+            if (action_choose_index[ACTION_SPACE_SIZE-1]==0){
+                action_decision=-1;
+            }else{
+                action_decision=(int)Math.floor(Math.random()*action_choose_index[ACTION_SPACE_SIZE-1]);
+                for(int i=0;i<ACTION_SPACE_SIZE;i++){
+                    if (action_decision<action_choose_index[i]){
+                        action_decision=i;
+                        break;
+                    }
                 }
             }
+
+
             System.out.println(origin.name+"casts attack: " + action_decision + "score: " + action_choose_index[ACTION_SPACE_SIZE-1]);
 
         }else if (meta_decision==1){
