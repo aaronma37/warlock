@@ -102,6 +102,11 @@ public class Rend implements GLSurfaceView.Renderer {
     public GeneralGraphic blue_apparition;
     public GeneralGraphic buttons;
     public GeneralGraphic text_box;
+    public GeneralGraphic test_hair;
+    public GeneralGraphic test_head;
+    public GeneralGraphic test_eyes;
+
+
     public UI_Graphics ui_graphics[] = new UI_Graphics[5];
     public Cont_Font font_1;
     public Text_Collection text_collection;
@@ -181,6 +186,11 @@ public class Rend implements GLSurfaceView.Renderer {
         buttons = new GeneralGraphic(context,11,.4f, .1f,-.4f,0);
         font_1 = new Cont_Font(context,0);
         text_box = new GeneralGraphic(context,18);
+        test_hair = new GeneralGraphic(context,19);
+        test_eyes = new GeneralGraphic(context,21);
+
+        test_head = new GeneralGraphic(context,20);
+
         text_collection=new Text_Collection();
 
         for (int i=0;i<5;i++){
@@ -403,6 +413,8 @@ public class Rend implements GLSurfaceView.Renderer {
 
             }
 
+
+
         }
 
         for (int i = 0; i< active_projectiles.size();i++){
@@ -423,6 +435,28 @@ public class Rend implements GLSurfaceView.Renderer {
                 projectile_sprite[active_projectiles.get(i).spell_type].Draw(scratch,false,0);
             }
         }
+
+
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+        //Matrix.scaleM(scratch, 0, 5f,5f,1f);
+        Matrix.translateM(scratch, 0, 0.021f, -.008f, 1f);
+        Matrix.scaleM(scratch, 0, .06f,.06f,.5f);
+        test_head.Draw(scratch,false);
+
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+        //Matrix.scaleM(scratch, 0, 5,5,1f);
+
+        Matrix.translateM(scratch, 0, 0.058f, -.0195f, 1f);
+        Matrix.scaleM(scratch, 0, .02f,.02f,.5f);
+        test_eyes.Draw(scratch,false);
+
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+        //Matrix.scaleM(scratch, 0, 5,5,1f);
+
+        Matrix.translateM(scratch, 0, 0, 0, 1f);
+        Matrix.scaleM(scratch, 0, .15f,.1f,.5f);
+        test_hair.Draw(scratch,false);
+
     }
 
     public void update_ui_image(int k, int i){

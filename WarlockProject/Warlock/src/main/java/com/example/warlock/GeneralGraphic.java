@@ -173,7 +173,14 @@ public class GeneralGraphic
             selectedTextureDataHandle = loadTexture(mActivityContext,R.drawable.blue_apparition);
         }else if (s==18){
             mTextureDataHandle = loadTexture(mActivityContext, R.drawable.text_box);
+        }else if (s==19){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.f_h1);
+        }else if (s==20){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.f_head1);
+        }else if (s==21){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.f_eyes1);
         }
+
     }
 
 

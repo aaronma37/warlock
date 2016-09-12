@@ -186,8 +186,8 @@ public class MainActivity extends ActionBarActivity {
                                 for (int k = 0; k < 3; k++) {//META
                                     for (int g = 0; g < 10; g++) {//ACTION
                                         for (int p = 0; p < 15; p++) {
-                                            sView.mRenderer.player.spirit[i].meta_a[k].c[g]=dataSnapshot.child("spirit").child(Integer.toString(i)).child("ma").child(Integer.toString(k)).child("a").child(Integer.toString(g)).child("c").child(Integer.toString(p)).getValue(float.class);
-                                            sView.mRenderer.player.spirit[i].meta_a[k].o[g]=dataSnapshot.child("spirit").child(Integer.toString(i)).child("ma").child(Integer.toString(k)).child("a").child(Integer.toString(g)).child("o").child(Integer.toString(p)).getValue(float.class);
+                                            //sView.mRenderer.player.spirit[i].meta_a[k].c[g]=dataSnapshot.child("spirit").child(Integer.toString(i)).child("ma").child(Integer.toString(k)).child("a").child(Integer.toString(g)).child("c").child(Integer.toString(p)).getValue(float.class);
+                                            //sView.mRenderer.player.spirit[i].meta_a[k].o[g]=dataSnapshot.child("spirit").child(Integer.toString(i)).child("ma").child(Integer.toString(k)).child("a").child(Integer.toString(g)).child("o").child(Integer.toString(p)).getValue(float.class);
                                         }
                                     }
 
