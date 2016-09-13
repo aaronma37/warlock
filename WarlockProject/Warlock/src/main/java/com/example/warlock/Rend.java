@@ -102,9 +102,7 @@ public class Rend implements GLSurfaceView.Renderer {
     public GeneralGraphic blue_apparition;
     public GeneralGraphic buttons;
     public GeneralGraphic text_box;
-    public GeneralGraphic test_hair;
-    public GeneralGraphic test_head;
-    public GeneralGraphic test_eyes;
+    public Person_Graphics person_graphics;
 
 
     public UI_Graphics ui_graphics[] = new UI_Graphics[5];
@@ -186,10 +184,7 @@ public class Rend implements GLSurfaceView.Renderer {
         buttons = new GeneralGraphic(context,11,.4f, .1f,-.4f,0);
         font_1 = new Cont_Font(context,0);
         text_box = new GeneralGraphic(context,18);
-        test_hair = new GeneralGraphic(context,19);
-        test_eyes = new GeneralGraphic(context,21);
-
-        test_head = new GeneralGraphic(context,20);
+        person_graphics = new Person_Graphics(context, 0,0,0);
 
         text_collection=new Text_Collection();
 
@@ -436,26 +431,8 @@ public class Rend implements GLSurfaceView.Renderer {
             }
         }
 
-
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-        //Matrix.scaleM(scratch, 0, 5f,5f,1f);
-        Matrix.translateM(scratch, 0, 0.021f, -.008f, 1f);
-        Matrix.scaleM(scratch, 0, .06f,.06f,.5f);
-        test_head.Draw(scratch,false);
-
-        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-        //Matrix.scaleM(scratch, 0, 5,5,1f);
-
-        Matrix.translateM(scratch, 0, 0.058f, -.0195f, 1f);
-        Matrix.scaleM(scratch, 0, .02f,.02f,.5f);
-        test_eyes.Draw(scratch,false);
-
-        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-        //Matrix.scaleM(scratch, 0, 5,5,1f);
-
-        Matrix.translateM(scratch, 0, 0, 0, 1f);
-        Matrix.scaleM(scratch, 0, .15f,.1f,.5f);
-        test_hair.Draw(scratch,false);
+        person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,0,0);
 
     }
 

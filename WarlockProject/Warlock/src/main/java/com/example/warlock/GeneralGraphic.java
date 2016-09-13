@@ -77,6 +77,59 @@ public class GeneralGraphic
     // Set color with red, green, blue and alpha (opacity) values
     float color[] = { 1f, 1f, 1f, 1f };
 
+    public GeneralGraphic(final Context activityContext, int k, int kk)
+    {
+        mActivityContext = activityContext;
+        s = k;
+
+        //Initialize Vertex Byte Buffer for Shape Coordinates / # of coordinate values * 4 bytes per float
+        ByteBuffer bb = ByteBuffer.allocateDirect(spriteCoords.length * 4);
+        //Use the Device's Native Byte Order
+        bb.order(ByteOrder.nativeOrder());
+        //Create a floating point buffer from the ByteBuffer
+        vertexBuffer = bb.asFloatBuffer();
+        //Add the coordinates to the FloatBuffer
+        vertexBuffer.put(spriteCoords);
+        //Set the Buffer to Read the first coordinate
+        vertexBuffer.position(0);
+
+
+        final float[] cubeTextureCoordinateData =
+                {
+                        1f,  0f,
+                        1f, 1f,
+                        0f, 1f,
+                        0f, 0f
+                };
+
+
+
+        mCubeTextureCoordinates = ByteBuffer.allocateDirect(cubeTextureCoordinateData.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
+        mCubeTextureCoordinates.put(cubeTextureCoordinateData).position(0);
+
+        //Initialize byte buffer for the draw list
+        ByteBuffer dlb = ByteBuffer.allocateDirect(spriteCoords.length * 2);
+        dlb.order(ByteOrder.nativeOrder());
+        drawListBuffer = dlb.asShortBuffer();
+        drawListBuffer.put(drawOrder);
+        drawListBuffer.position(0);
+
+        int vertexShader = Rend.loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
+        int fragmentShader = Rend.loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
+
+        shaderProgram = GLES20.glCreateProgram();
+        GLES20.glAttachShader(shaderProgram, vertexShader);
+        GLES20.glAttachShader(shaderProgram, fragmentShader);
+
+        //Texture Code
+        GLES20.glBindAttribLocation(shaderProgram, 0, "a_TexCoordinate");
+
+        GLES20.glLinkProgram(shaderProgram);
+
+        mTextureDataHandle = k;
+        selectedTextureDataHandle=k;
+    }
+
     public GeneralGraphic(final Context activityContext, int k)
     {
         mActivityContext = activityContext;
