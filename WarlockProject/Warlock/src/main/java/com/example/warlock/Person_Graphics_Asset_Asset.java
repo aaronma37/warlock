@@ -28,6 +28,8 @@ public class Person_Graphics_Asset_Asset
     public float width, height, y,x;
     public boolean active=false;
     public int s;
+    public float vel_x;
+
 
 
     private final String vertexShaderCode =
@@ -57,7 +59,7 @@ public class Person_Graphics_Asset_Asset
                     "}";
 
     private final int shaderProgram;
-    private final FloatBuffer vertexBuffer;
+    private FloatBuffer vertexBuffer;
     private final ShortBuffer drawListBuffer;
     private int mPositionHandle;
     private int mColorHandle;
@@ -66,6 +68,7 @@ public class Person_Graphics_Asset_Asset
     public float size;
     public float x_off;
     public float y_off;
+    public float alpha;
 
 
     // number of coordinates per vertex in this array
@@ -78,27 +81,49 @@ public class Person_Graphics_Asset_Asset
             1f,  1f}; //top right
 */
 
-    static float spriteCoords[] = {
+    public float spriteCoords[] = {
 
 
             -1f,  1f,   // top left xy
+            -.5f, 1f,
             0, 1f,
+            .5f, 1f,
             1f, 1f,
 
+            -1f, .5f,
+            -.5f, .5f,
+            0f, .5f,
+            .5f, .5f,
+            1f, .5f,
+
+
             -1f, 0f,
+            -.5f, 0f,
             0f, 0f,
+            .5f, 0f,
             1f, 0f,
 
+            -1f, -.5f,
+            -.5f, -.5f,
+            0f, -.5f,
+            .5f, -.5f,
+            1f, -.5f,
+
+
             -1f, -1f,
+            -.5f, -1f,
             0f, -1f,
+            .5f, -1f,
             1f, -1f
 
 
 
     }; //top right*/
 
+    private ByteBuffer bb = ByteBuffer.allocateDirect(spriteCoords.length * 4);
 
-    private short drawOrder[] = { 0,3,4, 0,4,1, 1,4,5, 1,5,2, 3,6,7, 3,7,4, 4,7,8, 4,8,5
+    private short drawOrder[] = { 0,5,6, 0,6,1, 1,6,7, 1,7,2, 2,7,8, 2,8,3,  3,8,9, 3,9,4, 5,10,11, 5,11,6, 6,11,12, 6,12,7, 7,12,13, 7,13,8, 8,13,14, 8,14,9, 10,15,16, 10,16,11, 11,16,17, 11,17,12, 12,17,18, 12,18,13, 13,18,19, 13,19,14,
+            15,20,21, 15,21,16, 16,21,22, 16,22,17, 17,22,23, 17,23,18, 18,23,24, 18,24,19
 
 
     }; //Order to draw vertices
@@ -113,12 +138,14 @@ public class Person_Graphics_Asset_Asset
         size=i_size;
         x_off=i_x_off;
         y_off=i_y_off;
+        vel_x=0;
+        alpha=0;
 
         mActivityContext = activityContext;
         s = k;
 
         //Initialize Vertex Byte Buffer for Shape Coordinates / # of coordinate values * 4 bytes per float
-        ByteBuffer bb = ByteBuffer.allocateDirect(spriteCoords.length * 4);
+
         //Use the Device's Native Byte Order
         bb.order(ByteOrder.nativeOrder());
         //Create a floating point buffer from the ByteBuffer
@@ -133,15 +160,33 @@ public class Person_Graphics_Asset_Asset
                 {
 
                         1f,  0f,   // top left xy
+                        .75f, 0f,
                         .5f, 0f,
+                        .25f, 0f,
                         0f, 0f,
 
+                        1f, .25f,
+                        .75f, .25f,
+                        .5f, .25f,
+                        .25f, .25f,
+                        0f, .25f,
+
                         1f, .5f,
+                        .75f, .5f,
                         .5f, .5f,
+                        .25f, .5f,
                         0f, .5f,
 
+                        1f, .75f,
+                        .75f, .75f,
+                        .5f, .75f,
+                        .25f, .75f,
+                        0f, .75f,
+
                         1f, 1f,
+                        .75f, 1f,
                         .5f, 1f,
+                        .25f, 1f,
                         0f, 1f};
 
 
@@ -150,7 +195,7 @@ public class Person_Graphics_Asset_Asset
         mCubeTextureCoordinates.put(cubeTextureCoordinateData).position(0);
 
         //Initialize byte buffer for the draw list
-        ByteBuffer dlb = ByteBuffer.allocateDirect(spriteCoords.length * 3);
+        ByteBuffer dlb = ByteBuffer.allocateDirect(spriteCoords.length * 4);
         dlb.order(ByteOrder.nativeOrder());
         drawListBuffer = dlb.asShortBuffer();
         drawListBuffer.put(drawOrder);
@@ -170,6 +215,29 @@ public class Person_Graphics_Asset_Asset
 
         mTextureDataHandle = k;
         selectedTextureDataHandle=k;
+    }
+
+    public void step(float force, int dir){
+
+        vel_x=vel_x+.2f*(0-alpha)-force*5f*dir-vel_x*.2f;
+        alpha=alpha+vel_x;
+
+        if (alpha>1f){
+            alpha=1f;
+        }else if (alpha <-1f){
+            alpha=-1f;
+        }
+
+        for (int i = 0;i<5;i++){
+            spriteCoords[20+i*2]=(i*.5f-1f)+alpha*.25f;
+            spriteCoords[30+i*2]=(i*.5f-1f)+alpha*.5f;
+            spriteCoords[40+i*2]=(i*.5f-1f)+alpha;
+        }
+
+
+        vertexBuffer.put(spriteCoords);
+        vertexBuffer.position(0);
+
     }
 
 

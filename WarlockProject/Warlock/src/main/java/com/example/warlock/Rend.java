@@ -102,8 +102,6 @@ public class Rend implements GLSurfaceView.Renderer {
     public GeneralGraphic blue_apparition;
     public GeneralGraphic buttons;
     public GeneralGraphic text_box;
-    public Person_Graphics person_graphics;
-
 
     public UI_Graphics ui_graphics[] = new UI_Graphics[5];
     public Cont_Font font_1;
@@ -136,8 +134,6 @@ public class Rend implements GLSurfaceView.Renderer {
     private boolean blue_victory_flag, red_victory_flag;
     private int victory=0;
 
-    private Person temp_person = new Person();
-
     private float width,height;
 
     private float mAngle;
@@ -145,8 +141,7 @@ public class Rend implements GLSurfaceView.Renderer {
     public Rend(Context context1, Firebase mref) {
         context = context1;
         ref=mref;
-        player = new Person("Aaron", -.5f, GROUND_LEVEL);
-        luke = new Person("Luke", .5f, GROUND_LEVEL);
+
     }
 
     @Override
@@ -184,9 +179,11 @@ public class Rend implements GLSurfaceView.Renderer {
         buttons = new GeneralGraphic(context,11,.4f, .1f,-.4f,0);
         font_1 = new Cont_Font(context,0);
         text_box = new GeneralGraphic(context,18);
-        person_graphics = new Person_Graphics(context, 0,0,0);
 
         text_collection=new Text_Collection();
+
+        player = new Person("Aaron", -.5f, GROUND_LEVEL, context);
+        luke = new Person("Luke", .5f, GROUND_LEVEL, context);
 
         for (int i=0;i<5;i++){
             ui_graphics[i] = new UI_Graphics(context,i);
@@ -432,7 +429,7 @@ public class Rend implements GLSurfaceView.Renderer {
         }
 
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-        person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,0,0);
+        player.person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,active_people.get(0).center_x+.2f,0,active_people.get(0).facing_direction);
 
     }
 
@@ -546,11 +543,12 @@ public class Rend implements GLSurfaceView.Renderer {
                         calculateMetaObs(origin,target);
                         calculateOffObs(origin,target);
                         calculateTargetObs(origin,target);
-
+                        origin.step();
 
                 }else if (origin.state.state==1 && origin.action.active){
                     //Complete action
                     origin.action.step(projectile_swap, active_projectiles);
+                    origin.step();
 
                 }else if(origin.state.state==2 || origin.state.state==3){
                     origin.step();

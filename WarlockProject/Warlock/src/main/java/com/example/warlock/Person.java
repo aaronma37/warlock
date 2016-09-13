@@ -1,5 +1,7 @@
 package com.example.warlock;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +37,8 @@ public class Person {
     public int last_spell=0;
     public float action_choose_index[]= new float[ACTION_SPACE_SIZE];
     public Wardrobe wardrobe;
+    public Person_Graphics person_graphics;
+    public Context myContext;
 
     public Spirit spirit[] = new Spirit[NUMBER_OF_SPIRITS];
 
@@ -62,71 +66,6 @@ public class Person {
     public Offensive_Physical_Actions fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball,null);
 
 
-    public Person() {
-        health=100;
-        name="default";
-        hitbox=new Hitbox(3,5);
-        height=10;
-        width=6;
-        busy=false;
-        state.setState(0,0,0,0);
-
-        center_x=0;
-        center_y=0;
-
-        for (int i=0;i<META_SIZE;i++){
-            a[i]=new action_space_action(i);
-        }
-        for (int i=0;i<ACTION_SPACE_SIZE;i++){
-            off_a[i]=new action_space_action(i);
-            def_a[i]=new action_space_action(i);
-        }
-
-        for (int i=0;i<NUMBER_OF_ATTRIBUTES;i++){
-            attribute[i]=0;
-        }
-
-        for (int i=0;i<NUMBER_OF_SPIRITS;i++){
-            spirit[i]=new Spirit(i);
-        }
-
-        for (int i=0;i<4;i++){
-            toCast[i]=0;
-        }
-
-        wardrobe= new Wardrobe();
-        //recalculate_attributes(wardrobe);
-        setAvailableOffensiveActionSpace();
-
-    }
-
-    public void reset(float start_x, float start_y){
-        health=100;
-        height=10;
-        alive=true;
-        width=6;
-        hitbox = new Hitbox(3,5);
-        center_x=start_x;
-        center_y=start_y;
-        busy=false;
-        state.setState(0,0,0,0);
-
-        for (int i=0;i<NUMBER_OF_ATTRIBUTES;i++){
-            attribute[i]=0;
-        }
-
-        for (int i=0;i<4;i++){
-            toCast[i]=0;
-        }
-
-        setAvailableOffensiveActionSpace();
-
-        for (int i=0;i<NUMBER_OF_SPIRITS;i++){
-            spirit[i].setAvailableOffensiveActionSpace();
-        }
-        recalculate_attributes(wardrobe);
-
-    }
 
     public void recalculate_attributes(Wardrobe w){
         for (int i =0;i<NUMBER_OF_ATTRIBUTES;i++){
@@ -136,7 +75,8 @@ public class Person {
         }
     }
 
-    public Person(String given_name, float start_x, float start_y) {
+    public Person(String given_name, float start_x, float start_y, Context context) {
+        myContext=context;
         health=100;
         name=given_name;
         height=10;
@@ -164,11 +104,42 @@ public class Person {
         for (int i=0;i<4;i++){
             toCast[i]=0;
         }
+
+        person_graphics = new Person_Graphics(myContext, 0,0,0);
         setAvailableOffensiveActionSpace();
         wardrobe= new Wardrobe();
 /*        for (int i=0;i<NUMBER_OF_SPIRITS;i++){
             spirit[i].setAvailableOffensiveActionSpace();
         }*/
+    }
+
+
+    public void reset(float start_x, float start_y){
+        health=100;
+        height=10;
+        alive=true;
+        width=6;
+        hitbox = new Hitbox(3,5);
+        center_x=start_x;
+        center_y=start_y;
+        busy=false;
+        state.setState(0,0,0,0);
+
+        for (int i=0;i<NUMBER_OF_ATTRIBUTES;i++){
+            attribute[i]=0;
+        }
+
+        for (int i=0;i<4;i++){
+            toCast[i]=0;
+        }
+
+        setAvailableOffensiveActionSpace();
+
+        for (int i=0;i<NUMBER_OF_SPIRITS;i++){
+            spirit[i].setAvailableOffensiveActionSpace();
+        }
+        recalculate_attributes(wardrobe);
+
     }
 
 /*    public void cast(Offensive_Physical_Actions desired_action){
@@ -318,6 +289,7 @@ public class Person {
 
     public void motion(float speed, float direction){
         center_x=center_x+speed*direction;
+        person_graphics.resolve_movement(direction*speed,0, facing_direction);
         OOB();
     }
 
@@ -331,12 +303,16 @@ public class Person {
             }
         }
 
-        if (state.state==2){
+
+        if (state.state==0 || state.state==1){
+            motion(0,1);
+        } else if (state.state==2){
             state.time_in_state--;
             if (state.time_in_state < 1){
                 state.state=0;
             }else{
-                center_x=center_x+state.force*state.knock_back_direction;
+                motion(state.force,state.knock_back_direction);
+                //center_x=center_x+state.force*state.knock_back_direction;
                 OOB();
             }
         }else if (state.state==3){

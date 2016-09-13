@@ -18,52 +18,69 @@ public class Person_Graphics {
     public Person_Graphics_Asset hair;
     public Person_Graphics_Asset face;
     public Person_Graphics_Asset eyes;
+    public Context myContext;
 
     public List<Person_Graphics_Asset_Asset> hair_assets = new ArrayList<>();
 
 
     public Person_Graphics(Context context, int hair_index, int face_index, int eyes_index){
 
+        myContext=context;
 
 
 
         if (face_index==0){
-            face = new Person_Graphics_Asset(context, loadTexture(context, R.drawable.f_head1), 1f,.06f,.021f,-.008f);
+            face = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_head1), 1f,.06f,.021f,-.008f);
         }
 
         if (hair_index==0){
-            hair  = new Person_Graphics_Asset(context, loadTexture(context, R.drawable.f_h1_base),.15f/.15f,.1f, .035f-face.x_off,-face.y_off);
+            hair  = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h1_base),.15f/.15f,.1f, .035f-face.x_off,-face.y_off);
 
-            Person_Graphics_Asset_Asset hair_asset_1 = new Person_Graphics_Asset_Asset(context, loadTexture(context,R.drawable.f_h1_add_1),.15f/.15f,.06f, -.1f-face.x_off-hair.x_off,.02f-face.y_off-hair.y_off);
+            Person_Graphics_Asset_Asset hair_asset_1 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_h1_add_1),.15f/.15f,.06f, -.1f-face.x_off-hair.x_off,.02f-face.y_off-hair.y_off);
             hair_assets.add(hair_asset_1);
         }
 
         if (eyes_index==0){
-            eyes = new Person_Graphics_Asset(context, loadTexture(context, R.drawable.f_eyes1),1f,.02f,0.058f,-.0195f);
+            eyes = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_eyes1),1f,.02f,0.058f,-.0195f);
         }
 
     }
 
-    public void draw_person(float scratch[], float mMVPMatrix[], float zeroRotationMatrix[], float x, float y){
+    public void resolve_movement(float x_movement, float y_movement, int dir){
 
-        Matrix.translateM(scratch, 0, x+face.x_off, y+face.y_off, 1f);
+        for (int i =0; i<hair_assets.size();i++){
+            hair_assets.get(i).step(x_movement,dir);
+        }
+    }
+
+    public void draw_person(float scratch[], float mMVPMatrix[], float zeroRotationMatrix[], float x, float y, int dir){
+
+        Matrix.translateM(scratch, 0, x+face.x_off*dir, y+face.y_off, 1f);
         Matrix.scaleM(scratch, 0, face.size,face.size*face.AR,.5f);
+        Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
+
         face.Draw(scratch,false);
 
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-        Matrix.translateM(scratch, 0, x+eyes.x_off, y+eyes.y_off, 1f);
+        Matrix.translateM(scratch, 0, x+eyes.x_off*dir, y+eyes.y_off, 1f);
         Matrix.scaleM(scratch, 0, eyes.size,eyes.size*eyes.AR,.5f);
+        Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
+
         eyes.Draw(scratch,false);
 
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-        Matrix.translateM(scratch, 0, x+face.x_off+hair.x_off, y+face.y_off+hair.y_off, 1f);
+        Matrix.translateM(scratch, 0, x+face.x_off*dir+hair.x_off*dir, y+face.y_off+hair.y_off, 1f);
         Matrix.scaleM(scratch, 0, hair.size,hair.size*hair.AR,.5f);
+        Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
+
         hair.Draw(scratch,false);
 
         for (int i =0; i<hair_assets.size();i++){
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, x+face.x_off+hair.x_off+hair_assets.get(i).x_off, y+face.y_off+hair.y_off+hair_assets.get(i).y_off, 1f);
+            Matrix.translateM(scratch, 0, x+face.x_off*dir+hair.x_off*dir+hair_assets.get(i).x_off*dir, y+face.y_off+hair.y_off+hair_assets.get(i).y_off, 1f);
             Matrix.scaleM(scratch, 0, hair_assets.get(i).size,hair_assets.get(i).size*hair_assets.get(i).AR,.5f);
+            Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
+
             hair_assets.get(i).Draw(scratch,false);
         }
 
