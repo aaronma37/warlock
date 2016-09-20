@@ -376,12 +376,14 @@ public class Rend implements GLSurfaceView.Renderer {
                 draw_spell_circle(active_people.get(i));
             }
 
-            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+/*            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
             Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).facing_direction*.05f, active_people.get(i).center_y, 1f);
             Matrix.scaleM(scratch, 0, active_people.get(i).hitbox.x*5.5f/100f,active_people.get(i).hitbox.y*4/100f,1f);
             Matrix.rotateM(scratch, 0, 90-active_people.get(i).facing_direction*90, 0, 1f, 0);
-            sprite.Draw(scratch,false,(int)active_people.get(i).animation/5);
+            sprite.Draw(scratch,false,(int)active_people.get(i).animation/5);*/
 
+            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+            player.person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,active_people.get(i).center_x,.3f,active_people.get(i).facing_direction);
 
 
 
@@ -428,8 +430,7 @@ public class Rend implements GLSurfaceView.Renderer {
             }
         }
 
-        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-        player.person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,active_people.get(0).center_x+.2f,0,active_people.get(0).facing_direction);
+
 
     }
 

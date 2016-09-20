@@ -105,7 +105,7 @@ public class Person {
             toCast[i]=0;
         }
 
-        person_graphics = new Person_Graphics(myContext, 0,0,0);
+        person_graphics = new Person_Graphics(myContext, 2,0,0,0);
         setAvailableOffensiveActionSpace();
         wardrobe= new Wardrobe();
 /*        for (int i=0;i<NUMBER_OF_SPIRITS;i++){
@@ -289,7 +289,7 @@ public class Person {
 
     public void motion(float speed, float direction){
         center_x=center_x+speed*direction;
-        person_graphics.resolve_movement(direction*speed,0, facing_direction);
+        person_graphics.resolve_movement(direction*speed,0, facing_direction, state.state);
         OOB();
     }
 
@@ -305,7 +305,7 @@ public class Person {
 
 
         if (state.state==0 || state.state==1){
-            motion(0,1);
+            person_graphics.resolve_movement(0,0,facing_direction,state.state);
         } else if (state.state==2){
             state.time_in_state--;
             if (state.time_in_state < 1){

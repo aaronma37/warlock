@@ -29,6 +29,7 @@ public class Person_Graphics_Asset_Asset
     public boolean active=false;
     public int s;
     public float vel_x;
+    public float force;
 
 
 
@@ -69,6 +70,9 @@ public class Person_Graphics_Asset_Asset
     public float x_off;
     public float y_off;
     public float alpha;
+    public float a1,a2,a3,a4,a5;
+    public float mass;
+    public float drag;
 
 
     // number of coordinates per vertex in this array
@@ -132,7 +136,7 @@ public class Person_Graphics_Asset_Asset
     // Set color with red, green, blue and alpha (opacity) values
     float color[] = { 1f, 1f, 1f, 1f };
 
-    public Person_Graphics_Asset_Asset(final Context activityContext, int k, float i_AR, float i_size, float i_x_off, float i_y_off)
+    public Person_Graphics_Asset_Asset(final Context activityContext, int k, float i_AR, float i_size, float i_x_off, float i_y_off, float a_1, float a_2, float a_3, float a_4, float a_5, float i_mass, float i_drag)
     {
         AR=i_AR;
         size=i_size;
@@ -140,6 +144,13 @@ public class Person_Graphics_Asset_Asset
         y_off=i_y_off;
         vel_x=0;
         alpha=0;
+        a1=a_1;
+        a2=a_2;
+        a3=a_3;
+        a4=a_4;
+        a5=a_5;
+        mass=i_mass;
+        drag=i_drag;
 
         mActivityContext = activityContext;
         s = k;
@@ -159,35 +170,35 @@ public class Person_Graphics_Asset_Asset
         final float[] cubeTextureCoordinateData =
                 {
 
-                        1f,  0f,   // top left xy
-                        .75f, 0f,
-                        .5f, 0f,
-                        .25f, 0f,
-                        0f, 0f,
+                        .99f,  0.01f,   // top left xy
+                        .75f, 0.01f,
+                        .5f, 0.01f,
+                        .25f, 0.01f,
+                        0.01f, 0.01f,
 
-                        1f, .25f,
+                        .99f, .25f,
                         .75f, .25f,
                         .5f, .25f,
                         .25f, .25f,
-                        0f, .25f,
+                        0.01f, .25f,
 
-                        1f, .5f,
+                        .99f, .5f,
                         .75f, .5f,
                         .5f, .5f,
                         .25f, .5f,
-                        0f, .5f,
+                        0.01f, .5f,
 
-                        1f, .75f,
+                        .99f, .75f,
                         .75f, .75f,
                         .5f, .75f,
                         .25f, .75f,
-                        0f, .75f,
+                        0.01f, .75f,
 
-                        1f, 1f,
-                        .75f, 1f,
-                        .5f, 1f,
-                        .25f, 1f,
-                        0f, 1f};
+                        .99f, .99f,
+                        .75f, .99f,
+                        .5f, .99f,
+                        .25f, .99f,
+                        0.01f, .99f};
 
 
 
@@ -217,9 +228,16 @@ public class Person_Graphics_Asset_Asset
         selectedTextureDataHandle=k;
     }
 
-    public void step(float force, int dir){
+    public void add_force(float i_force, int dir){
+        System.out.println("force: " + force);
 
-        vel_x=vel_x+.2f*(0-alpha)-force*5f*dir-vel_x*.2f;
+        force-=dir*i_force;
+    }
+
+    public void step(){
+
+
+        vel_x=vel_x+.2f*(0-alpha)-force/mass-vel_x*drag;
         alpha=alpha+vel_x;
 
         if (alpha>1f){
@@ -229,11 +247,14 @@ public class Person_Graphics_Asset_Asset
         }
 
         for (int i = 0;i<5;i++){
-            spriteCoords[20+i*2]=(i*.5f-1f)+alpha*.25f;
-            spriteCoords[30+i*2]=(i*.5f-1f)+alpha*.5f;
-            spriteCoords[40+i*2]=(i*.5f-1f)+alpha;
+            spriteCoords[00+i*2]=(i*.5f-1f)+alpha*a1;
+            spriteCoords[10+i*2]=(i*.5f-1f)+alpha*a2;
+            spriteCoords[20+i*2]=(i*.5f-1f)+alpha*a3;
+            spriteCoords[30+i*2]=(i*.5f-1f)+alpha*a4;
+            spriteCoords[40+i*2]=(i*.5f-1f)+alpha*a5;
         }
 
+        force=0;
 
         vertexBuffer.put(spriteCoords);
         vertexBuffer.position(0);

@@ -13,7 +13,7 @@ import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public class Person_Graphics_Asset
+public class Person_Graphics_Asset_Sprite
 {
     //Reference to Activity Context
     private final Context mActivityContext;
@@ -82,7 +82,7 @@ public class Person_Graphics_Asset
     // Set color with red, green, blue and alpha (opacity) values
     float color[] = { 1f, 1f, 1f, 1f };
 
-    public Person_Graphics_Asset(final Context activityContext, int k, float i_AR, float i_size, float i_x_off, float i_y_off)
+    public Person_Graphics_Asset_Sprite(final Context activityContext, int k, float i_AR, float i_size, float i_x_off, float i_y_off)
     {
 
 
@@ -106,73 +106,23 @@ public class Person_Graphics_Asset
         vertexBuffer.position(0);
 
 
-        final float[] cubeTextureCoordinateData =
-                {
-                        .99f,  .01f,
-                        .99f, .99f,
-                        .01f, .99f,
-                        .01f, .01f
-                };
+        final float cubeTextureCoordinateData[] = new float[8*10];
+        for (int j=0;j<8;j++){
+/*            cubeTextureCoordinateData[8*j+0]=1f-.15f-j*.1f;
+            cubeTextureCoordinateData[8*j+2]=cubeTextureCoordinateData[8*j+0];
+            cubeTextureCoordinateData[8*j+4]=cubeTextureCoordinateData[8*j+0]+.1f;
+            cubeTextureCoordinateData[8*j+6]=cubeTextureCoordinateData[8*j+0]+.1f;*/
 
+            cubeTextureCoordinateData[8*j+0]=-1f+.125f+.125f*j;
+            cubeTextureCoordinateData[8*j+2]=cubeTextureCoordinateData[8*j+0];
+            cubeTextureCoordinateData[8*j+4]=cubeTextureCoordinateData[8*j+0]-.125f;
+            cubeTextureCoordinateData[8*j+6]=cubeTextureCoordinateData[8*j+0]-.125f;
 
-
-        mCubeTextureCoordinates = ByteBuffer.allocateDirect(cubeTextureCoordinateData.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
-        mCubeTextureCoordinates.put(cubeTextureCoordinateData).position(0);
-
-        //Initialize byte buffer for the draw list
-        ByteBuffer dlb = ByteBuffer.allocateDirect(spriteCoords.length * 2);
-        dlb.order(ByteOrder.nativeOrder());
-        drawListBuffer = dlb.asShortBuffer();
-        drawListBuffer.put(drawOrder);
-        drawListBuffer.position(0);
-
-        int vertexShader = Rend.loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
-        int fragmentShader = Rend.loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
-
-        shaderProgram = GLES20.glCreateProgram();
-        GLES20.glAttachShader(shaderProgram, vertexShader);
-        GLES20.glAttachShader(shaderProgram, fragmentShader);
-
-        //Texture Code
-        GLES20.glBindAttribLocation(shaderProgram, 0, "a_TexCoordinate");
-
-        GLES20.glLinkProgram(shaderProgram);
-
-        mTextureDataHandle = k;
-        selectedTextureDataHandle=k;
-    }
-
-    public Person_Graphics_Asset(final Context activityContext, int k, float i_AR, float i_size, float x_1, float x_2, float y_1, float y_2)
-    {
-
-
-        AR=i_AR;
-        size=i_size;
-        x_off=0;
-        y_off=0;
-
-        mActivityContext = activityContext;
-        s = k;
-
-        //Initialize Vertex Byte Buffer for Shape Coordinates / # of coordinate values * 4 bytes per float
-        ByteBuffer bb = ByteBuffer.allocateDirect(spriteCoords.length * 4);
-        //Use the Device's Native Byte Order
-        bb.order(ByteOrder.nativeOrder());
-        //Create a floating point buffer from the ByteBuffer
-        vertexBuffer = bb.asFloatBuffer();
-        //Add the coordinates to the FloatBuffer
-        vertexBuffer.put(spriteCoords);
-        //Set the Buffer to Read the first coordinate
-        vertexBuffer.position(0);
-
-
-        final float[] cubeTextureCoordinateData =
-                {
-                        x_2,  y_1,
-                        x_2,  y_2,
-                        x_1, y_2,
-                        x_1, y_1
-                };
+            cubeTextureCoordinateData[8*j+1]=0f;
+            cubeTextureCoordinateData[8*j+3]=cubeTextureCoordinateData[8*j+1]+.3f;
+            cubeTextureCoordinateData[8*j+5]=cubeTextureCoordinateData[8*j+1]+.3f;
+            cubeTextureCoordinateData[8*j+7]=cubeTextureCoordinateData[8*j+1];
+        }
 
 
 
@@ -203,7 +153,7 @@ public class Person_Graphics_Asset
     }
 
 
-    public void Draw(float[] mvpMatrix, boolean k)
+    public void Draw(float[] mvpMatrix, boolean k, int i)
     {
 
         GLES20.glUseProgram(shaderProgram);
@@ -241,8 +191,8 @@ public class Person_Graphics_Asset
         //Tell the texture uniform sampler to use this texture in the shader by binding to texture unit 0.
         GLES20.glUniform1i(mTextureUniformHandle, 0);
 
-        //Pass in the texture coordinate information
-        mCubeTextureCoordinates.position(0);
+        mCubeTextureCoordinates.position(i*8);
+
         GLES20.glVertexAttribPointer(mTextureCoordinateHandle, mTextureCoordinateDataSize, GLES20.GL_FLOAT, false, 0, mCubeTextureCoordinates);
         GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
 
