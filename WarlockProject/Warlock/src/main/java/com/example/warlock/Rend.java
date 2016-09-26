@@ -81,6 +81,8 @@ public class Rend implements GLSurfaceView.Renderer {
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
+    private final float[] personSizeMatrix = new float[16];
+
     private final float[] stockMatrix = new float[16];
     private final float[] mProjectionMatrix = new float[16];
     private final float[] mViewMatrix = new float[16];
@@ -383,7 +385,9 @@ public class Rend implements GLSurfaceView.Renderer {
             sprite.Draw(scratch,false,(int)active_people.get(i).animation/5);*/
 
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            player.person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,active_people.get(i).center_x,.3f,active_people.get(i).facing_direction);
+            Matrix.multiplyMM(personSizeMatrix, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+            Matrix.scaleM(personSizeMatrix, 0, .5f,.5f,.5f);
+            active_people.get(i).person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,active_people.get(i).center_x,.15f,active_people.get(i).facing_direction, active_people.get(i).state.state);
 
 
 

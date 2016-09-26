@@ -105,7 +105,7 @@ public class Person {
             toCast[i]=0;
         }
 
-        person_graphics = new Person_Graphics(myContext, 2,0,0,0);
+        person_graphics = new Person_Graphics(myContext, 2,0,0,0,0);
         setAvailableOffensiveActionSpace();
         wardrobe= new Wardrobe();
 /*        for (int i=0;i<NUMBER_OF_SPIRITS;i++){
