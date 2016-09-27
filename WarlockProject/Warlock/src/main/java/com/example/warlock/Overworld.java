@@ -4,11 +4,12 @@ package com.example.warlock;
  * Created by aaron on 9/27/16.
  */
 public class Overworld {
-    public Location location[] = new Location[50];
+    public Location location[] = new Location[52];
 
     public Overworld(){
         //right left up down
         location[0]= new Location(0,0,0,0,0);
+
         //TUTORIAL AREA 1
         location[1]= new Location(1,2,0,0,0);
         //TUTORIAL AREA 2

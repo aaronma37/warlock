@@ -109,6 +109,8 @@ public class Rend implements GLSurfaceView.Renderer {
     public GeneralGraphic buttons;
     public GeneralGraphic text_box;
 
+    public Environment_Data env;
+
     public UI_Graphics ui_graphics[] = new UI_Graphics[5];
     public Cont_Font font_1;
     public Text_Collection text_collection;
@@ -218,6 +220,8 @@ public class Rend implements GLSurfaceView.Renderer {
         for (int i=0;i<2;i++){
             pointer[i]=0;
         }
+
+        env = new Environment_Data(context,1);
 
 
 
@@ -373,10 +377,7 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public void draw_battle(){
         //Load stage
-        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-        Matrix.translateM(scratch, 0, 0, 0f, 0f);
-        Matrix.scaleM(scratch, 0, 1.8f,1.4f, 1f);
-        castle_background.Draw(scratch,false);
+        env.active_location.draw_location(scratch,mMVPMatrix,zeroRotationMatrix);
 
         //Load characters
         for (int i = 0; i< active_people.size();i++){
@@ -384,12 +385,6 @@ public class Rend implements GLSurfaceView.Renderer {
             if (active_people.get(i).state.state==1 && active_people.get(i).action.meta_type==0 && active_people.get(i).action.spell_type==0){
                 draw_spell_circle(active_people.get(i));
             }
-
-/*            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).facing_direction*.05f, active_people.get(i).center_y, 1f);
-            Matrix.scaleM(scratch, 0, active_people.get(i).hitbox.x*5.5f/100f,active_people.get(i).hitbox.y*4/100f,1f);
-            Matrix.rotateM(scratch, 0, 90-active_people.get(i).facing_direction*90, 0, 1f, 0);
-            sprite.Draw(scratch,false,(int)active_people.get(i).animation/5);*/
 
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
             Matrix.multiplyMM(personSizeMatrix, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
