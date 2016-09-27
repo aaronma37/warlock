@@ -16,6 +16,8 @@ public class Location_Data {
     public Location_Graphics_Asset arrow;
     public Arrow_Data arrow_datas[] = new Arrow_Data[4];
     public Location location;
+    private float ARROW_WIDTH=2f;
+    private float ARROW_AR=.25f;
 
     public Context myContext;
 
@@ -30,11 +32,11 @@ public class Location_Data {
         if (location.location_index==0){
             //NOTHING HERE
         }else if (location.location_index==1) {
-            base = new Location_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.location_ground_grass_bass), .25f , 2f, 0, 0);
-            arrow_datas[0]= new Arrow_Data(-1.5f,0f,0,true);
-            arrow_datas[1]= new Arrow_Data(1.5f,0f,2,false);
-            arrow_datas[2]= new Arrow_Data(0f,-.5f,1,false);
-            arrow_datas[3]= new Arrow_Data(0f,.5f,3,false);
+            base = new Location_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.location_ground_grass_bass), ARROW_WIDTH*ARROW_AR , ARROW_WIDTH, 0, 0);
+            arrow_datas[0]= new Arrow_Data(-1.5f,0f, 2f*.25f, 2f,0,true);
+            arrow_datas[1]= new Arrow_Data(1.5f,0f,ARROW_WIDTH*ARROW_AR,ARROW_WIDTH,2,false);
+            arrow_datas[2]= new Arrow_Data(0f,-.5f,ARROW_WIDTH*ARROW_AR,ARROW_WIDTH,1,false);
+            arrow_datas[3]= new Arrow_Data(0f,.5f,ARROW_WIDTH*ARROW_AR,ARROW_WIDTH,3,false);
 
 
 
@@ -65,6 +67,13 @@ public class Location_Data {
         for (int i=0;i<4;i++){
             draw_asset_custom(scratch,mMVPMatrix,zeroRotationMatrix,arrow,arrow_datas[i].direction, arrow_datas[i].x, arrow_datas[i].y);
         }
+
+    }
+
+    public void draw_location_battle(float scratch[], float mMVPMatrix[], float zeroRotationMatrix[]){
+
+        draw_asset(scratch,mMVPMatrix,zeroRotationMatrix,base,0);
+
 
     }
 

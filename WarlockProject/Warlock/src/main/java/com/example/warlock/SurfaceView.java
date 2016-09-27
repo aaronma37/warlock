@@ -86,16 +86,16 @@ public class SurfaceView extends GLSurfaceView {
                 mRenderer.pointer[0]=modded_x;
                 mRenderer.pointer[1]=modded_y;
 
-                System.out.println("gamestate x: "+mRenderer.game_state);
-
                 //GAME
-
-                if (checkClick(modded_x,modded_y,2f,.2f,0,-.2f)){
-                    move_player(modded_x);
-                    vibrator.vibrate(200);
+                if (mRenderer.game_state==0 || mRenderer.game_state ==5){
+                    if (checkClick(modded_x,modded_y,2f,.2f,0,-.2f)){
+                        move_player(modded_x);
+                        vibrator.vibrate(200);
+                    }
                 }
 
-
+                //ARROWS
+                check_arrow(modded_x,modded_y);
 
                     //UI
                 for (int i=0;i<mRenderer.ui_graphics[mRenderer.game_state].number_of_images;i++){
@@ -104,15 +104,6 @@ public class SurfaceView extends GLSurfaceView {
                     }
                 }
 
-/*                if (mRenderer.game_state==0){
-
-                }else if(mRenderer.game_state==1){
-                    if (checkClick(modded_x,modded_y,mRenderer.start_button.width,mRenderer.start_button.height, mRenderer.start_button.x,mRenderer.start_button.y)){
-                        mRenderer.enterArena();
-                        vibrator.vibrate(200);
-
-                    }
-                }*/
             case MotionEvent.ACTION_MOVE:
 
             case MotionEvent.ACTION_UP:
@@ -122,9 +113,18 @@ public class SurfaceView extends GLSurfaceView {
         return true;
     }
 
-    public boolean checkClick(float click_x, float click_y, float width, float height, float center_x, float center_y){
+    public void check_arrow(float modded_x, float modded_y){
+        if (mRenderer.game_state==5){
+            for (int i=0;i<4;i++){
+                if (checkClick(modded_x,modded_y, mRenderer.env.active_location.arrow_datas[i].width, mRenderer.env.active_location.arrow_datas[i].height,mRenderer.env.active_location.arrow_datas[i].x ,mRenderer.env.active_location.arrow_datas[i].y)){
+                    mRenderer.env.update_active_location(mRenderer.env.current_location.neighbor_index[i]);
+                    return;
+                }
+            }
+        }
+    }
 
-        //System.out.println("click x: " + click_x + "y: " + click_y);
+    public boolean checkClick(float click_x, float click_y, float width, float height, float center_x, float center_y){
         if (click_x > center_x-width && click_x < center_x+width){
             if (click_y > center_y-height && click_y < center_y+height){
                 return true;

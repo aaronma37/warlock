@@ -45,7 +45,7 @@ package com.example.warlock;
  */
 public class Rend implements GLSurfaceView.Renderer {
 
-    private int BATTLE=0, STARTING_SCREEN=1, SECONDARY_SCREEN=2, DUNGEONS=3, DUNGEON_LEVEL=4;
+    private int BATTLE=0, STARTING_SCREEN=1, SECONDARY_SCREEN=2, DUNGEONS=3, DUNGEON_LEVEL=4, EXPLORE=5;
 
     private static final String TAG = "MyGLRenderer";
 
@@ -338,6 +338,8 @@ public class Rend implements GLSurfaceView.Renderer {
             draw_battle();
         }else if (game_state==1){
             text_collection.add_to_active_text(0);
+        }else if (game_state==5){
+            draw_explore();
         }
 
         draw_ui(game_state);
@@ -377,7 +379,7 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public void draw_battle(){
         //Load stage
-        env.active_location.draw_location(scratch,mMVPMatrix,zeroRotationMatrix);
+        env.active_location.draw_location_battle(scratch,mMVPMatrix,zeroRotationMatrix);
 
         //Load characters
         for (int i = 0; i< active_people.size();i++){
@@ -441,6 +443,14 @@ public class Rend implements GLSurfaceView.Renderer {
 
 
     }
+
+    public void draw_explore(){
+        //Load stage
+        env.active_location.draw_location(scratch,mMVPMatrix,zeroRotationMatrix);
+
+            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+            player.person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,player.center_x,.15f,player.facing_direction, player.state.state);
+        }
 
     public void update_ui_image(int k, int i){
         if (ui_graphics[k].images[i].trigger==0){
@@ -541,6 +551,8 @@ public class Rend implements GLSurfaceView.Renderer {
             }
         }
     }
+
+
 
     public boolean resolve_people(Person origin, Person target){
         origin.animate(water_circle);
