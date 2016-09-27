@@ -1,5 +1,7 @@
 package com.example.warlock;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,21 +55,31 @@ public class Projectile {
         spell_type=0;
     }
 
-    public void step(){
-        location_x=location_x+speed*(float)Math.cos(direction);
-        location_y=location_y+speed*(float)Math.sin(direction);
+    public void step() {
+        location_x = location_x + speed * (float) Math.cos(direction);
+        location_y = location_y + speed * (float) Math.sin(direction);
 
-        if (Math.abs(location_x-active_targets.get(0).center_x)>.5f){
-            distance_from_target=2;
-        }else if (Math.abs(location_x-active_targets.get(0).center_x)>.35f){
-            distance_from_target=1;
-        }else{
-            distance_from_target=0;
+        if (Math.abs(location_x - active_targets.get(0).center_x) > .5f) {
+            distance_from_target = 2;
+        } else if (Math.abs(location_x - active_targets.get(0).center_x) > .35f) {
+            distance_from_target = 1;
+        } else {
+            distance_from_target = 0;
         }
-        time_active=time_active+1;
-        if (time_active>active_time){
-            active=false;
+        time_active = time_active + 1;
+        if (time_active > active_time) {
+            active = false;
         }
+
+    }
+
+    public boolean ask_for_particle(){
+        if (type==0) {
+            if (Math.random()>.05f){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void on_hit(){

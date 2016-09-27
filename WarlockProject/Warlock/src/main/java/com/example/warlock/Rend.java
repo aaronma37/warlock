@@ -59,7 +59,11 @@ public class Rend implements GLSurfaceView.Renderer {
     private Firebase ref;
 
     private List<Projectile> active_projectiles = new ArrayList<>();
+    private List<Particle_Info> active_particles = new ArrayList<>();
+
     private Projectile projectile_swap[] = new Projectile[50];
+    private Particle_Info particle_swap[] = new Particle_Info[50];
+
     private int active_projectile_count=0;
     private List<Person> active_people = new ArrayList<>();
     private List<Person> blue_team = new ArrayList<>();
@@ -111,7 +115,8 @@ public class Rend implements GLSurfaceView.Renderer {
     private List<Hard_Text> active_text = new ArrayList<>();
 
     public SpellCircle water_circle;
-    public ProjectileSprite projectile_sprite[] = new ProjectileSprite[OFFENSIVE_SPELL_COUNT];
+    public Projectile_Graphics projectile_sprite[] = new Projectile_Graphics[OFFENSIVE_SPELL_COUNT];
+    public Particle_Graphics particle_sprite[] = new Particle_Graphics[OFFENSIVE_SPELL_COUNT];
 
     public User user_information = new User();
 
@@ -207,7 +212,8 @@ public class Rend implements GLSurfaceView.Renderer {
         float start_time = System.currentTimeMillis();
 
         for (int i=0;i<OFFENSIVE_SPELL_COUNT;i++){
-            projectile_sprite[i] = new ProjectileSprite(context, i);
+            projectile_sprite[i] = new Projectile_Graphics(context, i);
+            particle_sprite[i] = new Particle_Graphics(context,i);
         }
         for (int i=0;i<2;i++){
             pointer[i]=0;
@@ -274,6 +280,7 @@ public class Rend implements GLSurfaceView.Renderer {
 
         for (int i =0; i<50;i++){
             projectile_swap[i]= new Projectile();
+            particle_swap[i]= new Particle_Info(.01f,.1f,.1f);
         }
 
         text_collection.add_to_active_text(10);
@@ -425,13 +432,15 @@ public class Rend implements GLSurfaceView.Renderer {
                 }
             }
             if (active_projectiles.get(i).active){
-                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                Matrix.translateM(scratch, 0, active_projectiles.get(i).location_x, active_projectiles.get(i).location_y, 1);
-                Matrix.scaleM(scratch, 0, ice_shard.width, ice_shard.height,.5f);
-                Matrix.rotateM(scratch, 0, -90, 0, 0, 1f);
-
-                projectile_sprite[active_projectiles.get(i).spell_type].Draw(scratch,false,0);
+                projectile_sprite[active_projectiles.get(i).spell_type].draw_projectile_base(active_projectiles.get(i).location_x,active_projectiles.get(i).location_y,1,scratch,mMVPMatrix,zeroRotationMatrix);
             }
+        }
+
+
+        particle_engine();
+
+        for (int i=0;i<active_particles.size();i++){
+                particle_sprite[active_particles.get(i).type].draw_particle(active_particles.get(i).x,active_particles.get(i).y,1,scratch,mMVPMatrix,zeroRotationMatrix,active_particles.get(i).alpha);
         }
 
 
@@ -571,6 +580,10 @@ public class Rend implements GLSurfaceView.Renderer {
             return;
         }else{
             inner_projectile.step();
+            if (inner_projectile.ask_for_particle()){
+                particle_swap[active_particles.size()].reset(inner_projectile.location_x,inner_projectile.location_y,inner_projectile.speed,0,inner_projectile.type);
+                active_particles.add(particle_swap[active_particles.size()]);
+            }
         }
         //Check hit
         for (int j = 0; j< inner_projectile.active_targets.size();j++){
@@ -580,6 +593,18 @@ public class Rend implements GLSurfaceView.Renderer {
             }
         }
 
+    }
+
+    public void particle_engine(){
+        for (int i=0;i<active_particles.size();i++){
+            if (i>=active_particles.size()){
+                break;
+            }
+            active_particles.get(i).step();
+            if (active_particles.get(i).alpha<0){
+                active_particles.remove(i);
+            }
+        }
     }
 
     public void command_spirit(int spirit_type){
