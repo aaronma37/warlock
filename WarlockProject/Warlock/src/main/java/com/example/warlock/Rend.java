@@ -47,6 +47,8 @@ public class Rend implements GLSurfaceView.Renderer {
 
     private int BATTLE=0, STARTING_SCREEN=1, SECONDARY_SCREEN=2, DUNGEONS=3, DUNGEON_LEVEL=4, EXPLORE=5;
 
+    private int STARTING_STATE=5;
+
     private static final String TAG = "MyGLRenderer";
 
     //FOR SURFACE PLOT
@@ -111,7 +113,7 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public Environment_Data env;
 
-    public UI_Graphics ui_graphics[] = new UI_Graphics[5];
+    public UI_Graphics ui_graphics[] = new UI_Graphics[10];
     public Cont_Font font_1;
     public Text_Collection text_collection;
     private List<Hard_Text> active_text = new ArrayList<>();
@@ -135,7 +137,7 @@ public class Rend implements GLSurfaceView.Renderer {
 
 
     //game_states!
-    public int game_state=STARTING_SCREEN;
+    public int game_state=STARTING_STATE;
 
 
 
@@ -194,7 +196,7 @@ public class Rend implements GLSurfaceView.Renderer {
         player = new Person("Aaron", -.5f, GROUND_LEVEL, context);
         luke = new Person("Luke", .5f, GROUND_LEVEL, context);
 
-        for (int i=0;i<5;i++){
+        for (int i=0;i<10;i++){
             ui_graphics[i] = new UI_Graphics(context,i);
         }
 
@@ -299,7 +301,11 @@ public class Rend implements GLSurfaceView.Renderer {
         if (i==1){
 
 
-            game_state=1;
+            game_state=5;
+        }
+
+        if (i==5){
+            game_state=5;
         }
     }
 
@@ -339,6 +345,7 @@ public class Rend implements GLSurfaceView.Renderer {
         }else if (game_state==1){
             text_collection.add_to_active_text(0);
         }else if (game_state==5){
+            update_explore();
             draw_explore();
         }
 
@@ -379,7 +386,7 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public void draw_battle(){
         //Load stage
-        env.active_location.draw_location_battle(scratch,mMVPMatrix,zeroRotationMatrix);
+        env.all_locations[env.current_location.location_index].draw_location_battle(scratch,mMVPMatrix,zeroRotationMatrix);
 
         //Load characters
         for (int i = 0; i< active_people.size();i++){
@@ -389,8 +396,6 @@ public class Rend implements GLSurfaceView.Renderer {
             }
 
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.multiplyMM(personSizeMatrix, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.scaleM(personSizeMatrix, 0, .5f,.5f,.5f);
             active_people.get(i).person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,active_people.get(i).center_x,.15f,active_people.get(i).facing_direction, active_people.get(i).state.state);
 
 
@@ -444,9 +449,24 @@ public class Rend implements GLSurfaceView.Renderer {
 
     }
 
+    public void update_explore(){
+            if(player.state.state==0){
+                player.step();
+            }else if(player.state.state==2 || player.state.state==3){
+                player.step();
+            }
+
+            env.all_locations[env.current_location.location_index].step_people();
+
+
+    }
+
     public void draw_explore(){
         //Load stage
+/*
         env.active_location.draw_location(scratch,mMVPMatrix,zeroRotationMatrix);
+*/
+        env.all_locations[env.current_location.location_index].draw_location(scratch,mMVPMatrix,zeroRotationMatrix, player.center_x);
 
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
             player.person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,player.center_x,.15f,player.facing_direction, player.state.state);
@@ -535,7 +555,7 @@ public class Rend implements GLSurfaceView.Renderer {
         }
 
         if (blue_victory_flag==true){
-            enter_game_state(1);
+            enter_game_state(5);
         }else if (red_victory_flag==true){
             enter_game_state(1);
         }
@@ -742,6 +762,14 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public void reward_event(int reward_type){
         player.reward_function(reward_type);
+    }
+
+    public void enter_location(int loc){
+        text_collection.add_to_active_text(100+loc);
+    }
+
+    public void leave_location(int loc){
+        text_collection.remove_to_active_text(100+loc);
     }
 
 }

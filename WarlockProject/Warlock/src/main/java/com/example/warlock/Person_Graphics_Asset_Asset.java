@@ -229,8 +229,6 @@ public class Person_Graphics_Asset_Asset
     }
 
     public void add_force(float i_force, int dir){
-        System.out.println("force: " + force);
-
         force-=dir*i_force;
     }
 

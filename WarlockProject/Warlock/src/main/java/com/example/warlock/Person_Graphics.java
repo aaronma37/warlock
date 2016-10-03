@@ -76,7 +76,7 @@ public class Person_Graphics {
             Person_Graphics_Asset_Asset hair_asset_2 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_h2_asset_2),50.217f/36.993f,1.3f*ADJ_SCALE*36.993f/1000, 1.3f*ADJ_SCALE*(.028f)-face.x_off-hair.x_off,1.3f*ADJ_SCALE*(-.028f)-face.y_off-hair.y_off,0f,.2f,.4f,.6f,.8f, .05f,.13f);
             post_hair_assets.add(hair_asset_2);
 
-            Person_Graphics_Asset_Asset hair_asset_3 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_h2_asset_3),59.797f/5.595f,1.3f*ADJ_SCALE*5.595f/1000, 1.3f*ADJ_SCALE*(.055f)-face.x_off-hair.x_off,1.3f*ADJ_SCALE*(-.035f)-face.y_off-hair.y_off,0f,.2f,.4f,.6f,.8f, .01f, .13f);
+            Person_Graphics_Asset_Asset hair_asset_3 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_h2_asset_3),59.797f/5.595f,1.3f*ADJ_SCALE*5.595f/1000, 1.3f*ADJ_SCALE*(.04f)-face.x_off-hair.x_off,1.3f*ADJ_SCALE*(.075f)-face.y_off-hair.y_off,0f,.2f,.4f,.6f,.8f, .01f, .13f);
             pre_hair_assets.add(hair_asset_3);
         }
 

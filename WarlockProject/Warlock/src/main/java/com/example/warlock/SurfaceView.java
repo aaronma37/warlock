@@ -116,9 +116,13 @@ public class SurfaceView extends GLSurfaceView {
     public void check_arrow(float modded_x, float modded_y){
         if (mRenderer.game_state==5){
             for (int i=0;i<4;i++){
-                if (checkClick(modded_x,modded_y, mRenderer.env.active_location.arrow_datas[i].width, mRenderer.env.active_location.arrow_datas[i].height,mRenderer.env.active_location.arrow_datas[i].x ,mRenderer.env.active_location.arrow_datas[i].y)){
-                    mRenderer.env.update_active_location(mRenderer.env.current_location.neighbor_index[i]);
-                    return;
+                if (mRenderer.env.all_locations[mRenderer.env.current_location.location_index].arrow_datas[i].is_active && mRenderer.env.all_locations[mRenderer.env.current_location.location_index].arrow_datas[i].active){
+                    if (checkClick(modded_x,modded_y, mRenderer.env.all_locations[mRenderer.env.current_location.location_index].arrow_datas[i].width,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].arrow_datas[i].height,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].arrow_datas[i].x ,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].arrow_datas[i].y)){
+                        System.out.println(mRenderer.env.current_location.neighbor_index[i]);
+                        mRenderer.leave_location(mRenderer.env.current_location.location_index);
+                        mRenderer.enter_location(mRenderer.env.update_active_location(i));
+                        return;
+                    }
                 }
             }
         }

@@ -162,6 +162,8 @@ public class UI_Graphics
         }else if (k==4){
             //DUNGEON LEVEL  SCREEN
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.ui_battle_player_portrait), 1f, .3f,.8f,.5f,START,BATTLE,BUTTON);number_of_images++;
+        }else if (k==5){
+
         }
 
 

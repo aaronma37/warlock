@@ -71,14 +71,13 @@ public class MainActivity extends ActionBarActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         setContentView(R.layout.activity_main);
-        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
-
 
 
         callbackManager = CallbackManager.Factory.create();
+        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
 
-        LoginManager.getInstance().registerCallback(callbackManager,
+        loginButton.registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
@@ -100,6 +99,9 @@ public class MainActivity extends ActionBarActivity {
                         System.out.print("FAIL");
                     }
                 });
+
+
+
         mAuth = FirebaseAuth.getInstance();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
