@@ -46,6 +46,8 @@ public class SurfaceView extends GLSurfaceView {
     private Vibrator vibrator;
     private DatabaseReference mDatabase;
     private Firebase ref;
+    public int sprint_timer=0;
+    private int SPRINT_TIME=100;
 
 
     public SurfaceView(Context context, Firebase mref) {
@@ -88,9 +90,18 @@ public class SurfaceView extends GLSurfaceView {
 
                 //GAME
                 if (mRenderer.game_state==0 || mRenderer.game_state ==5){
-                    if (checkClick(modded_x,modded_y,2f,.2f,0,-.2f)){
-                        move_player(modded_x);
+                    if (checkClick(modded_x,modded_y,2f,.2f,0,-.2f,mRenderer.screen_x)){
+                        move_player(modded_x+mRenderer.screen_x );
                         vibrator.vibrate(200);
+                    }
+                }
+
+                if (mRenderer.game_state==5){
+                    for (int i=0;i<mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.size();i++){
+                        if (checkClick(modded_x,modded_y,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.get(i).width,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.get(i).height,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.get(i).x,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.get(i).y,mRenderer.screen_x)){
+                            mRenderer.enterArena();
+                            vibrator.vibrate(200);
+                        }
                     }
                 }
 
@@ -99,7 +110,7 @@ public class SurfaceView extends GLSurfaceView {
 
                     //UI
                 for (int i=0;i<mRenderer.ui_graphics[mRenderer.game_state].number_of_images;i++){
-                    if (checkClick(modded_x,modded_y,mRenderer.ui_graphics[mRenderer.game_state].images[i].width,mRenderer.ui_graphics[mRenderer.game_state].images[i].height, mRenderer.ui_graphics[mRenderer.game_state].images[i].x,mRenderer.ui_graphics[mRenderer.game_state].images[i].y)){
+                    if (checkClick(modded_x,modded_y,mRenderer.ui_graphics[mRenderer.game_state].images[i].width,mRenderer.ui_graphics[mRenderer.game_state].images[i].height, mRenderer.ui_graphics[mRenderer.game_state].images[i].x,mRenderer.ui_graphics[mRenderer.game_state].images[i].y,0)){
                         click_code(mRenderer.ui_graphics[mRenderer.game_state].images[i].click_code_1, mRenderer.ui_graphics[mRenderer.game_state].images[i].click_code_2);
                     }
                 }
@@ -117,7 +128,7 @@ public class SurfaceView extends GLSurfaceView {
         if (mRenderer.game_state==5){
             for (int i=0;i<4;i++){
                 if (mRenderer.env.all_locations[mRenderer.env.current_location.location_index].arrow_datas[i].is_active && mRenderer.env.all_locations[mRenderer.env.current_location.location_index].arrow_datas[i].active){
-                    if (checkClick(modded_x,modded_y, mRenderer.env.all_locations[mRenderer.env.current_location.location_index].arrow_datas[i].width,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].arrow_datas[i].height,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].arrow_datas[i].x ,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].arrow_datas[i].y)){
+                    if (checkClick(modded_x,modded_y, mRenderer.env.all_locations[mRenderer.env.current_location.location_index].arrow_datas[i].width,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].arrow_datas[i].height,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].arrow_datas[i].x ,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].arrow_datas[i].y, mRenderer.screen_x)){
                         System.out.println(mRenderer.env.current_location.neighbor_index[i]);
                         mRenderer.leave_location(mRenderer.env.current_location.location_index);
                         mRenderer.enter_location(mRenderer.env.update_active_location(i));
@@ -128,8 +139,8 @@ public class SurfaceView extends GLSurfaceView {
         }
     }
 
-    public boolean checkClick(float click_x, float click_y, float width, float height, float center_x, float center_y){
-        if (click_x > center_x-width && click_x < center_x+width){
+    public boolean checkClick(float click_x, float click_y, float width, float height, float center_x, float center_y, float camera_x){
+        if (click_x+camera_x > center_x-width && click_x+camera_x < center_x+width){
             if (click_y > center_y-height && click_y < center_y+height){
                 return true;
             }
@@ -139,7 +150,7 @@ public class SurfaceView extends GLSurfaceView {
     }
 
     public void move_player(float destination_x){
-        mRenderer.player.state.setState(3,destination_x,0,0);
+        mRenderer.player.move_request(destination_x);
     }
 
     public void click_code(int c1, int c2){

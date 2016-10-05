@@ -30,6 +30,7 @@ public class Projectile_Graphics {
     public float overall_scale=.7f;
     public float rotation=0;
 
+
     public List<Projectile_Graphics_Asset> pre_base_assets = new ArrayList<>();
     public List<Projectile_Graphics_Asset> post_base_assets = new ArrayList<>();
 
@@ -52,6 +53,8 @@ public class Projectile_Graphics {
     }
 
     public void draw_projectile_base(float x, float y, float dir, float scratch[],float mMVPMatrix[],float zeroRotationMatrix[]){
+
+
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
         Matrix.translateM(scratch, 0, x, y, 1f);
         Matrix.scaleM(scratch, 0, overall_scale*projectile_base.size,overall_scale*projectile_base.size*projectile_base.AR,.5f);

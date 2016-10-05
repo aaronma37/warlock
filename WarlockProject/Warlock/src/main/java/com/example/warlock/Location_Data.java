@@ -7,6 +7,9 @@ import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by aaron on 9/27/16.
  */
@@ -21,9 +24,19 @@ public class Location_Data {
     private float ARROW_WIDTH=100f/1000f;
     private float ARROW_AR=28f/50f;
     private int STATIC_ASSET_SIZE=0;
+    private int DYNAMIC_ASSET_SIZE=0;
     public Person people_in_scene[] = new Person[5];
     public int PEOPLE_IN_SCENE_SIZE=0;
-    private float GROUND_LEVEL=-.1f;
+    private float GROUND_LEVEL=.15f;
+    public List<Box> hitbox_list = new ArrayList<>();
+    public List<Dynamic_Location> dynamic_location_list = new ArrayList<>();
+    public Location_Graphics_Asset dynamic_asset;
+    public float width;
+    public boolean DYNAMIC=false;
+    public int NUMBER_OF_LEAFS=3;
+
+
+
 
 
     public Context myContext;
@@ -35,10 +48,12 @@ public class Location_Data {
 
         arrow = new Location_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.location_arrow), 28f/50f, 100f/1000f, 0, 0);
 
-
         if (location.location_index==0){
             //NOTHING HERE
         }else if (location.location_index==1) {
+
+            width=2.5f;
+
             base = new Location_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.location_ground_grass_bass), 2f*.25f , 2f, 0, 0);
 
             arrow_datas[0]= new Arrow_Data(-1.5f,0f, ARROW_WIDTH*ARROW_AR,ARROW_WIDTH,0,true);
@@ -46,11 +61,18 @@ public class Location_Data {
             arrow_datas[2]= new Arrow_Data(0f,-.5f,ARROW_WIDTH*ARROW_AR,ARROW_WIDTH,1,false);
             arrow_datas[3]= new Arrow_Data(0f,.5f,ARROW_WIDTH*ARROW_AR,ARROW_WIDTH,3,false);
 
-            static_assets[0]= new Location_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.location_daytime_base), 1f , 3f, 0, 0);STATIC_ASSET_SIZE++;
-            static_assets[1]= new Location_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.location_ground_grass_bass), 2f*.15f  , 2.5f, 0, -.35f);STATIC_ASSET_SIZE++;
+            static_assets[0]= new Location_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.location_daytime_base), 1f , width, 0, 0);STATIC_ASSET_SIZE++;
+            static_assets[1]= new Location_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.location_ground_grass_bass), 2f*.15f  , width, 0, -.35f);STATIC_ASSET_SIZE++;
 
             people_in_scene[0]= new Person("default 1", -.5f, GROUND_LEVEL, myContext);PEOPLE_IN_SCENE_SIZE++;
             people_in_scene[0].reset(0,GROUND_LEVEL); people_in_scene[0].state.state=0;
+
+            hitbox_list.add(new Box(.2f, .2f, people_in_scene[0].center_x, people_in_scene[0].center_y, 0));
+
+            add_dynamic_asset(0);
+
+
+
 
         }else if (location.location_index==2) {
             base = new Location_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.location_ground_grass_bass), 1f, .5f, 0, 0);
@@ -85,15 +107,45 @@ public class Location_Data {
 
     }
 
+    public void add_dynamic_asset(int index){
+        DYNAMIC=true;
+        if (index==0){
+            for (int i=0;i<NUMBER_OF_LEAFS;i++){
+                dynamic_location_list.add(new Dynamic_Location(index,width));
+            }
+            dynamic_asset = new Location_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.maple_1), 1, .03f, 0, 0);
+        }
+    }
+
+    public void step(){
+        if (DYNAMIC){
+            for (int i=0;i<NUMBER_OF_LEAFS;i++){
+                dynamic_location_list.get(i).step();
+            }
+        }
+    }
+
+
     public void step_people(){
         for (int i=0;i<PEOPLE_IN_SCENE_SIZE;i++){
             people_in_scene[i].step();
         }
     }
 
+    public float check_oob(float i_x){
+        if (i_x>width){
+            return width;
+        }else if (i_x<-width){
+            return -width;
+        }
+        return i_x;
+    }
+
+
 
     public void draw_location(float scratch[], float mMVPMatrix[], float zeroRotationMatrix[], float x){
 
+        step();
 
         for (int i=0;i<STATIC_ASSET_SIZE;i++){
             draw_asset(scratch,mMVPMatrix,zeroRotationMatrix,static_assets[i],0);
@@ -111,6 +163,20 @@ public class Location_Data {
 
         }
 
+        draw_dynamic_assets(scratch,mMVPMatrix,zeroRotationMatrix);
+
+    }
+
+    public void draw_dynamic_assets(float scratch[], float mMVPMatrix[], float zeroRotationMatrix[]){
+        if (DYNAMIC){
+            for (int i=0;i<NUMBER_OF_LEAFS;i++){
+                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                Matrix.translateM(scratch, 0, dynamic_location_list.get(i).x, dynamic_location_list.get(i).y, 1f);
+                Matrix.scaleM(scratch, 0, dynamic_asset.size, dynamic_asset.AR*dynamic_asset.size,.5f);
+                Matrix.rotateM(scratch, 0, dynamic_location_list.get(i).xr, dynamic_location_list.get(i).yr, dynamic_location_list.get(i).zr, 1f);
+                dynamic_asset.Draw(scratch);
+            }
+        }
     }
 
     public boolean set_arrow_active(float x1, float x2, int arr_index){

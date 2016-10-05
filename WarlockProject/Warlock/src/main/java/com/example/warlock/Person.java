@@ -40,6 +40,9 @@ public class Person {
     public Person_Graphics person_graphics;
     public Context myContext;
 
+    public int sprint_timer=0;
+    public int SPRINT_TIME=10;
+
     public Spirit spirit[] = new Spirit[NUMBER_OF_SPIRITS];
 
     public boolean busy;
@@ -62,8 +65,7 @@ public class Person {
 
 
     public float max_sum=0;
-    public Projectile projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0,100);
-    public Offensive_Physical_Actions fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball,null);
+   // public Offensive_Physical_Actions fireball = new Offensive_Physical_Actions(100f, 0,null, myContext);
 
 
 
@@ -79,9 +81,9 @@ public class Person {
         myContext=context;
         health=100;
         name=given_name;
-        height=10;
-        width=6;
-        hitbox = new Hitbox(3,5);
+        height=24;
+        width=8;
+        hitbox = new Hitbox(4,12);
         center_x=start_x;
         center_y=start_y;
         busy=false;
@@ -116,10 +118,10 @@ public class Person {
 
     public void reset(float start_x, float start_y){
         health=100;
-        height=10;
+        height=24;
         alive=true;
-        width=6;
-        hitbox = new Hitbox(3,5);
+        width=8;
+        hitbox = new Hitbox(4,12);
         center_x=start_x;
         center_y=start_y;
         busy=false;
@@ -153,8 +155,8 @@ public class Person {
         busy=true;
         state.setState(1,meta_index,action_index,0);
 
-        fireball.reset();
-        action.set(meta_index,action_index, spirit_type,projectile_fireball, target, this);
+        //fireball.reset();
+        action.set(meta_index,action_index, spirit_type, target, this);
 
         //action= new Offensive_Physical_Actions();
 /*        if (action_index==0){
@@ -203,76 +205,6 @@ public class Person {
     }
 
 
-    /*public void choose_spell(int o[], int off_o[], Person target){
-        //choose meta
-        reset_action_choose_index();
-        int meta_decision=0;
-        int action_decision=0;
-
-        max_sum=0;
-        for (int i=0; i< META_SIZE; i++){
-            temp_sum=0;
-            for (int j=0;j<10;j++){
-                temp_sum+=a[i].o[j]*o[j];
-            }
-            if (temp_sum>max_sum){
-                max_sum=temp_sum;
-                meta_decision=i;
-            }
-        }
-        last_meta=meta_decision;
-        if (meta_decision == 0){
-
-            //Calculate feasible
-            max_sum=0;
-            for (int i =0;i<ACTION_SPACE_SIZE;i++){
-                //if (checkFeasibility(off_a[i].index, target, available_offensive_action_space)){
-                temp_sum=0;
-                if (checkFeasibility(0,i,target,available_offensive_action_space)){
-
-                    for (int j=0;j<10;j++){
-                        if (off_a[i].o[j]/off_a[i].c[j]>5){
-                            temp_sum+=off_a[i].o[j]*off_o[j];
-                        }{
-                            temp_sum+=1;
-                        }
-                    }
-                    //System.out.println(this.name+"casts attack: " + action_decision + "score: " + temp_sum);
-
-
-                    if (temp_sum>max_sum){
-                        max_sum=temp_sum;
-                        action_decision=i;
-                    }
-
-                }
-                if(i==0){
-                    action_choose_index[i]=temp_sum;
-                }else{
-                    action_choose_index[i]=action_choose_index[i-1]+temp_sum;
-                }
-            }
-
-            action_decision=(int)Math.floor(Math.random()*action_choose_index[ACTION_SPACE_SIZE-1]);
-            for(int i=0;i<ACTION_SPACE_SIZE;i++){
-                if (action_decision<action_choose_index[i]){
-                    action_decision=i;
-                    break;
-                }
-            }
-            System.out.println(this.name+"casts attack: " + action_decision + "score: " + action_choose_index[ACTION_SPACE_SIZE-1]);
-
-            cast(meta_decision, action_decision, target);
-        }else if (meta_decision==1){
-            cast(meta_decision, 0, target);
-            System.out.println("casts block ");
-
-        }
-        //last_target=target;
-        last_spell=action_decision;
-        //System.out.println("Choose to: " + a1);
-        //choose action
-    }*/
 
     public boolean checkFeasibility(int meta_type, int spell_type, Person target, List<Integer> action_list){
 
@@ -315,7 +247,8 @@ public class Person {
                 //center_x=center_x+state.force*state.knock_back_direction;
                 OOB();
             }
-        }else if (state.state==3){
+        }else if (state.state==3 || state.state==4){
+            sprint_timer--;
             if (Math.abs(center_x-state.destination_x)>.01f){
                 facing_direction=return_direction(center_x,state.destination_x);
                 motion(state.ms,return_direction(center_x,state.destination_x));
@@ -334,11 +267,11 @@ public class Person {
     }
 
     public void OOB(){
-        if (center_x<-1.3f){
+/*        if (center_x<-1.3f){
             center_x=-1.3f;
         }else if (center_x>1.3f){
             center_x=1.3f;
-        }
+        }*/
     }
 
     public void animate(SpellCircle circle){
@@ -406,6 +339,15 @@ public class Person {
         for (int i=0;i<ACTION_SPACE_SIZE;i++){
             action_choose_index[i]=0;
         }
+    }
+
+    public void move_request(float dest_x){
+        if (sprint_timer<1){
+            state.setState(3,dest_x,0,0);
+        }else{
+            state.setState(4,dest_x,0,0);
+        }
+        sprint_timer=SPRINT_TIME;
     }
 
 

@@ -47,7 +47,7 @@ public class Rend implements GLSurfaceView.Renderer {
 
     private int BATTLE=0, STARTING_SCREEN=1, SECONDARY_SCREEN=2, DUNGEONS=3, DUNGEON_LEVEL=4, EXPLORE=5;
 
-    private int STARTING_STATE=5;
+    private int STARTING_STATE=EXPLORE;
 
     private static final String TAG = "MyGLRenderer";
 
@@ -57,7 +57,7 @@ public class Rend implements GLSurfaceView.Renderer {
     public boolean SINFO_FLAG=true;
     private FloatBuffer textureBuffer;
     public Context context;
-    private boolean show_info=false;
+    private boolean show_info=true;
     private Firebase ref;
 
     private List<Projectile> active_projectiles = new ArrayList<>();
@@ -70,6 +70,8 @@ public class Rend implements GLSurfaceView.Renderer {
     private List<Person> active_people = new ArrayList<>();
     private List<Person> blue_team = new ArrayList<>();
     private List<Person> red_team = new ArrayList<>();
+    public float screen_x;
+    private float MAX_SCREEN_CLIP=2f;
 
     float Coords[] = {
             -0.5f,  0.5f, 0.0f,   // top left
@@ -87,6 +89,8 @@ public class Rend implements GLSurfaceView.Renderer {
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
+    private final float[] mMVPMatrix2 = new float[16];
+
     private final float[] personSizeMatrix = new float[16];
 
     private final float[] stockMatrix = new float[16];
@@ -96,7 +100,7 @@ public class Rend implements GLSurfaceView.Renderer {
     private final float[] zeroRotationMatrix = new float[16];
     private final float[] simpleRotationMatrix = new float[4];
 
-    private final float GROUND_LEVEL=-.1f;
+    private final float GROUND_LEVEL=.15f;
     private final int OFFENSIVE_SPELL_COUNT=150;
     float[] scratch = new float[16];
     float[] scratch2 = new float[16];
@@ -127,8 +131,6 @@ public class Rend implements GLSurfaceView.Renderer {
     public Sprite sprite;
 
     public Person player, luke;
-    public Projectile projectile_fireball;
-    public Offensive_Physical_Actions fireball;
     private long start_time, end_time;
     private int meta_obs[] = new int[10];
     private int off_obs[] = new int[10];
@@ -211,8 +213,6 @@ public class Rend implements GLSurfaceView.Renderer {
         sprite = new Sprite(context,0);
         castle_background = new GeneralGraphic(context,7);
 
-        projectile_fireball = new Projectile(0f, 0f, .001f,5,0,0,0f, new Hitbox(2,2), 0,100);
-        fireball = new Offensive_Physical_Actions(100f, 0, projectile_fireball,player);
         float start_time = System.currentTimeMillis();
 
         for (int i=0;i<OFFENSIVE_SPELL_COUNT;i++){
@@ -230,6 +230,9 @@ public class Rend implements GLSurfaceView.Renderer {
     }
 
     public void enterArena(){
+
+        game_state=BATTLE;
+
         player.reset(-.5f, GROUND_LEVEL);
         luke.reset(1f, GROUND_LEVEL);
 
@@ -285,12 +288,12 @@ public class Rend implements GLSurfaceView.Renderer {
 
 
         for (int i =0; i<50;i++){
-            projectile_swap[i]= new Projectile();
+            projectile_swap[i]= new Projectile(context);
             particle_swap[i]= new Particle_Info(.01f,.1f,.1f);
         }
 
-        text_collection.add_to_active_text(10);
-        text_collection.add_to_active_text(11);
+/*        text_collection.add_to_active_text(10);
+        text_collection.add_to_active_text(11);*/
     }
 
     public void exitArena(){
@@ -330,10 +333,37 @@ public class Rend implements GLSurfaceView.Renderer {
         start_time = System.currentTimeMillis();
 
 
-        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0, 0, 0f, 0f, 1.0f, 0.0f);
+
+        if (game_state == EXPLORE){
+            screen_x=player.center_x;
+            if (screen_x>env.all_locations[env.current_location.location_index].width-MAX_SCREEN_CLIP){
+                screen_x=env.all_locations[env.current_location.location_index].width-MAX_SCREEN_CLIP;
+            }else if (screen_x<-env.all_locations[env.current_location.location_index].width+MAX_SCREEN_CLIP){
+                screen_x=-env.all_locations[env.current_location.location_index].width+MAX_SCREEN_CLIP;
+            }
+        }else if (game_state == BATTLE) {
+            screen_x = player.center_x;
+            if (screen_x > env.all_locations[env.current_location.location_index].width - MAX_SCREEN_CLIP) {
+                screen_x = env.all_locations[env.current_location.location_index].width - MAX_SCREEN_CLIP;
+            } else if (screen_x < -env.all_locations[env.current_location.location_index].width + MAX_SCREEN_CLIP) {
+                screen_x = -env.all_locations[env.current_location.location_index].width + MAX_SCREEN_CLIP;
+            }
+        }
+        else{
+            screen_x=0;
+        }
+
+
+        Matrix.setLookAtM(mViewMatrix, 0, screen_x, 0, -3, screen_x, 0, 0f, 0f, 1.0f, 0.0f);
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0, 0, 0f, 0f, 1.0f, 0.0f);
+        Matrix.multiplyMM(mMVPMatrix2, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+
         Matrix.setRotateM(zeroRotationMatrix, 0, 0, 0, 0, 1.0f);
         Matrix.multiplyMM(stockMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+
+
+
 
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
@@ -368,13 +398,13 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public void draw_word(Hard_Text hard_text){
 
-        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix2, 0, zeroRotationMatrix, 0);
         Matrix.translateM(scratch, 0, hard_text.x, hard_text.y, 0f);
         Matrix.scaleM(scratch, 0,hard_text.width,hard_text.height, 1f);
         text_box.Draw(scratch,false);
 
 
-        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix2, 0, zeroRotationMatrix, 0);
         Matrix.translateM(scratch, 0, hard_text.x+hard_text.width-.1f, hard_text.y, 0f);
         Matrix.scaleM(scratch, 0, .05f*hard_text.text_size,.05f*hard_text.text_size, 1f);
 
@@ -396,7 +426,7 @@ public class Rend implements GLSurfaceView.Renderer {
             }
 
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            active_people.get(i).person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,active_people.get(i).center_x,.15f,active_people.get(i).facing_direction, active_people.get(i).state.state);
+            active_people.get(i).person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,active_people.get(i).center_x,active_people.get(i).center_y,active_people.get(i).facing_direction, active_people.get(i).state.state);
 
 
 
@@ -425,16 +455,16 @@ public class Rend implements GLSurfaceView.Renderer {
         }
 
         for (int i = 0; i< active_projectiles.size();i++){
+            if (active_projectiles.get(i).active){
+                projectile_sprite[active_projectiles.get(i).spell_type].draw_projectile_base(active_projectiles.get(i).location_x,active_projectiles.get(i).location_y,1,scratch,mMVPMatrix,zeroRotationMatrix);
+            }
             if (show_info){
                 if (active_projectiles.get(i).active){
                     Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
                     Matrix.translateM(scratch, 0, active_projectiles.get(i).location_x, active_projectiles.get(i).location_y, 1);
-                    Matrix.scaleM(scratch, 0, active_projectiles.get(i).hitbox.x*2/100f,active_projectiles.get(i).hitbox.y*2/100f,.5f);
+                    Matrix.scaleM(scratch, 0, active_projectiles.get(i).skeleton.width,active_projectiles.get(i).skeleton.height,.5f);
                     red_box.Draw(scratch,false);
                 }
-            }
-            if (active_projectiles.get(i).active){
-                projectile_sprite[active_projectiles.get(i).spell_type].draw_projectile_base(active_projectiles.get(i).location_x,active_projectiles.get(i).location_y,1,scratch,mMVPMatrix,zeroRotationMatrix);
             }
         }
 
@@ -450,12 +480,7 @@ public class Rend implements GLSurfaceView.Renderer {
     }
 
     public void update_explore(){
-            if(player.state.state==0){
-                player.step();
-            }else if(player.state.state==2 || player.state.state==3){
-                player.step();
-            }
-
+            step_people(player);
             env.all_locations[env.current_location.location_index].step_people();
 
 
@@ -463,9 +488,6 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public void draw_explore(){
         //Load stage
-/*
-        env.active_location.draw_location(scratch,mMVPMatrix,zeroRotationMatrix);
-*/
         env.all_locations[env.current_location.location_index].draw_location(scratch,mMVPMatrix,zeroRotationMatrix, player.center_x);
 
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
@@ -481,24 +503,16 @@ public class Rend implements GLSurfaceView.Renderer {
         }else if (ui_graphics[k].images[i].trigger==2){
             //HP
             ui_graphics[k].images[i].width = player.health/450f;
-/*
-            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, active_people.get(i).center_x+active_people.get(i).hitbox.x*2/100f-active_people.get(i).health/1600f, active_people.get(i).center_y+.15f, 1f);
-            Matrix.scaleM(scratch, 0, active_people.get(i).health/1600f,1/100f,.5f);
-            hp_box.Draw(scratch,false);*/
             return;
         }
     }
 
     public void draw_ui(int k){
-
-
-
         for (int i=0;i<ui_graphics[k].number_of_images;i++){
 
             update_ui_image(k,i);
 
-            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+            Matrix.multiplyMM(scratch, 0, mMVPMatrix2, 0, zeroRotationMatrix, 0);
             Matrix.translateM(scratch, 0, ui_graphics[k].images[i].x, ui_graphics[k].images[i].y, 1f);
             Matrix.scaleM(scratch, 0, ui_graphics[k].images[i].width,ui_graphics[k].images[i].height,1f);
             ui_graphics[k].Draw(scratch, false, i);
@@ -578,25 +592,29 @@ public class Rend implements GLSurfaceView.Renderer {
         origin.animate(water_circle);
             if (origin.alive){
                 //temp_person = active_people.get(i);
+
                 if(origin.state.state==0){
                     //Choose what to do::
 
                         calculateMetaObs(origin,target);
                         calculateOffObs(origin,target);
                         calculateTargetObs(origin,target);
-                        origin.step();
 
                 }else if (origin.state.state==1 && origin.action.active){
                     //Complete action
                     origin.action.step(projectile_swap, active_projectiles);
-                    origin.step();
 
                 }else if(origin.state.state==2 || origin.state.state==3){
-                    origin.step();
                 }
+                step_people(origin);
                 return true;
             }
         return false;
+    }
+
+    public void step_people(Person origin){
+        origin.step();
+        origin.center_x=env.all_locations[env.current_location.location_index].check_oob(origin.center_x);
     }
 
 

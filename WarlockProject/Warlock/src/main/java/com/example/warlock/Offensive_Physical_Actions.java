@@ -1,5 +1,7 @@
 package com.example.warlock;
 
+import android.content.Context;
+
 import java.util.List;
 
 /**
@@ -34,18 +36,19 @@ public class Offensive_Physical_Actions {
 
     }
 
-    public Offensive_Physical_Actions(float init_cast_time, int init_animation, Projectile init_projectile, Person init_target){
+    public Offensive_Physical_Actions(float init_cast_time, int init_animation, Person init_target){
         total_cast_time=init_cast_time;
         spell_type=0;
         animation=init_animation;
-        //projectile = new Projectile();
-        projectile=init_projectile;
+        //projectile = new Projectile(myContext);
+        //projectile=init_projectile;
         target=init_target;
         cast_time=0;
         active=true;
         for (int i=0;i<5;i++){
             attribute_requirements[i]=0;
         }
+
     }
 
     public void step(Projectile projectile_swap[], List<Projectile> active_projectiles){
@@ -140,12 +143,12 @@ public class Offensive_Physical_Actions {
         }
     }
 
-    public void set(int init_meta_type, int init_spell_type, int init_spirit_type, Projectile init_projectile, Person init_target, Person init_origin){
+    public void set(int init_meta_type, int init_spell_type, int init_spirit_type, Person init_target, Person init_origin){
         //Define what happens when spell is defined
         //cast time/target/
 
         animation=0;
-        projectile=init_projectile;
+        //projectile=init_projectile;
         target=init_target;
         origin=init_origin;
         cast_time=0;

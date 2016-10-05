@@ -76,7 +76,7 @@ public class Person_Graphics {
             Person_Graphics_Asset_Asset hair_asset_2 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_h2_asset_2),50.217f/36.993f,1.3f*ADJ_SCALE*36.993f/1000, 1.3f*ADJ_SCALE*(.028f)-face.x_off-hair.x_off,1.3f*ADJ_SCALE*(-.028f)-face.y_off-hair.y_off,0f,.2f,.4f,.6f,.8f, .05f,.13f);
             post_hair_assets.add(hair_asset_2);
 
-            Person_Graphics_Asset_Asset hair_asset_3 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_h2_asset_3),59.797f/5.595f,1.3f*ADJ_SCALE*5.595f/1000, 1.3f*ADJ_SCALE*(.04f)-face.x_off-hair.x_off,1.3f*ADJ_SCALE*(.075f)-face.y_off-hair.y_off,0f,.2f,.4f,.6f,.8f, .01f, .13f);
+            Person_Graphics_Asset_Asset hair_asset_3 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_h2_asset_3),59.797f/5.595f,1.3f*ADJ_SCALE*5.595f/1000, 1.3f*ADJ_SCALE*(.04f)-face.x_off-hair.x_off,1.3f*ADJ_SCALE*(-.08f)-face.y_off-hair.y_off,0f,.2f,.4f,.6f,.8f, .01f, .13f);
             pre_hair_assets.add(hair_asset_3);
         }
 
@@ -194,7 +194,7 @@ public class Person_Graphics {
 
         for (int i =0; i<pre_hair_assets.size();i++){
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, x+overall_scale*face.x_off*dir+overall_scale*hair.x_off*dir+overall_scale*pre_hair_assets.get(i).x_off*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir, y+overall_scale*face.y_off+hair.y_off+overall_scale*pre_hair_assets.get(i).y_off+overall_scale*head_position_static[head_counter][Y_LOC], 1f);
+            Matrix.translateM(scratch, 0, x+overall_scale*skeleton.hair[0]*dir+overall_scale*pre_hair_assets.get(i).x_off*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir,  y+overall_scale*skeleton.hair[1]+overall_scale*pre_hair_assets.get(i).y_off+overall_scale*head_position_static[head_counter][Y_LOC], 1f);
             Matrix.scaleM(scratch, 0, overall_scale*pre_hair_assets.get(i).size,overall_scale*pre_hair_assets.get(i).size*pre_hair_assets.get(i).AR,.5f);
             Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
             pre_hair_assets.get(i).step();
@@ -212,8 +212,7 @@ public class Person_Graphics {
         draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.upper_left_leg, upper_left_leg);
         draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.lower_bod, lower_body);
         draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.upper_bod, upper_body);
-        draw_body_part(x,y,1,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.lower_left_arm, lower_left_arm);
-        draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.upper_left_arm, upper_left_arm);
+
 
 
         //HEAD
@@ -247,6 +246,11 @@ public class Person_Graphics {
             post_body_assets.get(i).Draw(scratch,false);
         }
 
+
+
+        draw_body_part(x,y,1,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.lower_left_arm, lower_left_arm);
+        draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.upper_left_arm, upper_left_arm);
+
         for (int i =0; i<post_hair_assets.size();i++){
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
             Matrix.translateM(scratch, 0, x+overall_scale*skeleton.hair[0]*dir+overall_scale*post_hair_assets.get(i).x_off*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir, y+overall_scale*skeleton.hair[1]+overall_scale*post_hair_assets.get(i).y_off+overall_scale*head_position_static[head_counter][Y_LOC], 1f);
@@ -255,7 +259,6 @@ public class Person_Graphics {
             post_hair_assets.get(i).step();
             post_hair_assets.get(i).Draw(scratch,false);
         }
-
     }
 
 
