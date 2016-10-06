@@ -14,6 +14,8 @@ public class Skeleton {
 
     public float y=0;
     public float diff=0;
+    public float height=.5f;
+    public float GROUND=.15f;
 
     public int dir;
 
@@ -50,6 +52,8 @@ public class Skeleton {
     public List<KeyFrame> run_animation = new ArrayList<>();
     public List<KeyFrame> sprint_animation = new ArrayList<>();
     public List<KeyFrame> cast_1_animation = new ArrayList<>();
+    public List<KeyFrame> knockback_animation = new ArrayList<>();
+
 
 
 
@@ -117,6 +121,10 @@ public class Skeleton {
         idle_animation.add(new KeyFrame(0,0,0,0,0,0,0,0,0,0,0,0,0,60,90));
         idle_animation.add(new KeyFrame(0,0,0,-3,0,-5,-5,5,15,2,-5,2,-5,90,120));
         idle_animation.add(new KeyFrame(0,0,0,0,0,0,0,0,0,0,0,0,0,120,120));
+
+        knockback_animation.add(new KeyFrame(0,0,0,-20,20,    50,50,50,50,   50,50,50,50,    0,30));
+        knockback_animation.add(new KeyFrame(0,0,0,-20,20,    70,70,70,70,   50,50,50,50,  30,60));
+        knockback_animation.add(new KeyFrame(0,0,0,-20,20,    50,50,50,50,   50,50,50,50,    60,60));
 
         run_animation.add(new KeyFrame(0,0,0,0,0,   0,10,0,10,        0,0,0,0,0,5));
         run_animation.add(new KeyFrame(0,0,0,0,0,   -15,0,15,30,    20,0,-15,-15,5,10));
@@ -189,7 +197,21 @@ public class Skeleton {
             }
 
 
-        }else if (state==3){
+        }else if (state==2){
+            //KNOCKBACK ANIMATION
+            if (count>knockback_animation.get(knockback_animation.size()-1).end){
+                count=0;
+            }
+            for (int i=0;i<knockback_animation.size();i++){
+                if(count<knockback_animation.get(i).end){
+                    update_angle(dir, knockback_animation.get(i),knockback_animation.get(i+1), (1f-(count-knockback_animation.get(i).begin)/(knockback_animation.get(i).end-knockback_animation.get(i).begin)));
+                    break;
+                }
+
+            }
+
+
+        } else if (state==3){
             //RUN ANIMATION
             if (count>run_animation.get(run_animation.size()-1).end){
                 count=0;
@@ -263,16 +285,34 @@ public class Skeleton {
         lower_right_leg[2]= dir*(anim_2.lower_right_leg+rng*(anim_1.lower_right_leg-anim_2.lower_right_leg));
     }
 
+    public float calculate_y(){
+        if (state==0||state==3 || state==1 || state==4){
+            height=.5f-GROUND+y;
 
-    public void recalculate_skeleton(){
-        if (((float)Math.cos(upper_bod[2]*3.14f/180f)*-UPPER_BOD_LENGTH+(float)Math.cos(lower_bod[2]*3.14f/180f)*-LOW_BOD_LENGTH+(float)Math.cos(upper_left_leg[2]*3.14f/180f)*-UPPER_LEG_LENGTH-(float)Math.cos(lower_left_leg[2]*3.14f/180f)*LOWER_LEG_LENGTH) < ((float)Math.cos(upper_bod[2]*3.14f/180f)*-UPPER_BOD_LENGTH+(float)Math.cos(lower_bod[2]*3.14f/180f)*-LOW_BOD_LENGTH+(float)Math.cos(upper_right_leg[2]*3.14f/180f)*-UPPER_LEG_LENGTH-(float)Math.cos(lower_right_leg[2]*3.14f/180f)*LOWER_LEG_LENGTH)){
-            diff = ((float)Math.cos(upper_bod[2]*3.14f/180f)*-UPPER_BOD_LENGTH+(float)Math.cos(lower_bod[2]*3.14f/180f)*-LOW_BOD_LENGTH+(float)Math.cos(upper_left_leg[2]*3.14f/180f)*-UPPER_LEG_LENGTH-(float)Math.cos(lower_left_leg[2]*3.14f/180f)*LOWER_LEG_LENGTH);
-        }else{
-            diff= ((float)Math.cos(upper_bod[2]*3.14f/180f)*-UPPER_BOD_LENGTH+(float)Math.cos(lower_bod[2]*3.14f/180f)*-LOW_BOD_LENGTH+(float)Math.cos(upper_right_leg[2]*3.14f/180f)*-UPPER_LEG_LENGTH-(float)Math.cos(lower_right_leg[2]*3.14f/180f)*LOWER_LEG_LENGTH);
+            if (((float)Math.cos(upper_bod[2]*3.14f/180f)*-UPPER_BOD_LENGTH+(float)Math.cos(lower_bod[2]*3.14f/180f)*-LOW_BOD_LENGTH+(float)Math.cos(upper_left_leg[2]*3.14f/180f)*-UPPER_LEG_LENGTH-(float)Math.cos(lower_left_leg[2]*3.14f/180f)*LOWER_LEG_LENGTH) < ((float)Math.cos(upper_bod[2]*3.14f/180f)*-UPPER_BOD_LENGTH+(float)Math.cos(lower_bod[2]*3.14f/180f)*-LOW_BOD_LENGTH+(float)Math.cos(upper_right_leg[2]*3.14f/180f)*-UPPER_LEG_LENGTH-(float)Math.cos(lower_right_leg[2]*3.14f/180f)*LOWER_LEG_LENGTH)){
+                return ((float)Math.cos(upper_bod[2]*3.14f/180f)*-UPPER_BOD_LENGTH+(float)Math.cos(lower_bod[2]*3.14f/180f)*-LOW_BOD_LENGTH+(float)Math.cos(upper_left_leg[2]*3.14f/180f)*-UPPER_LEG_LENGTH-(float)Math.cos(lower_left_leg[2]*3.14f/180f)*LOWER_LEG_LENGTH);
+            }else{
+                return ((float)Math.cos(upper_bod[2]*3.14f/180f)*-UPPER_BOD_LENGTH+(float)Math.cos(lower_bod[2]*3.14f/180f)*-LOW_BOD_LENGTH+(float)Math.cos(upper_right_leg[2]*3.14f/180f)*-UPPER_LEG_LENGTH-(float)Math.cos(lower_right_leg[2]*3.14f/180f)*LOWER_LEG_LENGTH);
+            }
+        } else if (state==2){
+            height=.5f-GROUND+y;
+            if (((float)Math.cos(upper_bod[2]*3.14f/180f)*-UPPER_BOD_LENGTH+(float)Math.cos(lower_bod[2]*3.14f/180f)*-LOW_BOD_LENGTH+(float)Math.cos(upper_left_leg[2]*3.14f/180f)*-UPPER_LEG_LENGTH-(float)Math.cos(lower_left_leg[2]*3.14f/180f)*LOWER_LEG_LENGTH) < ((float)Math.cos(upper_bod[2]*3.14f/180f)*-UPPER_BOD_LENGTH+(float)Math.cos(lower_bod[2]*3.14f/180f)*-LOW_BOD_LENGTH+(float)Math.cos(upper_right_leg[2]*3.14f/180f)*-UPPER_LEG_LENGTH-(float)Math.cos(lower_right_leg[2]*3.14f/180f)*LOWER_LEG_LENGTH)){
+                return ((float)Math.cos(upper_bod[2]*3.14f/180f)*-UPPER_BOD_LENGTH+(float)Math.cos(lower_bod[2]*3.14f/180f)*-LOW_BOD_LENGTH+(float)Math.cos(upper_left_leg[2]*3.14f/180f)*-UPPER_LEG_LENGTH-(float)Math.cos(lower_left_leg[2]*3.14f/180f)*LOWER_LEG_LENGTH);
+            }else{
+                return ((float)Math.cos(upper_bod[2]*3.14f/180f)*-UPPER_BOD_LENGTH+(float)Math.cos(lower_bod[2]*3.14f/180f)*-LOW_BOD_LENGTH+(float)Math.cos(upper_right_leg[2]*3.14f/180f)*-UPPER_LEG_LENGTH-(float)Math.cos(lower_right_leg[2]*3.14f/180f)*LOWER_LEG_LENGTH);
+            }
         }
 
+        return 0;
+    }
+
+
+    public void recalculate_skeleton(){
+        diff = calculate_y();
+
+
         upper_bod[0]=0;
-        upper_bod[1]=-.5f-diff;
+        upper_bod[1]=-height-diff;
 
         lower_bod[0]=dir*upper_bod[0]+(float)Math.cos(upper_bod[2]*3.14f/180f)*UPPER_BOD_LENGTH_2+dir*(float)Math.sin(upper_bod[2]*3.14f/180f)*UPPER_BOD_LENGTH;
         lower_bod[1]=upper_bod[1]+(float)Math.cos(upper_bod[2]*3.14f/180f)*-UPPER_BOD_LENGTH;
@@ -311,7 +351,7 @@ public class Skeleton {
         lower_right_leg[0]=dir*upper_right_leg[0]+dir*(float)Math.cos(upper_right_leg[2]*3.14f/180f)*-.005f+(float)Math.sin(upper_right_leg[2]*3.14f/180f)*UPPER_LEG_LENGTH;
         lower_right_leg[1]=upper_right_leg[1]+(float)Math.cos(upper_right_leg[2]*3.14f/180f)*-UPPER_LEG_LENGTH;
 
-        diff= y-lower_left_leg[1]+(float)Math.cos(upper_right_leg[2]*3.14f/180f)*.1f;
+        //diff= y-lower_left_leg[1]+(float)Math.cos(upper_right_leg[2]*3.14f/180f)*.1f;
     }
 
 

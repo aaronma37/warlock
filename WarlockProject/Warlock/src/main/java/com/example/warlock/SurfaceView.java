@@ -89,14 +89,14 @@ public class SurfaceView extends GLSurfaceView {
                 mRenderer.pointer[1]=modded_y;
 
                 //GAME
-                if (mRenderer.game_state==0 || mRenderer.game_state ==5){
+                if ((mRenderer.game_state==0 || mRenderer.game_state ==5) && mRenderer.player.state.state!=2 && mRenderer.player.state.state!=1){
                     if (checkClick(modded_x,modded_y,2f,.2f,0,-.2f,mRenderer.screen_x)){
                         move_player(modded_x+mRenderer.screen_x );
                         vibrator.vibrate(200);
                     }
                 }
 
-                if (mRenderer.game_state==5){
+                if ((mRenderer.game_state==5) && mRenderer.player.state.state!=1 && mRenderer.player.state.state!=2){
                     for (int i=0;i<mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.size();i++){
                         if (checkClick(modded_x,modded_y,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.get(i).width,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.get(i).height,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.get(i).x,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.get(i).y,mRenderer.screen_x)){
                             mRenderer.enterArena();

@@ -75,10 +75,11 @@ public class Spirit {
 
         if (meta_decision == 0){
             max_sum=0;
-            for (int i =0;i<ACTION_SPACE_SIZE;i++){
+            for (int i =0;i<attribute;i++){
                 //if (checkFeasibility(off_a[i].index, target, available_offensive_action_space)){
                 temp_sum=0;
-                if (checkFeasibility(0,i,target, origin,available_offensive_action_space)){
+                //if (checkFeasibility(0,i,target, origin,available_offensive_action_space)){
+
 
                     for (int j=0;j<15;j++){
                         if (off_a[i].o[j]/off_a[i].c[j]>5){
@@ -87,7 +88,6 @@ public class Spirit {
                             temp_sum+=1;
                         }
                     }
-                    //System.out.println(this.name+"casts attack: " + action_decision + "score: " + temp_sum);
 
 
                     if (temp_sum>max_sum){
@@ -95,20 +95,19 @@ public class Spirit {
                         action_decision=i;
                     }
 
-                }
+               // }
                 if(i==0){
                     action_choose_index[i]=temp_sum;
                 }else{
                     action_choose_index[i]=action_choose_index[i-1]+temp_sum;
                 }
-
             }
 
-            if (action_choose_index[ACTION_SPACE_SIZE-1]==0){
+            if (action_choose_index[attribute-1]==0){
                 action_decision=-1;
             }else{
-                action_decision=(int)Math.floor(Math.random()*action_choose_index[ACTION_SPACE_SIZE-1]);
-                for(int i=0;i<ACTION_SPACE_SIZE;i++){
+                action_decision=(int)Math.floor(Math.random()*action_choose_index[attribute-1]);
+                for(int i=0;i<attribute;i++){
                     if (action_decision<action_choose_index[i]){
                         action_decision=i;
                         break;
@@ -117,7 +116,7 @@ public class Spirit {
             }
 
 
-            System.out.println(origin.name+"casts attack: " + action_decision + "score: " + action_choose_index[ACTION_SPACE_SIZE-1]);
+            System.out.println(origin.name+"casts attack: " + action_decision + "score: " + (action_choose_index[action_decision])/action_choose_index[attribute-1]);
 
         }else if (meta_decision==1){
 
@@ -190,7 +189,9 @@ public class Spirit {
 
     public boolean checkIndex(int spell_type, int meta_type, int att){
 
-        if (spell_type==1){
+        if (spell_type==0){
+           if (att>=spell_type){return true;}
+        }else if (spell_type==1){
             if (att>=spell_type){return true;}
         }else if(spell_type==2){
             if (att>=spell_type){return true;}
@@ -218,22 +219,6 @@ public class Spirit {
 
         }else if(spell_type==10){
             if (att>=spell_type){return true;}
-
-        }else if(spell_type==11){
-            if (att>=spell_type%10){return true;}
-
-        }else if(spell_type==12){
-            if (att>=spell_type%10){return true;}
-
-        }else if(spell_type==13){
-            if (att>=spell_type%10){return true;}
-
-        }else if(spell_type==14){
-            if (att>=spell_type%10){return true;}
-
-        }else if(spell_type==15){
-            if (att>=spell_type%10){return true;}
-
         }
         return false;
     }

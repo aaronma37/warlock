@@ -71,11 +71,22 @@ public class Person {
 
 
     public void recalculate_attributes(Wardrobe w){
+
+        //HARDCODE FOR TESTING
+        spirit[0].attribute=4;
+        spirit[1].attribute=2;
+        spirit[2].attribute=2;
+        spirit[3].attribute=2;
+        spirit[4].attribute=2;
+
         for (int i =0;i<NUMBER_OF_ATTRIBUTES;i++){
-            for (int j=0;j<NUMBER_OF_EQUIPMENT_SLOTS;j++){
+/*            for (int j=0;j<NUMBER_OF_EQUIPMENT_SLOTS;j++){
                 spirit[i].attribute+=w.currently_equipped[j].attributes[i];
-            }
+            }*/
+            spirit[i].setAvailableOffensiveActionSpace();
+
         }
+
     }
 
     public Person(String given_name, float start_x, float start_y, Context context) {
@@ -158,7 +169,9 @@ public class Person {
         if (projectile_index.damage-action.block > 0){
             health = health - (int)(projectile_index.damage - action.block);
         }
-        if (state.state==1){
+        if (state.state==0 || state.state==3 || state.state == 4){
+            state.setState(2,projectile_index.knock_back_time,projectile_index.knock_back_force, projectile_index.knockback_direction);
+        }else if (state.state==1){
             if (state.interrupt_level <= projectile_index.interrupt_level){
                 action.cast_time=0;
                 state.setState(2,projectile_index.knock_back_time,projectile_index.knock_back_force, projectile_index.knockback_direction);

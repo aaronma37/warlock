@@ -266,7 +266,7 @@ public class Rend implements GLSurfaceView.Renderer {
         player.off_a[2].o[7]=100;
 
 
-        player.attribute[0]=0;
+        player.attribute[0]=1;
         player.attribute[1]=1;
         player.attribute[2]=1;
         player.attribute[3]=1;
@@ -489,7 +489,7 @@ public class Rend implements GLSurfaceView.Renderer {
         env.all_locations[env.current_location.location_index].draw_location(scratch,mMVPMatrix,zeroRotationMatrix, player.center_x);
 
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            player.person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,player.center_x,.15f,player.facing_direction, player.state.state);
+            player.person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,player.center_x,player.center_y,player.facing_direction, player.state.state);
         }
 
     public void update_ui_image(int k, int i){
@@ -579,11 +579,10 @@ public class Rend implements GLSurfaceView.Renderer {
         //TEAM RED MAKE DECISIONS
         for (int i =0; i<red_team.size();i++){
             if (red_team.get(i).state.state==0){
-                red_team.get(i).cast(0,1,blue_team.get(0),0);
+                red_team.get(i).cast(0,0,blue_team.get(0),0);
             }
         }
     }
-
 
 
     public boolean resolve_people(Person origin, Person target){

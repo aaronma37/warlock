@@ -48,6 +48,20 @@ public class Projectile_Skeleton {
 
         animation.add(firespray);
 
+        List<Projectile_Keyframe> fireblast = new ArrayList<>();
+        fireblast.add(new Projectile_Keyframe(0, 0,  .5f,.1f,    0,10));
+        fireblast.add(new Projectile_Keyframe(0,0,  .5f,.1f,    10,10));
+        fireblast.add(new Projectile_Keyframe(0,0,  .5f,.1f,    10,10));
+
+        animation.add(fireblast);
+
+        List<Projectile_Keyframe> lsa = new ArrayList<>();
+        lsa.add(new Projectile_Keyframe(0, 0,  .5f,.3f,    0,10));
+        lsa.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
+        lsa.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
+
+        animation.add(lsa);
+
     }
 
     public void activate(float ix, float iy, int d, int index){
@@ -90,7 +104,6 @@ public class Projectile_Skeleton {
     }
 
     public void reset_box(){
-        System.out.print("ds : " + width);
         box.x=x;
         box.y=y;
         box.width=width;

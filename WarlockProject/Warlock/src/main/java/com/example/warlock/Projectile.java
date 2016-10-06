@@ -193,7 +193,7 @@ public class Projectile {
                 active_time=150;
 
                 knock_back_force=.01f;
-                knock_back_time=10;
+                knock_back_time=15;
 
                 interrupt_level=1;
             }else if (init_spell_type==1){
