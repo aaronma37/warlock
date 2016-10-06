@@ -21,12 +21,13 @@ public class Person {
 
     private final int META_SIZE=3;
 
-    public int health;
+    public float health;
     public boolean alive =true;
     public String name;
     public int height;
     public int width;
     public Hitbox hitbox;
+    public Box box;
     public float center_x;
     public float center_y;
     public int facing_direction=1;
@@ -84,6 +85,7 @@ public class Person {
         height=24;
         width=8;
         hitbox = new Hitbox(4,12);
+        box = new Box(.1f,.2f,0,0,0);
         center_x=start_x;
         center_y=start_y;
         busy=false;
@@ -122,6 +124,7 @@ public class Person {
         alive=true;
         width=8;
         hitbox = new Hitbox(4,12);
+        box = new Box(.1f,.2f,0,0,0);
         center_x=start_x;
         center_y=start_y;
         busy=false;
@@ -144,29 +147,11 @@ public class Person {
 
     }
 
-/*    public void cast(Offensive_Physical_Actions desired_action){
-        busy=true;
-        //action= new Offensive_Physical_Actions();
-        action=desired_action;
-        //action.set(0,ini);
-    }*/
 
     public void cast(int meta_index, int action_index, Person target, int spirit_type){
         busy=true;
         state.setState(1,meta_index,action_index,0);
-
-        //fireball.reset();
         action.set(meta_index,action_index, spirit_type, target, this);
-
-        //action= new Offensive_Physical_Actions();
-/*        if (action_index==0){
-            action.set(meta_index,0,projectile_fireball, target);
-        }
-        if (action_index==1){
-            action.set(meta_index,0, projectile_fireball, target);
-        }*/
-        //action=desired_action;
-        //action.set(0,ini);
     }
 
     public void hitBy(Projectile projectile_index){
@@ -225,6 +210,11 @@ public class Person {
         OOB();
     }
 
+    public void reset_box(){
+        box.x = center_x;
+        box.y = center_y;
+    }
+
     public void step(){
         //reset cooldowns
         for (int i=0;i<ACTION_SPACE_SIZE;i++){
@@ -256,6 +246,8 @@ public class Person {
                 state.setState(0,0,0,0);
             }
         }
+        reset_box();
+
     }
 
     public int return_direction(float x_1, float x_2){

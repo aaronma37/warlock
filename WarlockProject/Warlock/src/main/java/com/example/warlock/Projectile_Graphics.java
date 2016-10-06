@@ -46,6 +46,9 @@ public class Projectile_Graphics {
         if (projectile_index==0){
             projectile_base = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.fire_1_1_base), 1f,1.3f*ADJ_SCALE*100f/1000,ADJ_SCALE*.021f,ADJ_SCALE*-.008f);
             rotation=90;
+        }else if (projectile_index==1){
+            projectile_base = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.fire_1_1_base), 1f,1.3f*ADJ_SCALE*100f/1000,ADJ_SCALE*.021f,ADJ_SCALE*-.008f);
+            rotation=90;
         }
 
 

@@ -18,6 +18,7 @@ public class Projectile {
     public boolean active;
     public float persistance;
     public Hitbox hitbox=new Hitbox(2,2);
+    public Box box;
     public float location_x;
     public float location_y;
     public float knock_back_time;
@@ -39,6 +40,7 @@ public class Projectile {
         active=false;
         skeleton= new Projectile_Skeleton();
         myContext=context;
+        box= new Box(0,0,0,0,0);
     }
 
     public void reset(){active=false; time_active=0;}
@@ -72,10 +74,9 @@ public class Projectile {
             active=false;
         }
 
-
-
         location_x=skeleton.x+skeleton.origin_x;
         location_y=skeleton.y+skeleton.origin_y;
+        reset_box();
 
 
         if (Math.abs(location_x - active_targets.get(0).center_x) > .5f) {
@@ -85,13 +86,13 @@ public class Projectile {
         } else {
             distance_from_target = 0;
         }
+    }
 
-
-/*        time_active = time_active + 1;
-        if (time_active > active_time) {
-            active = false;
-        }*/
-
+    public void reset_box(){
+        box.x=location_x;
+        box.y=location_y;
+        box.width=skeleton.width;
+        box.height=skeleton.height;
     }
 
     public boolean ask_for_particle(){
@@ -104,7 +105,11 @@ public class Projectile {
     }
 
     public void on_hit(){
-        active=false;
+        if (spell_type==1){
+            return;
+        }else{
+            active=false;
+        }
     }
 
     public void addTarget(Person target){
@@ -112,7 +117,7 @@ public class Projectile {
     }
 
     public void setSpell(Person target, Person origin, int init_spell_type, int init_spirit_type){
-        skeleton.activate(origin.center_x, origin.center_y, origin.facing_direction, 0);
+        skeleton.activate(origin.center_x, origin.center_y, origin.facing_direction, init_spell_type);
         owner=origin;
 
         active=true;
@@ -197,7 +202,7 @@ public class Projectile {
                 location_x=cast_location_x;
                 location_y=cast_location_y;
                 speed=.025f;
-                damage=5;
+                damage=1f;
                 type=0;
                 debuff=0;
                 persistance=0;

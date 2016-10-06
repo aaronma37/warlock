@@ -15,6 +15,7 @@ public class Projectile_Skeleton {
     public int dir;
     public int count;
     public boolean active;
+    public Box box;
 
     public List<List<Projectile_Keyframe>> animation = new ArrayList<List<Projectile_Keyframe>>();
 
@@ -25,6 +26,8 @@ public class Projectile_Skeleton {
         y=0;
         width=0;
         height=0;
+        box=new Box(0,0,0,0,0);
+        reset_box();
     }
 
     public void set_keyframes(){
@@ -78,6 +81,7 @@ public class Projectile_Skeleton {
             for (int i=0;i<animation.get(type).size();i++){
                 if(count<animation.get(type).get(i).end){
                     update_projectile(dir, animation.get(type).get(i),animation.get(type).get(i+1), (1f-(count-animation.get(type).get(i).begin)/(animation.get(type).get(i).end-animation.get(type).get(i).begin)));
+                    reset_box();
                     break;
                 }
 
@@ -85,11 +89,19 @@ public class Projectile_Skeleton {
         }
     }
 
+    public void reset_box(){
+        System.out.print("ds : " + width);
+        box.x=x;
+        box.y=y;
+        box.width=width;
+        box.height=height;
+    }
+
     public void update_projectile(int dir, Projectile_Keyframe anim_1, Projectile_Keyframe anim_2, float rng){
         x= dir*(anim_2.x+rng*(anim_1.x-anim_2.x));
-        y= dir*(anim_2.y+rng*(anim_1.y-anim_2.y));
-        width= dir*(anim_2.width+rng*(anim_1.width-anim_2.width));
-        height= dir*(anim_2.height+rng*(anim_1.height-anim_2.height));
+        y= (anim_2.y+rng*(anim_1.y-anim_2.y));
+        width= (anim_2.width+rng*(anim_1.width-anim_2.width));
+        height= (anim_2.height+rng*(anim_1.height-anim_2.height));
     }
 
 

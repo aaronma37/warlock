@@ -10,12 +10,12 @@ public class Box {
 
     public int BATTLE=0;
 
-    public Box(float i_width, float i_height, float i_x, float i_y, int i_resonse){
+    public Box(float i_width, float i_height, float i_x, float i_y, int i_response){
         x=i_x;
         y=i_y;
         width=i_width;
         height=i_height;
-        response=i_resonse;
+        response=i_response;
     }
 
 }

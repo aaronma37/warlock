@@ -312,15 +312,13 @@ public class Rend implements GLSurfaceView.Renderer {
         }
     }
 
-    public boolean checkCollision(Hitbox hbox1, float x_1, float y_1, Hitbox hbox2, float x_2, float y_2){
-        //System.out.println("size of hitbox: " + hbox1.x);
-        if (x_1-hbox1.x/100<=x_2+hbox2.x/100 && x_1+hbox1.x/100 >= x_2-hbox2.x/100){
-            if (y_1-hbox1.y/100<=y_2+hbox2.y/100 && y_1+hbox1.y/100 >= y_2-hbox2.y/100){
-                return true;
-            }
-        }
+    public boolean checkCollision(Box b1, Box b2){
+        if (b1.x-b1.width > b2.x+b2.width) return false;
+        if (b1.x+b1.width < b2.x-b2.width) return false;
+        if (b1.y-b1.height > b2.y + b2.height)  return false;
+        if (b1.y+b1.height < b2.y-b2.height) return false; 
 
-        return false;
+        return true;
     }
 
 
@@ -432,8 +430,8 @@ public class Rend implements GLSurfaceView.Renderer {
 
             if (show_info){
                 Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                Matrix.translateM(scratch, 0, active_people.get(i).center_x, active_people.get(i).center_y, 1f);
-                Matrix.scaleM(scratch, 0, active_people.get(i).hitbox.x*2/100f,active_people.get(i).hitbox.y*2/100f,.5f);
+                Matrix.translateM(scratch, 0, active_people.get(i).box.x, active_people.get(i).box.y, 1f);
+                Matrix.scaleM(scratch, 0, active_people.get(i).box.width,active_people.get(i).box.height,.5f);
 
                 blue_box.Draw(scratch,false);
 
@@ -461,8 +459,8 @@ public class Rend implements GLSurfaceView.Renderer {
             if (show_info){
                 if (active_projectiles.get(i).active){
                     Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                    Matrix.translateM(scratch, 0, active_projectiles.get(i).location_x, active_projectiles.get(i).location_y, 1);
-                    Matrix.scaleM(scratch, 0, active_projectiles.get(i).skeleton.width,active_projectiles.get(i).skeleton.height,.5f);
+                    Matrix.translateM(scratch, 0, active_projectiles.get(i).box.x, active_projectiles.get(i).box.y, 1);
+                    Matrix.scaleM(scratch, 0, active_projectiles.get(i).box.width,active_projectiles.get(i).box.height,.5f);
                     red_box.Draw(scratch,false);
                 }
             }
@@ -581,7 +579,7 @@ public class Rend implements GLSurfaceView.Renderer {
         //TEAM RED MAKE DECISIONS
         for (int i =0; i<red_team.size();i++){
             if (red_team.get(i).state.state==0){
-                red_team.get(i).cast(0,0,blue_team.get(0),0);
+                red_team.get(i).cast(0,1,blue_team.get(0),0);
             }
         }
     }
@@ -632,7 +630,7 @@ public class Rend implements GLSurfaceView.Renderer {
         }
         //Check hit
         for (int j = 0; j< inner_projectile.active_targets.size();j++){
-            if (checkCollision(inner_projectile.active_targets.get(j).hitbox,inner_projectile.active_targets.get(j).center_x,inner_projectile.active_targets.get(j).center_y,inner_projectile.hitbox,inner_projectile.location_x,inner_projectile.location_y)){
+            if (checkCollision(inner_projectile.active_targets.get(j).box,inner_projectile.box)){
                 inner_projectile.on_hit();
                 inner_projectile.active_targets.get(j).hitBy(inner_projectile);
             }
