@@ -94,6 +94,10 @@ public class SurfaceView extends GLSurfaceView {
                         move_player(modded_x+mRenderer.screen_x );
                         vibrator.vibrate(200);
                     }
+                    if (checkClick(modded_x,modded_y,2f,.4f,0,.4f,mRenderer.screen_x)){
+                        jump_player(modded_x+mRenderer.screen_x, modded_y);
+                        vibrator.vibrate(200);
+                    }
                 }
 
                 if ((mRenderer.game_state==5) && mRenderer.player.state.state!=1 && mRenderer.player.state.state!=2){
@@ -151,6 +155,10 @@ public class SurfaceView extends GLSurfaceView {
 
     public void move_player(float destination_x){
         mRenderer.player.move_request(destination_x);
+    }
+
+    public void jump_player(float destination_x, float destination_y){
+        mRenderer.player.jump_request(destination_x, destination_y);
     }
 
     public void click_code(int c1, int c2){

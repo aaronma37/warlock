@@ -99,15 +99,15 @@ public class Offensive_Physical_Actions {
             //FIREBALL
             setFacingDirection();
             projectile_swap[active_projectiles.size()].reset();
-            projectile_swap[active_projectiles.size()].setSpell(target,origin,spell_type,spirit_type);
+            projectile_swap[active_projectiles.size()].setSpell(target,origin,spell_type,spirit_type,meta_type);
             active_projectiles.add(projectile_swap[active_projectiles.size()]);
             }else if (spell_type==1){
                 projectile_swap[active_projectiles.size()].reset();
-                projectile_swap[active_projectiles.size()].setSpell(target,origin,spell_type,spirit_type);
+                projectile_swap[active_projectiles.size()].setSpell(target,origin,spell_type,spirit_type,meta_type);
                 active_projectiles.add(projectile_swap[active_projectiles.size()]);
             }else{
                 projectile_swap[active_projectiles.size()].reset();
-                projectile_swap[active_projectiles.size()].setSpell(target,origin,spell_type,spirit_type);
+                projectile_swap[active_projectiles.size()].setSpell(target,origin,spell_type,spirit_type,meta_type);
                 active_projectiles.add(projectile_swap[active_projectiles.size()]);
             }
         } else if (meta_type==1){

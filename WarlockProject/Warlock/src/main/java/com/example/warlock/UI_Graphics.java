@@ -140,10 +140,9 @@ public class UI_Graphics
             //BATTLE
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.ui_battle_bottom), 1.8f, .3f,-.8f,0,NOTHING,NOTHING,NOTHING);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.fire_symbol),.1f,.1f,-.85f,-1.35f+0*.7f,COMMAND_SEAL,0,BUTTON);number_of_images++;
-            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.water_symbol),.1f,.1f,-.55f,-1.35f+0*.3f,COMMAND_SEAL,1,BUTTON);number_of_images++;
-            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.nature_symbol),.1f,.1f,-.7f,-1.35f+1*.3f,COMMAND_SEAL,2,BUTTON);number_of_images++;
-            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.light_symbol),.1f,.1f,-.85f,-1.35f+2*.3f,COMMAND_SEAL,3,BUTTON);number_of_images++;
-            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.dark_symbol),.1f,.1f,-.55f,-1.35f+2*.3f,COMMAND_SEAL,4,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.water_symbol),.1f,.1f,-.55f,-1.35f+0*.3f,COMMAND_SEAL,3,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.light_symbol),.1f,.1f,-.85f,-1.35f+2*.3f,COMMAND_SEAL,1,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.dark_symbol),.1f,.1f,-.55f,-1.35f+2*.3f,COMMAND_SEAL,2,BUTTON);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.red_button),.15f,.12f,-.85f,.15f,REWARD,0,BUTTON);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.green_button),.15f,.12f,-.85f,-.1f,REWARD,1,BUTTON);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.red_button),.15f,.12f,-.85f,.9f,REWARD,2,BUTTON);number_of_images++;

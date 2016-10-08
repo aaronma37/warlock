@@ -13,14 +13,16 @@ public class Person {
     private final int ACTION_SPACE_SIZE=15;
     private final int SUPPORT_SPACE_SIZE=15;
     private final int DEFENSE_SPACE_SIZE=15;
-    private static int NUMBER_OF_SPIRITS=15;
+    private static int NUMBER_OF_SPIRITS=10;
     private static int NUMBER_OF_EQUIPMENT_SLOTS=3;
     private static int NUMBER_OF_ATTRIBUTES=5;
+    private static float GRAVITY=.01f;
 
 
 
     private final int META_SIZE=3;
 
+    public float GROUND_LEVEL=.15f;
     public float health;
     public boolean alive =true;
     public String name;
@@ -30,6 +32,7 @@ public class Person {
     public Box box;
     public float center_x;
     public float center_y;
+    public float yvel;
     public int facing_direction=1;
     public int animation=0;
     public int attribute[] = new int[NUMBER_OF_ATTRIBUTES];
@@ -41,8 +44,13 @@ public class Person {
     public Person_Graphics person_graphics;
     public Context myContext;
 
+    public boolean in_air;
+
     public int sprint_timer=0;
     public int SPRINT_TIME=10;
+
+    public int jump_timer=0;
+    public int JUMP_TIME=10;
 
     public Spirit spirit[] = new Spirit[NUMBER_OF_SPIRITS];
 
@@ -101,6 +109,8 @@ public class Person {
         center_y=start_y;
         busy=false;
         state.setState(0,0,0,0);
+        in_air=false;
+        yvel=0;
 
         for (int i=0;i<META_SIZE;i++){
             a[i]=new action_space_action(i);
@@ -158,6 +168,18 @@ public class Person {
 
     }
 
+    public void step_in_air(){
+        if (in_air){
+            if (center_y<GROUND_LEVEL){
+                in_air=false;
+                yvel=0;
+                center_y=GROUND_LEVEL;
+            }else{
+                yvel-=GRAVITY;
+                center_y=center_y+yvel;
+            }
+        }
+    }
 
     public void cast(int meta_index, int action_index, Person target, int spirit_type){
         busy=true;
@@ -170,11 +192,11 @@ public class Person {
             health = health - (int)(projectile_index.damage - action.block);
         }
         if (state.state==0 || state.state==3 || state.state == 4){
-            state.setState(2,projectile_index.knock_back_time,projectile_index.knock_back_force, projectile_index.knockback_direction);
+            set_knockback(projectile_index);
         }else if (state.state==1){
             if (state.interrupt_level <= projectile_index.interrupt_level){
                 action.cast_time=0;
-                state.setState(2,projectile_index.knock_back_time,projectile_index.knock_back_force, projectile_index.knockback_direction);
+                set_knockback(projectile_index);
             }
         }
 
@@ -182,6 +204,17 @@ public class Person {
 
 
         checkVitals();
+    }
+
+    public void set_knockback(Projectile projectile_index){
+
+        state.setState(2,projectile_index.knock_back_time,projectile_index.knock_back_force, projectile_index.knockback_direction);
+        if (projectile_index.knockback_y>0){
+            yvel=projectile_index.knockback_y;
+            in_air=true;
+            center_y=GROUND_LEVEL+.01f;
+        }
+
     }
 
     public void checkVitals(){
@@ -238,6 +271,8 @@ public class Person {
             }
         }
 
+        step_in_air();
+
 
         if (state.state==0 || state.state==1){
             person_graphics.resolve_movement(0,0,facing_direction,state.state);
@@ -252,6 +287,7 @@ public class Person {
             }
         }else if (state.state==3 || state.state==4){
             sprint_timer--;
+            jump_timer--;
             if (Math.abs(center_x-state.destination_x)>.01f){
                 facing_direction=return_direction(center_x,state.destination_x);
                 motion(state.ms,return_direction(center_x,state.destination_x));
@@ -353,6 +389,18 @@ public class Person {
             state.setState(4,dest_x,0,0);
         }
         sprint_timer=SPRINT_TIME;
+    }
+
+    public void jump_request(float dest_x, float dest_y){
+
+        if (!in_air){
+            //state.setState(3,dest_x,0,0);
+            yvel=dest_y/10;
+            in_air=true;
+            center_y=GROUND_LEVEL+.01f;
+            jump_timer=JUMP_TIME;
+        }
+
     }
 
 

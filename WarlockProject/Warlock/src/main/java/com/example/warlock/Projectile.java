@@ -23,6 +23,7 @@ public class Projectile {
     public float location_y;
     public float knock_back_time;
     public float knock_back_force;
+    public float knockback_y;
     public float direction;
     public List<Person> active_targets = new ArrayList<>();
     public Person owner;
@@ -116,10 +117,10 @@ public class Projectile {
         active_targets.add(target);
     }
 
-    public void setSpell(Person target, Person origin, int init_spell_type, int init_spirit_type){
-        skeleton.activate(origin.center_x, origin.center_y, origin.facing_direction, init_spell_type);
+    public void setSpell(Person target, Person origin, int init_spell_type, int init_spirit_type, int init_meta_type){
+        skeleton.activate(origin.center_x, origin.center_y, origin.facing_direction, init_spell_type, init_spirit_type, init_meta_type);
         owner=origin;
-
+        knockback_y=.05f;
         active=true;
         spell_type=init_spell_type;
 
@@ -191,7 +192,6 @@ public class Projectile {
                 active_targets.clear();
                 active_targets.add(target);
                 active_time=150;
-
                 knock_back_force=.01f;
                 knock_back_time=15;
 
