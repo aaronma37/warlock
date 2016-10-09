@@ -89,7 +89,7 @@ public class SurfaceView extends GLSurfaceView {
                 mRenderer.pointer[1]=modded_y;
 
                 //GAME
-                if ((mRenderer.game_state==0 || mRenderer.game_state ==5) && mRenderer.player.state.state!=2 && mRenderer.player.state.state!=1){
+                if ((mRenderer.game_state==0 || mRenderer.game_state ==5) && mRenderer.player.state.can_move){
                     if (checkClick(modded_x,modded_y,2f,.2f,0,-.2f,mRenderer.screen_x)){
                         move_player(modded_x+mRenderer.screen_x );
                         vibrator.vibrate(200);

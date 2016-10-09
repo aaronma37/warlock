@@ -7,6 +7,8 @@ public class KeyFrame {
     public float begin;
     public float end;
 
+    public float x,y;
+
     public float head;
     public float hair;
     public float neck;
@@ -24,7 +26,7 @@ public class KeyFrame {
 
 
 
-    public KeyFrame(float i_head, float i_hair, float i_neck, float i_upper_bod, float i_lower_bod, float i_upper_left_arm, float i_lower_left_arm, float i_upper_right_arm, float i_lower_right_arm, float i_upper_left_leg, float i_lower_left_leg, float i_upper_right_leg, float i_lower_right_leg,  int i_beg, int i_end){
+    public KeyFrame(float i_head, float i_hair, float i_neck, float i_upper_bod, float i_lower_bod, float i_upper_left_arm, float i_lower_left_arm, float i_upper_right_arm, float i_lower_right_arm, float i_upper_left_leg, float i_lower_left_leg, float i_upper_right_leg, float i_lower_right_leg, float i_x, float i_y, int i_beg, int i_end){
         head=i_head;
         hair=i_hair;
         neck=i_neck;
@@ -39,7 +41,8 @@ public class KeyFrame {
         upper_right_leg=i_upper_right_leg;
         lower_right_leg=i_lower_right_leg;
 
-
+        x=i_x;
+        y=i_y;
         end=i_end;
         begin=i_beg;
     }

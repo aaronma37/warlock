@@ -127,7 +127,7 @@ public class Offensive_Physical_Actions {
 
 
         active=false;
-        origin.state.setState(0,0,0,0);
+        origin.state.setState(7,spell_type,spirit_type,meta_type);
     }
 
 

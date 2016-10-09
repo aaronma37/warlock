@@ -403,6 +403,21 @@ public class Person {
 
     }
 
+    public void DrawSelf(float[] scratch, float[] mMVPMatrix, float[] zeroRotationMatrix){
+        person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,center_x,center_y,facing_direction,state);
+        if (state.state==7){
+            //AFTER ACTION~~
+
+            if (person_graphics.skeleton.cycle){
+                state.setState(0,0,0,0);
+            }else{
+                center_x=person_graphics.skeleton.action_x;
+                center_y=person_graphics.skeleton.action_y;
+            }
+        }
+
+    }
+
 
     public boolean checkIndex(int spell_type, int meta_type, int att[]){
 

@@ -152,7 +152,7 @@ public class Location_Data {
         }
 
         for (int i=0;i<PEOPLE_IN_SCENE_SIZE;i++){
-            people_in_scene[i].person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,people_in_scene[i].center_x,people_in_scene[i].center_y,people_in_scene[i].facing_direction,people_in_scene[i].state.state);
+            people_in_scene[i].DrawSelf(scratch,mMVPMatrix,zeroRotationMatrix);
         }
 
 

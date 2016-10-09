@@ -190,7 +190,7 @@ public class Person_Graphics {
 
     }
 
-    public void draw_person(float scratch[], float mMVPMatrix[], float zeroRotationMatrix[], float x, float y, int dir, int state){
+    public void draw_person(float scratch[], float mMVPMatrix[], float zeroRotationMatrix[], float x, float y, int dir, PhysicalState i_state){
 
         for (int i =0; i<pre_hair_assets.size();i++){
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
@@ -201,7 +201,7 @@ public class Person_Graphics {
             pre_hair_assets.get(i).Draw(scratch,false);
         }
 
-        skeleton.step(state,dir, y);
+        skeleton.step(i_state,dir, x, y);
 
 
         draw_body_part(x,y,1,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.lower_right_arm, lower_right_arm);

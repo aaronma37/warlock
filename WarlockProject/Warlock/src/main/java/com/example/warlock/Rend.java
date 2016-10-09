@@ -424,9 +424,7 @@ public class Rend implements GLSurfaceView.Renderer {
             }
 
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            active_people.get(i).person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,active_people.get(i).center_x,active_people.get(i).center_y,active_people.get(i).facing_direction, active_people.get(i).state.state);
-
-
+            active_people.get(i).DrawSelf(scratch,mMVPMatrix,zeroRotationMatrix);
 
             if (show_info){
                 Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
@@ -489,7 +487,7 @@ public class Rend implements GLSurfaceView.Renderer {
         env.all_locations[env.current_location.location_index].draw_location(scratch,mMVPMatrix,zeroRotationMatrix, player.center_x);
 
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            player.person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,player.center_x,player.center_y,player.facing_direction, player.state.state);
+            player.DrawSelf(scratch,mMVPMatrix,zeroRotationMatrix);
         }
 
     public void update_ui_image(int k, int i){
