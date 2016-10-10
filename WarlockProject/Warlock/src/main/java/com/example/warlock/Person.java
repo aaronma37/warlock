@@ -413,6 +413,7 @@ public class Person {
             }else{
                 center_x=person_graphics.skeleton.action_x;
                 center_y=person_graphics.skeleton.action_y;
+                OOB();
             }
         }
 

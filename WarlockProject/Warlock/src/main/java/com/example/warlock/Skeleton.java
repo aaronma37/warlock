@@ -176,9 +176,9 @@ public class Skeleton {
 
 
         List<KeyFrame> unnamed = new ArrayList<>();
-        unnamed.add(new KeyFrame(0,0,0,0,0,    50,100,50,100,0,0,0,0,0,0,0,30));
-        unnamed.add(new KeyFrame(0,0,0,0,0,    50,100,50,100,0,0,0,0,.1f,0,30,30));
-        unnamed.add(new KeyFrame(0,0,0,0,0,    50,100,50,100,0,0,0,0,.1f,0,30,30));
+        unnamed.add(new KeyFrame(0,0,0,0,0,    50,100,50,100,0,0,0,0,0,0,0,15));
+        unnamed.add(new KeyFrame(0,0,0,0,0,    50,100,50,100,0,0,0,0,-.05f,0,15,15));
+        unnamed.add(new KeyFrame(0,0,0,0,0,    50,100,50,100,0,0,0,0,-.05f,0,15,15));
 /*
         List<KeyFrame> fireball = new ArrayList<>();
         fireball.add(new KeyFrame(0, 0,  .1f,.1f,    0,30));
@@ -441,9 +441,6 @@ public class Skeleton {
         dir=i_dir;
         count++;
         cycle=false;
-
-        System.out.println("og state" + state.state );
-        System.out.println( i_state.state );
 
         set_xy(i_x, i_y);
         update_state(i_state);
