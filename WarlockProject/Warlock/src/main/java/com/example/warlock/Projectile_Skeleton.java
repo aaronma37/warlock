@@ -283,6 +283,7 @@ public class Projectile_Skeleton {
 
         //spirit type, magical type, spell number
 
+
         magic=magical_type;
         spirit=spirit_type;
         spell_number=spell_index;

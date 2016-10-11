@@ -34,6 +34,7 @@ public class Projectile {
     public int knockback_direction=0;
     public int spell_type=0;
     public Context myContext;
+    public boolean projectile_interruptable=false;
 
     public Projectile_Skeleton skeleton;
 
@@ -117,6 +118,406 @@ public class Projectile {
         active_targets.add(target);
     }
 
+
+    //MAGICAL FIRE
+    public void SET_TYPE_fire_ball(Person target, Person origin, int init_spell_type, int init_spirit_type, int init_meta_type){
+        cast_location_x=origin.center_x;
+        cast_location_y=origin.center_y;
+        projectile_interruptable=false;
+        location_x=cast_location_x;
+        location_y=cast_location_y;
+        speed=.025f;
+        damage=5;
+        type=0;
+        debuff=0;
+        persistance=0;
+        hitbox.set(2,2);
+        direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+        if (target.center_x-origin.center_x>0){
+            knockback_direction=1;
+        }else{
+            knockback_direction=-1;
+        }
+        active_targets.clear();
+        active_targets.add(target);
+        active_time=150;
+        knock_back_force=.01f;
+        knock_back_time=15;
+
+        interrupt_level=1;
+    }
+
+    public void SET_TYPE_fire_spray(Person target, Person origin, int init_spell_type, int init_spirit_type, int init_meta_type){
+        cast_location_x=origin.center_x;
+        cast_location_y=origin.center_y;
+        projectile_interruptable=false;
+        location_x=cast_location_x;
+        location_y=cast_location_y;
+        speed=.025f;
+        damage=1f;
+        type=0;
+        debuff=0;
+        persistance=0;
+        hitbox.set(2,2);
+        direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+        if (target.center_x-origin.center_x>0){
+            knockback_direction=1;
+        }else{
+            knockback_direction=-1;
+        }
+        active_targets.clear();
+        active_targets.add(target);
+        active_time=150;
+
+        knock_back_force=.01f;
+        knock_back_time=10;
+
+        interrupt_level=1;
+    }
+
+    public void SET_TYPE_fire_blast(Person target, Person origin, int init_spell_type, int init_spirit_type, int init_meta_type){
+        cast_location_x=origin.center_x+origin.facing_direction*.2f;
+        cast_location_y=origin.center_y;
+        location_x=cast_location_x;
+        location_y=cast_location_y;
+        projectile_interruptable=false;
+        speed=0f;
+        damage=7;
+        type=0;
+        debuff=0;
+        persistance=0;
+        hitbox.set(3,2);
+        direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+        //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
+        if (target.center_x-origin.center_x>0){
+            knockback_direction=1;
+        }else{
+            knockback_direction=-1;
+        }
+        active_targets.clear();
+        active_targets.add(target);
+        active_time=10;
+
+        knock_back_force=.01f;
+        knock_back_time=15;
+
+        interrupt_level=1;
+    }
+
+    public void SET_TYPE_light_strike_array(Person target, Person origin, int init_spell_type, int init_spirit_type, int init_meta_type){
+        cast_location_x=origin.center_x;
+        cast_location_y=origin.center_y;
+        location_x=cast_location_x;
+        location_y=cast_location_y;
+        projectile_interruptable=false;
+        speed=.025f;
+        damage=1f;
+        type=0;
+        debuff=0;
+        persistance=0;
+        hitbox.set(2,2);
+        direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+        if (target.center_x-origin.center_x>0){
+            knockback_direction=1;
+        }else{
+            knockback_direction=-1;
+        }
+        active_targets.clear();
+        active_targets.add(target);
+        active_time=150;
+
+        knock_back_force=.01f;
+        knock_back_time=10;
+
+        interrupt_level=1;
+    }
+
+    public void SET_TYPE_sun_strike(Person target, Person origin, int init_spell_type, int init_spirit_type, int init_meta_type){
+        cast_location_x=origin.center_x;
+        cast_location_y=origin.center_y;
+        location_x=cast_location_x;
+        location_y=cast_location_y;
+        projectile_interruptable=false;
+        speed=.025f;
+        damage=1f;
+        type=0;
+        debuff=0;
+        persistance=0;
+        hitbox.set(2,2);
+        direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+        if (target.center_x-origin.center_x>0){
+            knockback_direction=1;
+        }else{
+            knockback_direction=-1;
+        }
+        active_targets.clear();
+        active_targets.add(target);
+        active_time=150;
+
+        knock_back_force=.01f;
+        knock_back_time=10;
+
+        interrupt_level=1;
+    }
+
+    public void SET_TYPE_flame_guard(Person target, Person origin, int init_spell_type, int init_spirit_type, int init_meta_type){
+        cast_location_x=origin.center_x;
+        cast_location_y=origin.center_y;
+        projectile_interruptable=false;
+        location_x=cast_location_x;
+        location_y=cast_location_y;
+        speed=.025f;
+        damage=1f;
+        type=0;
+        debuff=0;
+        persistance=0;
+        hitbox.set(2,2);
+        direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+        if (target.center_x-origin.center_x>0){
+            knockback_direction=1;
+        }else{
+            knockback_direction=-1;
+        }
+        active_targets.clear();
+        active_targets.add(target);
+        active_time=150;
+
+        knock_back_force=.01f;
+        knock_back_time=10;
+
+        interrupt_level=1;
+    }
+
+    public void SET_TYPE_flame_wall(Person target, Person origin, int init_spell_type, int init_spirit_type, int init_meta_type){
+        cast_location_x=origin.center_x;
+        cast_location_y=origin.center_y;
+        projectile_interruptable=false;
+        location_x=cast_location_x;
+        location_y=cast_location_y;
+        speed=.025f;
+        damage=1f;
+        type=0;
+        debuff=0;
+        persistance=0;
+        hitbox.set(2,2);
+        direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+        if (target.center_x-origin.center_x>0){
+            knockback_direction=1;
+        }else{
+            knockback_direction=-1;
+        }
+        active_targets.clear();
+        active_targets.add(target);
+        active_time=150;
+
+        knock_back_force=.01f;
+        knock_back_time=10;
+
+        interrupt_level=1;
+    }
+
+    public void SET_TYPE_imbue(Person target, Person origin, int init_spell_type, int init_spirit_type, int init_meta_type){
+        cast_location_x=origin.center_x;
+        cast_location_y=origin.center_y;
+        projectile_interruptable=false;
+        location_x=cast_location_x;
+        location_y=cast_location_y;
+        speed=.025f;
+        damage=1f;
+        type=0;
+        debuff=0;
+        persistance=0;
+        hitbox.set(2,2);
+        direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+        if (target.center_x-origin.center_x>0){
+            knockback_direction=1;
+        }else{
+            knockback_direction=-1;
+        }
+        active_targets.clear();
+        active_targets.add(target);
+        active_time=150;
+
+        knock_back_force=.01f;
+        knock_back_time=10;
+
+        interrupt_level=1;
+    }
+
+
+    //PHYSICAL FIRE
+    public void SET_TYPE_palm_blast(Person target, Person origin, int init_spell_type, int init_spirit_type, int init_meta_type){
+        projectile_interruptable=true;
+        cast_location_x=origin.center_x;
+        cast_location_y=origin.center_y;
+        location_x=cast_location_x;
+        location_y=cast_location_y;
+        speed=.025f;
+        damage=1f;
+        type=0;
+        debuff=0;
+        persistance=0;
+        hitbox.set(2,2);
+        direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+        if (target.center_x-origin.center_x>0){
+            knockback_direction=1;
+        }else{
+            knockback_direction=-1;
+        }
+        active_targets.clear();
+        active_targets.add(target);
+        active_time=150;
+
+        knock_back_force=.01f;
+        knock_back_time=10;
+
+        interrupt_level=1;
+    }
+
+    public void SET_TYPE_axe_attack(Person target, Person origin, int init_spell_type, int init_spirit_type, int init_meta_type){
+        projectile_interruptable=true;
+        cast_location_x=origin.center_x;
+        cast_location_y=origin.center_y;
+        location_x=cast_location_x;
+        location_y=cast_location_y;
+        speed=.025f;
+        damage=1f;
+        type=0;
+        debuff=0;
+        persistance=0;
+        hitbox.set(2,2);
+        direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+        if (target.center_x-origin.center_x>0){
+            knockback_direction=1;
+        }else{
+            knockback_direction=-1;
+        }
+        active_targets.clear();
+        active_targets.add(target);
+        active_time=150;
+
+        knock_back_force=.01f;
+        knock_back_time=10;
+
+        interrupt_level=1;
+    }
+
+    public void SET_TYPE_spinning_axe(Person target, Person origin, int init_spell_type, int init_spirit_type, int init_meta_type){
+        cast_location_x=origin.center_x;
+        cast_location_y=origin.center_y;
+        projectile_interruptable=true;
+
+        location_x=cast_location_x;
+        location_y=cast_location_y;
+        speed=.025f;
+        damage=1f;
+        type=0;
+        debuff=0;
+        persistance=0;
+        hitbox.set(2,2);
+        direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+        if (target.center_x-origin.center_x>0){
+            knockback_direction=1;
+        }else{
+            knockback_direction=-1;
+        }
+        active_targets.clear();
+        active_targets.add(target);
+        active_time=150;
+
+        knock_back_force=.01f;
+        knock_back_time=10;
+
+        interrupt_level=1;
+    }
+
+    public void SET_TYPE_dragon_kick(Person target, Person origin, int init_spell_type, int init_spirit_type, int init_meta_type){
+        cast_location_x=origin.center_x;
+        cast_location_y=origin.center_y;
+        projectile_interruptable=true;
+
+        location_x=cast_location_x;
+        location_y=cast_location_y;
+        speed=.025f;
+        damage=1f;
+        type=0;
+        debuff=0;
+        persistance=0;
+        hitbox.set(2,2);
+        direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+        if (target.center_x-origin.center_x>0){
+            knockback_direction=1;
+        }else{
+            knockback_direction=-1;
+        }
+        active_targets.clear();
+        active_targets.add(target);
+        active_time=150;
+
+        knock_back_force=.01f;
+        knock_back_time=10;
+
+        interrupt_level=1;
+    }
+
+    public void SET_TYPE_dragon_punch(Person target, Person origin, int init_spell_type, int init_spirit_type, int init_meta_type){
+        cast_location_x=origin.center_x;
+        cast_location_y=origin.center_y;
+        projectile_interruptable=true;
+
+        location_x=cast_location_x;
+        location_y=cast_location_y;
+        speed=.025f;
+        damage=1f;
+        type=0;
+        debuff=0;
+        persistance=0;
+        hitbox.set(2,2);
+        direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+        if (target.center_x-origin.center_x>0){
+            knockback_direction=1;
+        }else{
+            knockback_direction=-1;
+        }
+        active_targets.clear();
+        active_targets.add(target);
+        active_time=150;
+
+        knock_back_force=.01f;
+        knock_back_time=10;
+
+        interrupt_level=1;
+    }
+
+    public void SET_TYPE_dragon_wheel(Person target, Person origin, int init_spell_type, int init_spirit_type, int init_meta_type){
+        cast_location_x=origin.center_x;
+        cast_location_y=origin.center_y;
+        projectile_interruptable=true;
+
+        location_x=cast_location_x;
+        location_y=cast_location_y;
+        speed=.025f;
+        damage=1f;
+        type=0;
+        debuff=0;
+        persistance=0;
+        hitbox.set(2,2);
+        direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
+        if (target.center_x-origin.center_x>0){
+            knockback_direction=1;
+        }else{
+            knockback_direction=-1;
+        }
+        active_targets.clear();
+        active_targets.add(target);
+        active_time=150;
+
+        knock_back_force=.01f;
+        knock_back_time=10;
+
+        interrupt_level=1;
+    }
+
     public void setSpell(Person target, Person origin, int init_spell_type, int init_spirit_type, int init_meta_type){
         skeleton.activate(origin.center_x, origin.center_y, origin.facing_direction, init_spell_type, init_spirit_type, init_meta_type);
         owner=origin;
@@ -171,421 +572,59 @@ public class Projectile {
             type=15;
         }
 
+
         if (init_spirit_type==0){
-            if (init_spell_type==0){
-                cast_location_x=origin.center_x;
-                cast_location_y=origin.center_y;
-                location_x=cast_location_x;
-                location_y=cast_location_y;
-                speed=.025f;
-                damage=5;
-                type=0;
-                debuff=0;
-                persistance=0;
-                hitbox.set(2,2);
-                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-                if (target.center_x-origin.center_x>0){
-                    knockback_direction=1;
-                }else{
-                    knockback_direction=-1;
+            if (init_meta_type==0){
+                if (init_spell_type==0){
+                    SET_TYPE_fire_ball(target,origin,init_spell_type,init_spirit_type,init_meta_type);
+                }else if (init_spell_type==1){
+                    SET_TYPE_fire_spray(target,origin,init_spell_type,init_spirit_type,init_meta_type);
                 }
-                active_targets.clear();
-                active_targets.add(target);
-                active_time=150;
-                knock_back_force=.01f;
-                knock_back_time=15;
+                else if (init_spell_type==2){
+                    SET_TYPE_fire_blast(target, origin, init_spell_type, init_spirit_type, init_meta_type);
+                }else if (init_spell_type==3){
+                    SET_TYPE_light_strike_array(target, origin, init_spell_type, init_spirit_type, init_meta_type);
+                }else if (init_spell_type==4){
+                    SET_TYPE_sun_strike(target, origin, init_spell_type, init_spirit_type, init_meta_type);
+                }else if (init_spell_type==5){
+                    SET_TYPE_flame_guard(target, origin, init_spell_type, init_spirit_type, init_meta_type);
+                }else if (init_spell_type==6){
+                    SET_TYPE_flame_wall(target, origin, init_spell_type, init_spirit_type, init_meta_type);
+                }else if (init_spell_type==7){
+                    SET_TYPE_imbue(target, origin, init_spell_type, init_spirit_type, init_meta_type);
+                }else if (init_spell_type==8){
 
-                interrupt_level=1;
-            }else if (init_spell_type==1){
-                cast_location_x=origin.center_x;
-                cast_location_y=origin.center_y;
-                location_x=cast_location_x;
-                location_y=cast_location_y;
-                speed=.025f;
-                damage=1f;
-                type=0;
-                debuff=0;
-                persistance=0;
-                hitbox.set(2,2);
-                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-                if (target.center_x-origin.center_x>0){
-                    knockback_direction=1;
-                }else{
-                    knockback_direction=-1;
+                }else if (init_spell_type==9){
+
+                }else if (init_spell_type==10){
+
                 }
-                active_targets.clear();
-                active_targets.add(target);
-                active_time=150;
+            }else if (init_meta_type==1){
+                if (init_spell_type==0){
+                    SET_TYPE_palm_blast(target,origin,init_spell_type,init_spirit_type,init_meta_type);
+                }else if (init_spell_type==1){
+                    SET_TYPE_axe_attack(target,origin,init_spell_type,init_spirit_type,init_meta_type);
+                }else if (init_spell_type==2){
+                    SET_TYPE_spinning_axe(target, origin, init_spell_type, init_spirit_type, init_meta_type);
+                }else if (init_spell_type==3){
+                    SET_TYPE_dragon_kick(target, origin, init_spell_type, init_spirit_type, init_meta_type);
+                }else if (init_spell_type==4){
+                    SET_TYPE_dragon_punch(target, origin, init_spell_type, init_spirit_type, init_meta_type);
+                }else if (init_spell_type==5){
+                    SET_TYPE_dragon_wheel(target, origin, init_spell_type, init_spirit_type, init_meta_type);
+                }else if (init_spell_type==6){
 
-                knock_back_force=.01f;
-                knock_back_time=10;
+                }else if (init_spell_type==7){
 
-                interrupt_level=1;
+                }else if (init_spell_type==8){
+
+                }else if (init_spell_type==9){
+
+                }else if (init_spell_type==10){
+
+                }
             }
-            else if (init_spell_type==2){
-                cast_location_x=origin.center_x+origin.facing_direction*.2f;
-                cast_location_y=origin.center_y;
-                location_x=cast_location_x;
-                location_y=cast_location_y;
-                speed=0f;
-                damage=7;
-                type=0;
-                debuff=0;
-                persistance=0;
-                hitbox.set(3,2);
-                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-                if (target.center_x-origin.center_x>0){
-                    knockback_direction=1;
-                }else{
-                    knockback_direction=-1;
-                }
-                active_targets.clear();
-                active_targets.add(target);
-                active_time=10;
 
-                knock_back_force=.01f;
-                knock_back_time=15;
-
-                interrupt_level=1;
-            }else if (init_spell_type==3){
-                cast_location_x=origin.center_x+origin.facing_direction*.2f;
-                cast_location_y=origin.center_y;
-                location_x=cast_location_x;
-                location_y=cast_location_y;
-                speed=0f;
-                damage=7;
-                type=0;
-                debuff=0;
-                persistance=0;
-                hitbox.set(3,2);
-                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-                if (target.center_x-origin.center_x>0){
-                    knockback_direction=1;
-                }else{
-                    knockback_direction=-1;
-                }
-                active_targets.clear();
-                active_targets.add(target);
-                active_time=10;
-
-                knock_back_force=.01f;
-                knock_back_time=15;
-
-                interrupt_level=1;
-            }else if (init_spell_type==4){
-                cast_location_x=origin.center_x+origin.facing_direction*.2f;
-                cast_location_y=origin.center_y;
-                location_x=cast_location_x;
-                location_y=cast_location_y;
-                speed=0f;
-                damage=7;
-                type=0;
-                debuff=0;
-                persistance=0;
-                hitbox.set(3,2);
-                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-                if (target.center_x-origin.center_x>0){
-                    knockback_direction=1;
-                }else{
-                    knockback_direction=-1;
-                }
-                active_targets.clear();
-                active_targets.add(target);
-                active_time=10;
-
-                knock_back_force=.01f;
-                knock_back_time=15;
-
-                interrupt_level=1;
-            }else if (init_spell_type==5){
-                cast_location_x=origin.center_x+origin.facing_direction*.2f;
-                cast_location_y=origin.center_y;
-                location_x=cast_location_x;
-                location_y=cast_location_y;
-                speed=0f;
-                damage=7;
-                type=0;
-                debuff=0;
-                persistance=0;
-                hitbox.set(3,2);
-                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-                if (target.center_x-origin.center_x>0){
-                    knockback_direction=1;
-                }else{
-                    knockback_direction=-1;
-                }
-                active_targets.clear();
-                active_targets.add(target);
-                active_time=10;
-
-                knock_back_force=.01f;
-                knock_back_time=15;
-
-                interrupt_level=1;
-            }else if (init_spell_type==6){
-                cast_location_x=origin.center_x+origin.facing_direction*.2f;
-                cast_location_y=origin.center_y;
-                location_x=cast_location_x;
-                location_y=cast_location_y;
-                speed=0f;
-                damage=7;
-                type=0;
-                debuff=0;
-                persistance=0;
-                hitbox.set(3,2);
-                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-                if (target.center_x-origin.center_x>0){
-                    knockback_direction=1;
-                }else{
-                    knockback_direction=-1;
-                }
-                active_targets.clear();
-                active_targets.add(target);
-                active_time=10;
-
-                knock_back_force=.01f;
-                knock_back_time=15;
-
-                interrupt_level=1;
-            }else if (init_spell_type==7){
-                cast_location_x=origin.center_x+origin.facing_direction*.2f;
-                cast_location_y=origin.center_y;
-                location_x=cast_location_x;
-                location_y=cast_location_y;
-                speed=0f;
-                damage=7;
-                type=0;
-                debuff=0;
-                persistance=0;
-                hitbox.set(3,2);
-                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-                if (target.center_x-origin.center_x>0){
-                    knockback_direction=1;
-                }else{
-                    knockback_direction=-1;
-                }
-                active_targets.clear();
-                active_targets.add(target);
-                active_time=10;
-
-                knock_back_force=.01f;
-                knock_back_time=15;
-
-                interrupt_level=1;
-            }else if (init_spell_type==8){
-                cast_location_x=origin.center_x+origin.facing_direction*.2f;
-                cast_location_y=origin.center_y;
-                location_x=cast_location_x;
-                location_y=cast_location_y;
-                speed=0f;
-                damage=7;
-                type=0;
-                debuff=0;
-                persistance=0;
-                hitbox.set(3,2);
-                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-                if (target.center_x-origin.center_x>0){
-                    knockback_direction=1;
-                }else{
-                    knockback_direction=-1;
-                }
-                active_targets.clear();
-                active_targets.add(target);
-                active_time=10;
-
-                knock_back_force=.01f;
-                knock_back_time=15;
-
-                interrupt_level=1;
-            }else if (init_spell_type==9){
-                cast_location_x=origin.center_x+origin.facing_direction*.2f;
-                cast_location_y=origin.center_y;
-                location_x=cast_location_x;
-                location_y=cast_location_y;
-                speed=0f;
-                damage=7;
-                type=0;
-                debuff=0;
-                persistance=0;
-                hitbox.set(3,2);
-                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-                if (target.center_x-origin.center_x>0){
-                    knockback_direction=1;
-                }else{
-                    knockback_direction=-1;
-                }
-                active_targets.clear();
-                active_targets.add(target);
-                active_time=10;
-
-                knock_back_force=.01f;
-                knock_back_time=15;
-
-                interrupt_level=1;
-            }else if (init_spell_type==10){
-                cast_location_x=origin.center_x+origin.facing_direction*.2f;
-                cast_location_y=origin.center_y;
-                location_x=cast_location_x;
-                location_y=cast_location_y;
-                speed=0f;
-                damage=7;
-                type=0;
-                debuff=0;
-                persistance=0;
-                hitbox.set(3,2);
-                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-                if (target.center_x-origin.center_x>0){
-                    knockback_direction=1;
-                }else{
-                    knockback_direction=-1;
-                }
-                active_targets.clear();
-                active_targets.add(target);
-                active_time=10;
-
-                knock_back_force=.01f;
-                knock_back_time=15;
-
-                interrupt_level=1;
-            }else if (init_spell_type==11){
-                cast_location_x=origin.center_x;
-                cast_location_y=origin.center_y;
-                location_x=cast_location_x;
-                location_y=cast_location_y;
-                speed=.025f;
-                damage=5;
-                type=0;
-                debuff=0;
-                persistance=0;
-                hitbox.set(2,2);
-                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-                if (target.center_x-origin.center_x>0){
-                    knockback_direction=1;
-                }else{
-                    knockback_direction=-1;
-                }
-                active_targets.clear();
-                active_targets.add(target);
-                active_time=150;
-
-                knock_back_force=.01f;
-                knock_back_time=10;
-
-                interrupt_level=1;
-            }else if (init_spell_type==12){
-                cast_location_x=origin.center_x+origin.facing_direction*.2f;
-                cast_location_y=origin.center_y;
-                location_x=cast_location_x;
-                location_y=cast_location_y;
-                speed=0f;
-                damage=7;
-                type=0;
-                debuff=0;
-                persistance=0;
-                hitbox.set(3,2);
-                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-                if (target.center_x-origin.center_x>0){
-                    knockback_direction=1;
-                }else{
-                    knockback_direction=-1;
-                }
-                active_targets.clear();
-                active_targets.add(target);
-                active_time=10;
-
-                knock_back_force=.01f;
-                knock_back_time=15;
-
-                interrupt_level=1;
-            }else if (init_spell_type==13){
-                cast_location_x=origin.center_x+origin.facing_direction*.2f;
-                cast_location_y=origin.center_y;
-                location_x=cast_location_x;
-                location_y=cast_location_y;
-                speed=0f;
-                damage=7;
-                type=0;
-                debuff=0;
-                persistance=0;
-                hitbox.set(3,2);
-                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-                if (target.center_x-origin.center_x>0){
-                    knockback_direction=1;
-                }else{
-                    knockback_direction=-1;
-                }
-                active_targets.clear();
-                active_targets.add(target);
-                active_time=10;
-
-                knock_back_force=.01f;
-                knock_back_time=15;
-
-                interrupt_level=1;
-            }else if (init_spell_type==14){
-                cast_location_x=origin.center_x+origin.facing_direction*.2f;
-                cast_location_y=origin.center_y;
-                location_x=cast_location_x;
-                location_y=cast_location_y;
-                speed=0f;
-                damage=7;
-                type=0;
-                debuff=0;
-                persistance=0;
-                hitbox.set(3,2);
-                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-                if (target.center_x-origin.center_x>0){
-                    knockback_direction=1;
-                }else{
-                    knockback_direction=-1;
-                }
-                active_targets.clear();
-                active_targets.add(target);
-                active_time=10;
-
-                knock_back_force=.01f;
-                knock_back_time=15;
-
-                interrupt_level=1;
-            }else if (init_spell_type==15){
-                cast_location_x=origin.center_x+origin.facing_direction*.2f;
-                cast_location_y=origin.center_y;
-                location_x=cast_location_x;
-                location_y=cast_location_y;
-                speed=0f;
-                damage=7;
-                type=0;
-                debuff=0;
-                persistance=0;
-                hitbox.set(3,2);
-                direction=(float)Math.atan2((target.center_y-origin.center_y),(target.center_x-origin.center_x));
-                //direction = (float)Math.atan2(target.center_y, target.center_x) - (float)Math.atan2(origin.center_y, origin.center_x);
-                if (target.center_x-origin.center_x>0){
-                    knockback_direction=1;
-                }else{
-                    knockback_direction=-1;
-                }
-                active_targets.clear();
-                active_targets.add(target);
-                active_time=10;
-
-                knock_back_force=.01f;
-                knock_back_time=15;
-
-                interrupt_level=1;
-            }
         }else if (init_spirit_type==1){
             if (init_spell_type==0){
                 cast_location_x=origin.center_x;

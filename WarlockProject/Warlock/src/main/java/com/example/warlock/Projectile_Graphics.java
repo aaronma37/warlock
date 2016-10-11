@@ -36,8 +36,6 @@ public class Projectile_Graphics {
 
     public Particle_Info particle_info[] = new Particle_Info[10];
 
-
-
     public Projectile_Graphics(Context context, int projectile_index){
 
         myContext=context;
