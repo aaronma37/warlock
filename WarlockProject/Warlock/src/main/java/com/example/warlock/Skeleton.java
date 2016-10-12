@@ -237,7 +237,21 @@ public class Skeleton {
 
         magical_fire.add(imbue);*/
 
-        magical_fire.add(unnamed);
+
+        List<KeyFrame> palmblast = new ArrayList<>();
+        palmblast.add(new KeyFrame(0,0,0,0,0,    0,0,0,90,   0,0,0,0,0,0,0,5));
+        palmblast.add(new KeyFrame(0,0,0,-45,0,    0,0,90,90,   0,0,0,0,.05f,0,5,7));
+        palmblast.add(new KeyFrame(0,0,0,-45,0,    0,0,0,0,   0,0,0,0,-.05f,0,7,7));
+        palmblast.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,-.05f,0,7,7));
+
+        List<KeyFrame> dragon_kick = new ArrayList<>();
+        dragon_kick.add(new KeyFrame(0,0,0,0,0,    0,0,0,90,   0,0,0,0,0,0,0,10));
+        dragon_kick.add(new KeyFrame(0,0,0,45,45,    0,0,90,90,   0,0,0,0,1.05f,0,10,12));
+        dragon_kick.add(new KeyFrame(0,0,0,45,45,    0,0,0,0,   0,0,0,0,1f,0,12,12));
+        dragon_kick.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,1f,0,12,12));
+        
+
+        magical_fire.add(dragon_kick);
         magical_fire.add(unnamed);
         magical_fire.add(unnamed);
         magical_fire.add(unnamed);
@@ -251,6 +265,11 @@ public class Skeleton {
 
         //physical fire
         List<List<KeyFrame>> physical_fire = new ArrayList<List<KeyFrame>>();
+
+
+        // i_head,  i_hair,  i_neck,  i_upper_bod,  i_lower_bod,  i_upper_left_arm,  i_lower_left_arm,  i_upper_right_arm,  i_lower_right_arm,   i_upper_left_leg,  i_lower_left_leg,  i_upper_right_leg,  i_lower_right_leg,i_beg,  i_end
+
+
 
 
 /*        List<Projectile_Keyframe> palmblast = new ArrayList<>();
@@ -308,7 +327,7 @@ public class Skeleton {
         //magic light
         List<List<KeyFrame>> magical_light = new ArrayList<List<KeyFrame>>();
 
-        magical_light.add(unnamed);
+        magical_light.add(palmblast);
         magical_light.add(unnamed);
         magical_light.add(unnamed);
         magical_light.add(unnamed);
