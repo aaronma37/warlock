@@ -27,6 +27,7 @@ public class Skeleton {
 
     public boolean cycle=false;
     public int dir;
+    public int skeleton_dir=1;
 
     public float head[] = new float[3];
     public float hair[] = new float[3];
@@ -130,35 +131,35 @@ public class Skeleton {
 
     public void set_keyframes(){
         // i_head,  i_hair,  i_neck,  i_upper_bod,  i_lower_bod,  i_upper_left_arm,  i_lower_left_arm,  i_upper_right_arm,  i_lower_right_arm,   i_upper_left_leg,  i_lower_left_leg,  i_upper_right_leg,  i_lower_right_leg,i_beg,  i_end
-        idle_animation.add(new KeyFrame(0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0, 30));
-        idle_animation.add(new KeyFrame(0,0,0,3,0,5,15,-5,-5,2,-5,2,-5, 0,0, 30,60));
-        idle_animation.add(new KeyFrame(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,90));
-        idle_animation.add(new KeyFrame(0,0,0,-3,0,-5,-5,5,15,2,-5,2,-5,0,0,90,120));
-        idle_animation.add(new KeyFrame(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,120,120));
+        idle_animation.add(new KeyFrame(0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0, 30,0));
+        idle_animation.add(new KeyFrame(0,0,0,3,0,5,15,-5,-5,2,-5,2,-5, 0,0, 30,60,0));
+        idle_animation.add(new KeyFrame(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,90,0));
+        idle_animation.add(new KeyFrame(0,0,0,-3,0,-5,-5,5,15,2,-5,2,-5,0,0,90,120,0));
+        idle_animation.add(new KeyFrame(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,120,120,0));
 
-        knockback_animation.add(new KeyFrame(0,0,0,-20,20,    50,50,50,50,   50,50,50,50, 0,0,   0,30));
-        knockback_animation.add(new KeyFrame(0,0,0,-20,20,    70,70,70,70,   50,50,50,50, 0,0, 30,60));
-        knockback_animation.add(new KeyFrame(0,0,0,-20,20,    50,50,50,50,   50,50,50,50,  0,0,  60,60));
+        knockback_animation.add(new KeyFrame(0,0,0,-20,20,    50,50,50,50,   50,50,50,50, 0,0,   0,30,0));
+        knockback_animation.add(new KeyFrame(0,0,0,-20,20,    70,70,70,70,   50,50,50,50, 0,0, 30,60,0));
+        knockback_animation.add(new KeyFrame(0,0,0,-20,20,    50,50,50,50,   50,50,50,50,  0,0,  60,60,0));
 
-        run_animation.add(new KeyFrame(0,0,0,0,0,   0,10,0,10,        0,0,0,0,0,0,0,5));
-        run_animation.add(new KeyFrame(0,0,0,0,0,   -15,0,15,30,    20,0,-15,-15,0,0,5,10));
-        run_animation.add(new KeyFrame(0,0,0,0,0,   -5,0,5,20,      15,0,-10,-10,0,0,10,15));
-        run_animation.add(new KeyFrame(0,0,0,0,0,   0,10,0,10,        0,0,0,0,0,0,15,20));
-        run_animation.add(new KeyFrame(0,0,0,0,0,   15,30,-15,10,   -15,-15,20,0,0,0,20,25));
-        run_animation.add(new KeyFrame(0,0,0,0,0,   5,20,-5,10,     -10,0-10,10,0,0,0,25,30));
-        run_animation.add(new KeyFrame(0,0,0,0,0,   0,10,0,10,        0,0,0,0,0,0,30,30));
+        run_animation.add(new KeyFrame(0,0,0,0,0,   0,10,0,10,        0,0,0,0,0,0,0,5,0));
+        run_animation.add(new KeyFrame(0,0,0,0,0,   -15,0,15,30,    20,0,-15,-15,0,0,5,10,0));
+        run_animation.add(new KeyFrame(0,0,0,0,0,   -5,0,5,20,      15,0,-10,-10,0,0,10,15,0));
+        run_animation.add(new KeyFrame(0,0,0,0,0,   0,10,0,10,        0,0,0,0,0,0,15,20,0));
+        run_animation.add(new KeyFrame(0,0,0,0,0,   15,30,-15,10,   -15,-15,20,0,0,0,20,25,0));
+        run_animation.add(new KeyFrame(0,0,0,0,0,   5,20,-5,10,     -10,0-10,10,0,0,0,25,30,0));
+        run_animation.add(new KeyFrame(0,0,0,0,0,   0,10,0,10,        0,0,0,0,0,0,30,30,0));
 
-        sprint_animation.add(new KeyFrame(50,50,50,-50,-50,   -70,-70,-70,-70,        0,0,0,0,0,0,0,3));
-        sprint_animation.add(new KeyFrame(50,50,50,-30,-40,   -70,-70,-70,-70,        0,0,-85,-85,0,0,3,6));
-        sprint_animation.add(new KeyFrame(50,50,50,-40,-45,   -70,-70,-70,-70,        -5,-45,-40,-40,0,0,6,9));
-        sprint_animation.add(new KeyFrame(50,50,50,-50,-50,   -70,-70,-70,-70,        0,0,0,0,0,0,9,12));
-        sprint_animation.add(new KeyFrame(50,50,50,-30,-40,   -70,-70,-70,-70,        -85,-85,0,0,0,0,12,15));
-        sprint_animation.add(new KeyFrame(50,50,50,-40,-45,   -70,-70,-70,-70,        -40,-40,-5,-45,0,0,15,18));
-        sprint_animation.add(new KeyFrame(50,50,50,-50,-50,   -70,-70,-70,-70,        0,0,0,0,0,0,18,18));
+        sprint_animation.add(new KeyFrame(50,50,50,-50,-50,   -70,-70,-70,-70,        0,0,0,0,0,0,0,3,0));
+        sprint_animation.add(new KeyFrame(50,50,50,-30,-40,   -70,-70,-70,-70,        0,0,-85,-85,0,0,3,6,0));
+        sprint_animation.add(new KeyFrame(50,50,50,-40,-45,   -70,-70,-70,-70,        -5,-45,-40,-40,0,0,6,9,0));
+        sprint_animation.add(new KeyFrame(50,50,50,-50,-50,   -70,-70,-70,-70,        0,0,0,0,0,0,9,12,0));
+        sprint_animation.add(new KeyFrame(50,50,50,-30,-40,   -70,-70,-70,-70,        -85,-85,0,0,0,0,12,15,0));
+        sprint_animation.add(new KeyFrame(50,50,50,-40,-45,   -70,-70,-70,-70,        -40,-40,-5,-45,0,0,15,18,0));
+        sprint_animation.add(new KeyFrame(50,50,50,-50,-50,   -70,-70,-70,-70,        0,0,0,0,0,0,18,18,0));
 
-        cast_1_animation.add(new KeyFrame(0,0,0,0,0,    50,100,50,100,0,0,0,0,0,0,0,30));
-        cast_1_animation.add(new KeyFrame(0,0,0,3,0,    70,115,70,115,2,-5,2,-5,0,0,30,60));
-        cast_1_animation.add(new KeyFrame(0,0,0,0,0,    50,100,50,100,0,0,0,0,0,0,60,60));
+        cast_1_animation.add(new KeyFrame(0,0,0,0,0,    50,100,50,100,0,0,0,0,0,0,0,30,0));
+        cast_1_animation.add(new KeyFrame(0,0,0,3,0,    70,115,70,115,2,-5,2,-5,0,0,30,60,0));
+        cast_1_animation.add(new KeyFrame(0,0,0,0,0,    50,100,50,100,0,0,0,0,0,0,60,60,0));
         
         set_action_keyframes();
 
@@ -176,89 +177,177 @@ public class Skeleton {
 
 
         List<KeyFrame> unnamed = new ArrayList<>();
-        unnamed.add(new KeyFrame(0,0,0,0,0,    50,100,50,100,0,0,0,0,0,0,0,15));
-        unnamed.add(new KeyFrame(0,0,0,0,0,    50,100,50,100,0,0,0,0,-.05f,0,15,15));
-        unnamed.add(new KeyFrame(0,0,0,0,0,    50,100,50,100,0,0,0,0,-.05f,0,15,15));
-/*
+        unnamed.add(new KeyFrame(0,0,0,0,0,    50,100,50,100,0,0,0,0,0,0,0,15,0));
+        unnamed.add(new KeyFrame(0,0,0,0,0,    50,100,50,100,0,0,0,0,-.05f,0,15,15,0));
+        unnamed.add(new KeyFrame(0,0,0,0,0,    50,100,50,100,0,0,0,0,-.05f,0,15,15,0));
+
         List<KeyFrame> fireball = new ArrayList<>();
-        fireball.add(new KeyFrame(0, 0,  .1f,.1f,    0,30));
-        fireball.add(new KeyFrame(1f,0,  .1f,.1f,    30,30));
-        fireball.add(new KeyFrame(1f,0,  .1f,.1f,    30,30));
+        fireball.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,5, 0));
+        fireball.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,     0,0,  5,10, 0));
+        fireball.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    -.1f,0,  10,15, 0));
+        fireball.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    -.1f,0,  15,15, 0));
 
-        magical_fire.add(fireball);
+        List<KeyFrame> firespray = new ArrayList<>();
+        firespray.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,   0,0,  0,5, 0));
+        firespray.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,     0,0,  5,5, 0));
+
+        List<KeyFrame> fireblast = new ArrayList<>();
+        fireblast.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,   0,0,  0,15, 0));
+        fireblast.add(new KeyFrame(0,0,0,0,0,    0,0,180,180,   0,0,0,0,     0,0,  15,25, 0));
+        fireblast.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,     0,0,  25,25, 0));
 
 
-        List<Projectile_Keyframe> firespray = new ArrayList<>();
-        firespray.add(new Projectile_Keyframe(.1f, 0,  .1f,.1f,    0,100));
-        firespray.add(new Projectile_Keyframe(.1f,0,  .1f,.1f,    100,100));
-        firespray.add(new Projectile_Keyframe(.1f,0,  .1f,.1f,    100,100));
 
-        magical_fire.add(firespray);
+        List<KeyFrame> lsa = new ArrayList<>();
+        lsa.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,15, 0));
+        lsa.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,     0,0,  15,35, 0));
+        lsa.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,     0,0,  35,35, 0));
 
-        List<Projectile_Keyframe> fireblast = new ArrayList<>();
-        fireblast.add(new Projectile_Keyframe(0, 0,  .5f,.1f,    0,10));
-        fireblast.add(new Projectile_Keyframe(0,0,  .5f,.1f,    10,10));
-        fireblast.add(new Projectile_Keyframe(0,0,  .5f,.1f,    10,10));
+        List<KeyFrame> sunstrike = new ArrayList<>();
+        sunstrike.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,15, 0));
+        sunstrike.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,     0,0,  15,35, 0));
+        sunstrike.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,     0,0,  35,35, 0));
 
-        magical_fire.add(fireblast);
+        List<KeyFrame> flameguard = new ArrayList<>();
+        flameguard.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,15, 0));
+        flameguard.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,     0,0,  15,35, 0));
+        flameguard.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,     0,0,  35,35, 0));
 
-        List<Projectile_Keyframe> lsa = new ArrayList<>();
-        lsa.add(new Projectile_Keyframe(0, 0,  .5f,.3f,    0,10));
-        lsa.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-        lsa.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
+        List<KeyFrame> flamewall = new ArrayList<>();
+        flamewall.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,15, 0));
+        flamewall.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,     0,0,  15,35, 0));
+        flamewall.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,     0,0,  35,35, 0));
 
-        magical_fire.add(lsa);
+        List<KeyFrame> inferno = new ArrayList<>();
+        inferno.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,15, 0));
+        inferno.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,     0,0,  15,35, 0));
+        inferno.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,     0,0,  35,35, 0));
 
-        List<Projectile_Keyframe> sunstrike = new ArrayList<>();
-        sunstrike.add(new Projectile_Keyframe(0, 0,  .5f,.3f,    0,10));
-        sunstrike.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-        sunstrike.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
 
-        magical_fire.add(sunstrike);
-
-        List<Projectile_Keyframe> flameguard = new ArrayList<>();
-        flameguard.add(new Projectile_Keyframe(0, 0,  .5f,.3f,    0,10));
-        flameguard.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-        flameguard.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-
-        magical_fire.add(flameguard);
-
-        List<Projectile_Keyframe> flamewall = new ArrayList<>();
-        flamewall.add(new Projectile_Keyframe(0, 0,  .5f,.3f,    0,10));
-        flamewall.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-        flamewall.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-
-        magical_fire.add(flamewall);
-
-        List<Projectile_Keyframe> imbue = new ArrayList<>();
-        imbue.add(new Projectile_Keyframe(0, 0,  .5f,.3f,    0,10));
-        imbue.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-        imbue.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-
-        magical_fire.add(imbue);*/
 
 
         List<KeyFrame> palmblast = new ArrayList<>();
-        palmblast.add(new KeyFrame(0,0,0,0,0,    0,0,0,90,   0,0,0,0,0,0,0,5));
-        palmblast.add(new KeyFrame(0,0,0,-45,0,    0,0,90,90,   0,0,0,0,.05f,0,5,7));
-        palmblast.add(new KeyFrame(0,0,0,-45,0,    0,0,0,0,   0,0,0,0,-.05f,0,7,7));
-        palmblast.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,-.05f,0,7,7));
+        palmblast.add(new KeyFrame(0,0,0,0,0,    0,0,0,90,   0,0,0,0,0,0,0,5,0));
+        palmblast.add(new KeyFrame(0,0,0,-45,0,    0,0,90,90,   0,0,0,0,.05f,0,5,7,0));
+        palmblast.add(new KeyFrame(0,0,0,-45,0,    0,0,0,0,   0,0,0,0,-.05f,0,7,7,0));
+        palmblast.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,-.05f,0,7,7,0));
+
+        List<KeyFrame> axeattack = new ArrayList<>();
+        axeattack.add(new KeyFrame(0,0,0,0,0,    0,0,180,180,   0,0,0,0,0,0,0,10,0));
+        axeattack.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,0,0,10,12,0));
+        axeattack.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,0,0,12,12,0));
+        axeattack.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,0,0,12,12,0));
+
+
+        List<KeyFrame> spinningaxe = new ArrayList<>();
+        spinningaxe.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,0,0,  0,5, 0));
+        spinningaxe.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,0,0,  5,10, 1));
+        spinningaxe.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,0,0,  10,15, 0));
+        spinningaxe.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,0,0,  15,20, 1));
+        spinningaxe.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,0,0,  20,25, 0));
+        spinningaxe.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,0,0,  25,30, 1));
+        spinningaxe.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,0,0,  30,30, 0));
+        spinningaxe.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,0,0,  30,30, 1));
+
 
         List<KeyFrame> dragon_kick = new ArrayList<>();
-        dragon_kick.add(new KeyFrame(0,0,0,0,0,    0,0,0,90,   0,0,0,0,0,0,0,10));
-        dragon_kick.add(new KeyFrame(0,0,0,45,45,    0,0,90,90,   0,0,0,0,1.05f,0,10,12));
-        dragon_kick.add(new KeyFrame(0,0,0,45,45,    0,0,0,0,   0,0,0,0,1f,0,12,12));
-        dragon_kick.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,1f,0,12,12));
-        
+        dragon_kick.add(new KeyFrame(0,0,0,0,0,    0,0,0,90,   0,0,0,0,0,0,0,10,0));
+        dragon_kick.add(new KeyFrame(0,0,0,45,45,    0,0,90,90,   0,0,0,0,1.05f,0,10,12,0));
+        dragon_kick.add(new KeyFrame(0,0,0,45,45,    0,0,0,0,   0,0,0,0,1f,0,12,12,0));
+        dragon_kick.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,1f,0,12,12,0));
 
-        magical_fire.add(dragon_kick);
-        magical_fire.add(unnamed);
-        magical_fire.add(unnamed);
-        magical_fire.add(unnamed);
-        magical_fire.add(unnamed);
-        magical_fire.add(unnamed);
-        magical_fire.add(unnamed);
-        magical_fire.add(unnamed);
+        List<KeyFrame> dragonpunch = new ArrayList<>();
+        dragonpunch.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,5, 0));
+        dragonpunch.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,     0,0,  5,10, 0));
+        dragonpunch.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    .4f,0,  10,15, 0));
+        dragonpunch.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    .4f,0,  15,15, 0));
+
+        List<KeyFrame> dragonwheel = new ArrayList<>();
+        dragonwheel.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,5, 0));
+        dragonwheel.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,     0,0,  5,10, 0));
+        dragonwheel.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    .4f,-.4f,  10,15, 0));
+        dragonwheel.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    .4f,-.4f,  15,15, 0));
+
+        List<KeyFrame> charge = new ArrayList<>();
+        charge.add(new KeyFrame(0,0,0,0,0,    0,0,0,90,   0,0,0,0,0,0,0,10,0));
+        charge.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,1.05f,0,10,12,0));
+        charge.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,1f,0,12,12,0));
+        charge.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,1f,0,12,12,0));
+
+        List<KeyFrame> lance_barrage = new ArrayList<>();
+        lance_barrage.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,5, 0));
+        lance_barrage.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,     0,0,  5,10, 0));
+        lance_barrage.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,    .4f,0,  10,15, 0));
+        lance_barrage.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    .4f,0,  15,20, 0));
+        lance_barrage.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,    .4f,0,  20,25, 0));
+        lance_barrage.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    .4f,0,  25,30, 0));
+        lance_barrage.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,    .4f,0,  30,35, 0));
+        lance_barrage.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    .4f,0,  35,40, 0));
+        lance_barrage.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,    .4f,0,  40,40, 0));
+
+        List<KeyFrame> shield_bash = new ArrayList<>();
+        shield_bash.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,5, 0));
+        shield_bash.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,     0,0,  5,10, 0));
+        shield_bash.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,    .4f,0,  10,15, 0));
+        shield_bash.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    .4f,0,  15,20, 0));
+
+        List<KeyFrame> wham = new ArrayList<>();
+        wham.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,5, 0));
+        wham.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,     0,0,  5,10, 0));
+        wham.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,    .4f,.4f,  10,15, 0));
+        wham.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,    .4f,0,  15,20, 0));
+        wham.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,    .4f,0,  20,20, 0));
+
+        List<KeyFrame> upper_slash = new ArrayList<>();
+        upper_slash.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,5, 0));
+        upper_slash.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,     0,0,  5,10, 0));
+        upper_slash.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,    .1f,.8f,  10,15, 0));
+        upper_slash.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,    .1f,.8f,  15,15, 0));
+
+
+        List<KeyFrame> heal = new ArrayList<>();
+        heal.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,5, 0));
+        heal.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,     0,0,  5,10, 0));
+        heal.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    0,0,  10,15, 0));
+        heal.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    0,0,  15,15, 0));
+
+        List<KeyFrame> HoT = new ArrayList<>();
+        HoT.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,5, 0));
+        HoT.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,     0,0,  5,10, 0));
+        HoT.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    0,0,  10,15, 0));
+        HoT.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    0,0,  15,15, 0));
+
+        List<KeyFrame> Dispel = new ArrayList<>();
+        Dispel.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,5, 0));
+        Dispel.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,     0,0,  5,10, 0));
+        Dispel.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    0,0,  10,15, 0));
+        Dispel.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    0,0,  15,15, 0));
+
+        List<KeyFrame> HolyShield = new ArrayList<>();
+        HolyShield.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,5, 0));
+        HolyShield.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,     0,0,  5,10, 0));
+        HolyShield.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    0,0,  10,15, 0));
+        HolyShield.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    0,0,  15,15, 0));
+
+        List<KeyFrame> silence = new ArrayList<>();
+        silence.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,5, 0));
+        silence.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,     0,0,  5,10, 0));
+        silence.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    0,0,  10,15, 0));
+        silence.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    0,0,  15,15, 0));
+
+
+
+
+
+
+        magical_fire.add(fireball);
+        magical_fire.add(firespray);
+        magical_fire.add(fireblast);
+        magical_fire.add(lsa);
+        magical_fire.add(sunstrike);
+        magical_fire.add(flameguard);
+        magical_fire.add(flamewall);
+        magical_fire.add(inferno);
         magical_fire.add(unnamed);
 
         fire.add(magical_fire);
@@ -266,72 +355,27 @@ public class Skeleton {
         //physical fire
         List<List<KeyFrame>> physical_fire = new ArrayList<List<KeyFrame>>();
 
+            physical_fire.add(palmblast);
+            physical_fire.add(axeattack);
+            physical_fire.add(spinningaxe);
+            physical_fire.add(dragon_kick);
+            physical_fire.add(dragonpunch);
+            physical_fire.add(dragonwheel);
 
-        // i_head,  i_hair,  i_neck,  i_upper_bod,  i_lower_bod,  i_upper_left_arm,  i_lower_left_arm,  i_upper_right_arm,  i_lower_right_arm,   i_upper_left_leg,  i_lower_left_leg,  i_upper_right_leg,  i_lower_right_leg,i_beg,  i_end
+            fire.add(physical_fire);
 
-
-
-
-/*        List<Projectile_Keyframe> palmblast = new ArrayList<>();
-        palmblast.add(new Projectile_Keyframe(0, 0,  .5f,.3f,    0,10));
-        palmblast.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-        palmblast.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-
-        physical_fire.add(palmblast);
-
-        List<Projectile_Keyframe> axeattack = new ArrayList<>();
-        axeattack.add(new Projectile_Keyframe(0, 0,  .5f,.3f,    0,10));
-        axeattack.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-        axeattack.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-
-        physical_fire.add(axeattack);
-
-        List<Projectile_Keyframe> spinningaxe = new ArrayList<>();
-        spinningaxe.add(new Projectile_Keyframe(0, 0,  .5f,.3f,    0,10));
-        spinningaxe.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-        spinningaxe.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-
-        physical_fire.add(spinningaxe);
-
-        List<Projectile_Keyframe> dragonkick = new ArrayList<>();
-        dragonkick.add(new Projectile_Keyframe(0, 0,  .5f,.3f,    0,10));
-        dragonkick.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-        dragonkick.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-
-        physical_fire.add(dragonkick);
-
-        List<Projectile_Keyframe> dragonpunch = new ArrayList<>();
-        dragonpunch.add(new Projectile_Keyframe(0, 0,  .5f,.3f,    0,10));
-        dragonpunch.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-        dragonpunch.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-
-        physical_fire.add(dragonpunch);
-
-        List<Projectile_Keyframe> dragonwheel = new ArrayList<>();
-        dragonwheel.add(new Projectile_Keyframe(0, 0,  .5f,.3f,    0,10));
-        dragonwheel.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-        dragonwheel.add(new Projectile_Keyframe(0,0,  .5f,.3f,    10,10));
-
-        physical_fire.add(dragonwheel);*/
-        physical_fire.add(unnamed);
-        physical_fire.add(unnamed);
-        physical_fire.add(unnamed);
-        physical_fire.add(unnamed);
-
-        fire.add(physical_fire);
-
-        action_animation.add(fire);
+            action_animation.add(fire);
 
         //light
         List<List<List<KeyFrame>>> light = new ArrayList<List<List<KeyFrame>>>();
         //magic light
         List<List<KeyFrame>> magical_light = new ArrayList<List<KeyFrame>>();
 
-        magical_light.add(palmblast);
-        magical_light.add(unnamed);
-        magical_light.add(unnamed);
-        magical_light.add(unnamed);
-        magical_light.add(unnamed);
+        magical_light.add(heal);
+        magical_light.add(HoT);
+        magical_light.add(Dispel);
+        magical_light.add(HolyShield);
+        magical_light.add(silence);
         magical_light.add(unnamed);
         magical_light.add(unnamed);
         magical_light.add(unnamed);
@@ -343,11 +387,11 @@ public class Skeleton {
         //physical light
         List<List<KeyFrame>> physical_light = new ArrayList<List<KeyFrame>>();
 
-        physical_light.add(unnamed);
-        physical_light.add(unnamed);
-        physical_light.add(unnamed);
-        physical_light.add(unnamed);
-        physical_light.add(unnamed);
+        physical_light.add(charge);
+        physical_light.add(lance_barrage);
+        physical_light.add(shield_bash);
+        physical_light.add(wham);
+        physical_light.add(upper_slash);
         physical_light.add(unnamed);
         physical_light.add(unnamed);
         physical_light.add(unnamed);
@@ -541,6 +585,7 @@ public class Skeleton {
             for (int i=0;i<action_animation.get(state.spirit_type).get(state.meta_type).get(state.spell_type).size();i++){
                 if(count<action_animation.get(state.spirit_type).get(state.meta_type).get(state.spell_type).get(i).end){
                     update_angle(dir,action_animation.get(state.spirit_type).get(state.meta_type).get(state.spell_type).get(i),action_animation.get(state.spirit_type).get(state.meta_type).get(state.spell_type).get(i+1), (1f-(count-action_animation.get(state.spirit_type).get(state.meta_type).get(state.spell_type).get(i).begin)/(action_animation.get(state.spirit_type).get(state.meta_type).get(state.spell_type).get(i).end-action_animation.get(state.spirit_type).get(state.meta_type).get(state.spell_type).get(i).begin)));
+                    skeleton_dir=action_animation.get(state.spirit_type).get(state.meta_type).get(state.spell_type).get(i).dir;
                     break;
                 }
 

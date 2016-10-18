@@ -404,7 +404,7 @@ public class Person {
     }
 
     public void DrawSelf(float[] scratch, float[] mMVPMatrix, float[] zeroRotationMatrix){
-        person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,center_x,center_y,facing_direction,state);
+        person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,center_x,center_y,facing_direction*person_graphics.skeleton.skeleton_dir,state);
         if (state.state==7){
             //AFTER ACTION~~
 
@@ -414,7 +414,11 @@ public class Person {
                 center_x=person_graphics.skeleton.action_x;
                 center_y=person_graphics.skeleton.action_y;
                 OOB();
+                if (center_y>GROUND_LEVEL){
+                    in_air=true;
+                }
             }
+
         }
 
     }

@@ -22,11 +22,12 @@ public class KeyFrame {
     public float lower_right_leg;
     public float upper_left_leg;
     public float lower_left_leg;
+    public int dir;
 
 
 
 
-    public KeyFrame(float i_head, float i_hair, float i_neck, float i_upper_bod, float i_lower_bod, float i_upper_left_arm, float i_lower_left_arm, float i_upper_right_arm, float i_lower_right_arm, float i_upper_left_leg, float i_lower_left_leg, float i_upper_right_leg, float i_lower_right_leg, float i_x, float i_y, int i_beg, int i_end){
+    public KeyFrame(float i_head, float i_hair, float i_neck, float i_upper_bod, float i_lower_bod, float i_upper_left_arm, float i_lower_left_arm, float i_upper_right_arm, float i_lower_right_arm, float i_upper_left_leg, float i_lower_left_leg, float i_upper_right_leg, float i_lower_right_leg, float i_x, float i_y, int i_beg, int i_end, int i_dir){
         head=i_head;
         hair=i_hair;
         neck=i_neck;
@@ -45,6 +46,11 @@ public class KeyFrame {
         y=i_y;
         end=i_end;
         begin=i_beg;
+        if (i_dir==0){
+            dir = 1;
+        }else{
+            dir = -1;
+        }
     }
 
 
