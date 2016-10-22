@@ -21,6 +21,7 @@ public class Skeleton {
 
     public float og_x;
     public float og_y;
+    public int og_dir;
 
     public float action_x;
     public float action_y;
@@ -265,8 +266,8 @@ public class Skeleton {
         List<KeyFrame> dragonwheel = new ArrayList<>();
         dragonwheel.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,   0,0,  0,5, 0));
         dragonwheel.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,     0,0,  5,10, 0));
-        dragonwheel.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    .4f,-.4f,  10,15, 0));
-        dragonwheel.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    .4f,-.4f,  15,15, 0));
+        dragonwheel.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    .4f,.4f,  10,15, 0));
+        dragonwheel.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    .4f,.4f,  15,15, 0));
 
         List<KeyFrame> charge = new ArrayList<>();
         charge.add(new KeyFrame(0,0,0,0,0,    0,0,0,90,   0,0,0,0,0,0,0,10,0));
@@ -336,9 +337,48 @@ public class Skeleton {
         silence.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,    0,0,  15,15, 0));
 
 
+        List<KeyFrame> stab = new ArrayList<>();
+        stab.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,0,0,0,10,0));
+        stab.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,0,0,10,12,0));
+        stab.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,0,0,12,12,0));
+
+        List<KeyFrame> blink_strike = new ArrayList<>();
+        blink_strike.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,0,0,  0,10, 0));
+        blink_strike.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,   0,0,   10,11, 0));
+
+        blink_strike.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,   .7f,0,   11,15, 1));
+        blink_strike.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,      0,0,0,0, .7f,0, 15,15,   1));
+        blink_strike.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,      0,0,0,0, .7f,0, 15,15,   1));
+
+        List<KeyFrame> dagger_dance = new ArrayList<>();
+        dagger_dance.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,0,0,0,10,0));
+        dagger_dance.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,0,0,10,12,0));
+        dagger_dance.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,0,0,12,12,0));
+
+        List<KeyFrame> blind = new ArrayList<>();
+        blind.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,0,0,0,10,0));
+        blind.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,0,0,10,12,0));
+        blind.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,0,0,12,12,0));
+
+        List<KeyFrame> flash_escape = new ArrayList<>();
+        flash_escape.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,0,0,  0,10, 0));
+        flash_escape.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,   0,0,   10,11, 0));
+        flash_escape.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,   -.7f,0,   11,15, 0));
+        flash_escape.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,      0,0,0,0, -.7f,0, 15,15,   0));
+        flash_escape.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,      0,0,0,0, -.7f,0, 15,15,   0));
+
+        List<KeyFrame> stealth = new ArrayList<>();
+        stealth.add(new KeyFrame(0,0,0,0,0,    0,0,-45,90,   0,0,0,0,0,0,0,10,0));
+        stealth.add(new KeyFrame(0,0,0,0,0,    0,0,90,90,   0,0,0,0,0,0,10,12,0));
+        stealth.add(new KeyFrame(0,0,0,0,0,    0,0,0,0,   0,0,0,0,0,0,12,12,0));
 
 
 
+
+
+
+
+        magical_fire.add(dragonwheel);
 
         magical_fire.add(fireball);
         magical_fire.add(firespray);
@@ -478,10 +518,11 @@ public class Skeleton {
 
     }
 
-    public void set_xy(float i_x, float i_y){
+    public void set_xy(float i_x, float i_y, int i_dir){
         if (state.state!=7){
             og_x=i_x;
             og_y=i_y;
+            og_dir=i_dir;
         }
     }
 
@@ -505,7 +546,7 @@ public class Skeleton {
         count++;
         cycle=false;
 
-        set_xy(i_x, i_y);
+        set_xy(i_x, i_y,i_dir);
         update_state(i_state);
 
         if (state.state==0){
@@ -635,8 +676,8 @@ public class Skeleton {
         upper_right_leg[2]= dir*(anim_2.upper_right_leg+rng*(anim_1.upper_right_leg-anim_2.upper_right_leg));
         lower_right_leg[2]= dir*(anim_2.lower_right_leg+rng*(anim_1.lower_right_leg-anim_2.lower_right_leg));
 
-        action_x=og_x+dir*(anim_2.x+rng*(anim_1.x-anim_2.x));
-        action_y=og_y+dir*(anim_2.y+rng*(anim_1.y-anim_2.y));
+        action_x=og_x+og_dir*(anim_2.x+rng*(anim_1.x-anim_2.x));
+        action_y=og_y+(anim_2.y+rng*(anim_1.y-anim_2.y));
 
     }
 

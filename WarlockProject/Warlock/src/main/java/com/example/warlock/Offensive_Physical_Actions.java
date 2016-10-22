@@ -165,69 +165,69 @@ public class Offensive_Physical_Actions {
             if (spirit_type==0){
                 if (spell_type==0){
 
-                    spell_name="Not designated";
+                    spell_name="Fireball";
 
                     //FIREBALL
                     projectile_flag=true;
-                    total_cast_time=45f;
+                    total_cast_time=25f;
                     cool_down=0;
                     active=true;
 
                 }else if (spell_type==1){
-                    spell_name="Not designated";
+                    spell_name="Firespray";
 
                     //FIREBALL
                     projectile_flag=true;
-                    total_cast_time=45f;
+                    total_cast_time=30f;
                     cool_down=0;
                     active=true;
                 }else if (spell_type==2){
-                    spell_name="Not designated";
+                    spell_name="fireblast";
 
                     //FIREBALL  /0
                     projectile_flag=true;
-                    total_cast_time=45f;
+                    total_cast_time=10f;
                     cool_down=0;
                     active=true;
                 }else if (spell_type==3){
-                    spell_name="Not designated";
+                    spell_name="Light strike array";
 
                     //flamethrower /0
                     projectile_flag=true;
-                    total_cast_time=45f;
+                    total_cast_time=25f;
                     cool_down=0;
                     active=true;
                 }else if (spell_type==4){
-                    spell_name="Not designated";
+                    spell_name="sunstrike";
 
                     //FIRESTORM  /0
                     projectile_flag=true;
-                    total_cast_time=45f;
+                    total_cast_time=15f;
                     cool_down=0;
                     active=true;
                 }else if (spell_type==5){
-                    spell_name="Not designated";
+                    spell_name="flameguard";
 
                     //immolate  /0
                     projectile_flag=true;
-                    total_cast_time=45f;
+                    total_cast_time=15f;
                     cool_down=0;
                     active=true;
                 }else if (spell_type==6){
-                    spell_name="Not designated";
+                    spell_name="Flame Wall";
 
                     //immolate  /0
                     projectile_flag=true;
-                    total_cast_time=45f;
+                    total_cast_time=60f;
                     cool_down=0;
                     active=true;
                 }
                 else if (spell_type==7){
-                    spell_name="Not designated";
+                    spell_name="Inferno";
 
                     //blank  /0
                     projectile_flag=true;
-                    total_cast_time=45f;
+                    total_cast_time=150f;
                     cool_down=0;
                     active=true;
                 }
@@ -249,57 +249,6 @@ public class Offensive_Physical_Actions {
                     cool_down=0;
                     active=true;
 
-                }else if (spell_type==10){
-                    spell_name="Not designated";
-
-                    //blank  /0
-                    projectile_flag=true;
-                    total_cast_time=45f;
-                    cool_down=0;
-                    active=true;
-                }else if (spell_type==11){
-                    spell_name="Not designated";
-
-                    //icebolt  /0
-                    projectile_flag=true;
-                    total_cast_time=45f;
-                    cool_down=0;
-                    active=true;
-
-                }
-                else if (spell_type==12){
-                    spell_name="Not designated";
-
-                    //icebolt SPAM /0
-                    projectile_flag=true;
-                    total_cast_time=45f;
-                    cool_down=0;
-                    active=true;
-
-                }else if (spell_type==13){
-                    spell_name="Not designated";
-
-                    //mist  /0
-                    projectile_flag=true;
-                    total_cast_time=45f;
-                    cool_down=0;
-                    active=true;
-                }else if (spell_type==14){
-                    spell_name="Not designated";
-
-                    //bubble beam  /0
-                    projectile_flag=true;
-                    total_cast_time=45f;
-                    cool_down=0;
-                    active=true;
-                }else if (spell_type==15){
-                    spell_name="Not designated";
-
-                    //blank  /0
-                    projectile_flag=true;
-                    total_cast_time=45f;
-                    cool_down=0;
-                    active=true;
                 }
                 }
             if (spirit_type==1){
@@ -736,8 +685,10 @@ public class Offensive_Physical_Actions {
             //SUPPORT META TYPE
             if (spirit_type==0){
                 if (spell_type==0){
+                    spell_name="Palm Blast";
+
                     projectile_flag=true;
-                    total_cast_time=45f;
+                    total_cast_time=0f;
                     cool_down=0;
                     active=true;
 
