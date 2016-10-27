@@ -414,7 +414,7 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public void draw_battle(){
         //Load stage
-        env.all_locations[env.current_location.location_index].draw_location_battle(scratch,mMVPMatrix,zeroRotationMatrix);
+        env.all_locations[env.current_location.location_index].draw_location_battle(scratch,mMVPMatrix,zeroRotationMatrix, screen_x);
 
         //Load characters
         for (int i = 0; i< active_people.size();i++){
@@ -484,7 +484,7 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public void draw_explore(){
         //Load stage
-        env.all_locations[env.current_location.location_index].draw_location(scratch,mMVPMatrix,zeroRotationMatrix, player.center_x);
+        env.all_locations[env.current_location.location_index].draw_location(scratch,mMVPMatrix,zeroRotationMatrix, player.center_x,screen_x);
 
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
             player.DrawSelf(scratch,mMVPMatrix,zeroRotationMatrix);

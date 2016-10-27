@@ -25,9 +25,9 @@ public class Location_Graphics_Asset
     private final int mTextureCoordinateDataSize = 2;
     private int mTextureDataHandle, selectedTextureDataHandle;
     public float left,right,up,down;
-    public float width, height, y,x;
+    public float width, height, y,x,distance;
     public boolean active=false;
-    public int s;
+    public int s,num_assets=0;
 
 
     private final String vertexShaderCode =
@@ -82,7 +82,7 @@ public class Location_Graphics_Asset
     // Set color with red, green, blue and alpha (opacity) values
     float color[] = { 1f, 1f, 1f, 1f };
 
-    public Location_Graphics_Asset(final Context activityContext, int k, float i_AR, float i_size, float i_x_off, float i_y_off)
+    public Location_Graphics_Asset(final Context activityContext, int k, float i_AR, float i_size, float i_x_off, float i_y_off, float i_distance)
     {
 
 
@@ -90,7 +90,7 @@ public class Location_Graphics_Asset
         size=i_size;
         x_off=i_x_off;
         y_off=i_y_off;
-
+        distance=i_distance;
         mActivityContext = activityContext;
         s = k;
 
@@ -141,6 +141,9 @@ public class Location_Graphics_Asset
         mTextureDataHandle = k;
         selectedTextureDataHandle=k;
     }
+
+    public void set_num_assets(int i){num_assets=i;}
+
 
     public Location_Graphics_Asset(final Context activityContext, int k, float i_AR, float i_size, float x_1, float x_2, float y_1, float y_2)
     {
