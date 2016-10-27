@@ -190,6 +190,8 @@ public class SurfaceView extends GLSurfaceView {
             vibrator.vibrate(200);
             mRenderer.text_collection.active_text.clear();
             return;
+        }else if (c1==mRenderer.ui_graphics[mRenderer.game_state].MOVE){
+            move_player(mRenderer.player.center_x+.1f*c2);
         }
 
     }

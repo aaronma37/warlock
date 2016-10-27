@@ -17,7 +17,7 @@ public class UI_Graphics
 {
     //Reference to Activity Context
     private final Context mActivityContext;
-    public int COMMAND_SEAL=1,NOTHING=0,REWARD=2, START=3;
+    public int COMMAND_SEAL=1,NOTHING=0,REWARD=2, START=3, MOVE=4;
 
     public int BUTTON=1,ADAPTIVE=2;
 
@@ -162,7 +162,8 @@ public class UI_Graphics
             //DUNGEON LEVEL  SCREEN
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.ui_battle_player_portrait), 1f, .3f,.8f,.5f,START,BATTLE,BUTTON);number_of_images++;
         }else if (k==5){
-
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.location_arrow), .1f, .1f,-.8f,1.55f,MOVE,-1,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.location_arrow),.1f,.1f,-.8f,1.15f,MOVE,1,BUTTON);number_of_images++;
         }
 
 
