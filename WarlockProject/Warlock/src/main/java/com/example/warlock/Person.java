@@ -45,6 +45,7 @@ public class Person {
     public Context myContext;
 
     public boolean in_air;
+    public NPC_Action npc;
 
     public int sprint_timer=0;
     public int SPRINT_TIME=10;
@@ -99,6 +100,7 @@ public class Person {
 
     public Person(String given_name, float start_x, float start_y, Context context) {
         myContext=context;
+        npc=new NPC_Action(false);
         health=100;
         name=given_name;
         height=24;
@@ -130,7 +132,49 @@ public class Person {
             toCast[i]=0;
         }
 
-        person_graphics = new Person_Graphics(myContext, 2,0,0,0,0);
+        person_graphics = new Person_Graphics(myContext, 2,0,0,4,0);
+        setAvailableOffensiveActionSpace();
+        wardrobe= new Wardrobe();
+/*        for (int i=0;i<NUMBER_OF_SPIRITS;i++){
+            spirit[i].setAvailableOffensiveActionSpace();
+        }*/
+    }
+    public Person(String given_name, float start_x, float start_y, Context context, int hair_index, int face_index, int eyes_index, int body_index, int leg_index, int i_npc_action) {
+        myContext=context;
+        npc=new NPC_Action(true,i_npc_action,-1,1);
+
+        health=100;
+        name=given_name;
+        height=24;
+        width=8;
+        hitbox = new Hitbox(4,12);
+        box = new Box(.1f,.2f,0,0,0);
+        center_x=start_x;
+        center_y=start_y;
+        busy=false;
+        state.setState(0,0,0,0);
+        in_air=false;
+        yvel=0;
+
+        for (int i=0;i<META_SIZE;i++){
+            a[i]=new action_space_action(i);
+        }
+
+        for (int i=0;i<ACTION_SPACE_SIZE;i++){
+            off_a[i]=new action_space_action(i);
+            def_a[i]=new action_space_action(i);
+        }
+        for (int i=0;i<NUMBER_OF_ATTRIBUTES;i++){
+            attribute[i]=0;
+        }
+        for (int i=0;i<NUMBER_OF_SPIRITS;i++){
+            spirit[i]=new Spirit(i);
+        }
+        for (int i=0;i<4;i++){
+            toCast[i]=0;
+        }
+
+        person_graphics = new Person_Graphics(myContext, hair_index,face_index,eyes_index,body_index,leg_index);
         setAvailableOffensiveActionSpace();
         wardrobe= new Wardrobe();
 /*        for (int i=0;i<NUMBER_OF_SPIRITS;i++){
@@ -389,6 +433,11 @@ public class Person {
             state.setState(4,dest_x,0,0);
         }
         sprint_timer=SPRINT_TIME;
+    }
+
+    public void move_request_force_walk(float dest_x){
+        state.setState(3,dest_x,0,0);
+
     }
 
     public void jump_request(float dest_x, float dest_y){
@@ -883,6 +932,39 @@ public class Person {
             }
             return false;
         }
+
+    public void step_npc(){
+
+        if (npc.active){
+            //patrol action
+            if (!npc.init){
+                move_request_force_walk(npc.val1);
+                npc.state=npc.val1;
+                npc.init=true;
+            }
+
+            if (npc.type==1){
+                if (reach_destination()){
+                    if (npc.state==npc.val1) {
+                            npc.state=npc.val2;
+                            move_request_force_walk(npc.val2);
+                    }else{
+                            npc.state=npc.val1;
+                            move_request_force_walk(npc.val1);
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean reach_destination(){
+        if(Math.abs(center_x-state.destination_x)>.01f){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
 
 
 }

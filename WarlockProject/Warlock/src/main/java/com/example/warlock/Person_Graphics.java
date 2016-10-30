@@ -104,6 +104,78 @@ public class Person_Graphics {
             post_body_assets.add(body_asset_1);
 
 
+        }else if (body_index==1){
+            //body = new Person_Graphics_Asset_Sprite(myContext, loadTexture(myContext, R.drawable.f_body_clothes_1), 182.756f/57.366f ,ADJ_SCALE*90.366f/1000,ADJ_SCALE*0.02f,ADJ_SCALE*-.285f);
+            upper_body = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_2), 75f/50f ,ADJ_SCALE*90.366f/1000, 0f, 1f/3f, 0f, .5f);
+            lower_body = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_2), 75f/50f ,ADJ_SCALE*90.366f/1000, 0f, 1f/3f, .5f, 1f);
+
+            upper_right_arm = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_2), 75f/50f ,ADJ_SCALE*90.366f/1000, 2f/3f, 1f, 0f, .5f);
+
+            lower_right_arm = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_2), 75f/50f ,ADJ_SCALE*90.366f/1000, 2f/3f, 1f, .5f, 1f);
+
+            upper_left_arm = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_2), 75f/50f ,ADJ_SCALE*90.366f/1000, 1f/3f, 2f/3f, 0f, .5f);
+
+            lower_left_arm = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_2), 75f/50f ,ADJ_SCALE*90.366f/1000, 1/3f, 2f/3f, .5f, 1f);
+
+            Person_Graphics_Asset_Asset body_asset_2 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_body_2_asset_1),1,ADJ_SCALE*27f/1000, ADJ_SCALE*(.060f),ADJ_SCALE*(-.032f),0f,.1f,.1f,.2f,.2f, .03f, .13f);
+            post_body_assets.add(body_asset_2);
+
+            Person_Graphics_Asset_Asset body_asset_1 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_body_2_asset_2),1,ADJ_SCALE*30f/1000, ADJ_SCALE*(.045f),ADJ_SCALE*(-.035f),0f,.1f,.1f,.2f,.2f, .03f, .13f);
+            post_body_assets.add(body_asset_1);
+        }else if (body_index==2){
+            //body = new Person_Graphics_Asset_Sprite(myContext, loadTexture(myContext, R.drawable.f_body_clothes_1), 182.756f/57.366f ,ADJ_SCALE*90.366f/1000,ADJ_SCALE*0.02f,ADJ_SCALE*-.285f);
+            upper_body = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_3), 75f/50f ,ADJ_SCALE*90.366f/1000, 0f, 1f/3f, 0f, .5f);
+            lower_body = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_3), 75f/50f ,ADJ_SCALE*90.366f/1000, 0f, 1f/3f, .5f, 1f);
+
+            upper_right_arm = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_3), 75f/50f ,ADJ_SCALE*90.366f/1000, 2f/3f, 1f, 0f, .5f);
+
+            lower_right_arm = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_3), 75f/50f ,ADJ_SCALE*90.366f/1000, 2f/3f, 1f, .5f, 1f);
+
+            upper_left_arm = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_3), 75f/50f ,ADJ_SCALE*90.366f/1000, 1f/3f, 2f/3f, 0f, .5f);
+
+            lower_left_arm = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_3), 75f/50f ,ADJ_SCALE*90.366f/1000, 1/3f, 2f/3f, .5f, 1f);
+
+            Person_Graphics_Asset_Asset body_asset_2 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_body_3_asset_1),1,ADJ_SCALE*27f/1000, ADJ_SCALE*(.060f),ADJ_SCALE*(-.032f),0f,.1f,.1f,.2f,.2f, .03f, .13f);
+            post_body_assets.add(body_asset_2);
+
+            Person_Graphics_Asset_Asset body_asset_1 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_body_3_asset_2),1,ADJ_SCALE*30f/1000, ADJ_SCALE*(.045f),ADJ_SCALE*(-.035f),0f,.1f,.1f,.2f,.2f, .03f, .13f);
+            post_body_assets.add(body_asset_1);
+        }else if (body_index==3){
+            //body = new Person_Graphics_Asset_Sprite(myContext, loadTexture(myContext, R.drawable.f_body_clothes_1), 182.756f/57.366f ,ADJ_SCALE*90.366f/1000,ADJ_SCALE*0.02f,ADJ_SCALE*-.285f);
+            upper_body = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_4), 75f/50f ,ADJ_SCALE*90.366f/1000, 0f, 1f/3f, 0f, .5f);
+            lower_body = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_4), 75f/50f ,ADJ_SCALE*90.366f/1000, 0f, 1f/3f, .5f, 1f);
+
+            upper_right_arm = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_4), 75f/50f ,ADJ_SCALE*90.366f/1000, 2f/3f, 1f, 0f, .5f);
+
+            lower_right_arm = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_4), 75f/50f ,ADJ_SCALE*90.366f/1000, 2f/3f, 1f, .5f, 1f);
+
+            upper_left_arm = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_4), 75f/50f ,ADJ_SCALE*90.366f/1000, 1f/3f, 2f/3f, 0f, .5f);
+
+            lower_left_arm = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_4), 75f/50f ,ADJ_SCALE*90.366f/1000, 1/3f, 2f/3f, .5f, 1f);
+
+            Person_Graphics_Asset_Asset body_asset_2 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_body_4_asset_1),1,ADJ_SCALE*27f/1000, ADJ_SCALE*(.060f),ADJ_SCALE*(-.032f),0f,.1f,.1f,.2f,.2f, .03f, .13f);
+            post_body_assets.add(body_asset_2);
+
+            Person_Graphics_Asset_Asset body_asset_1 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_body_4_asset_2),1,ADJ_SCALE*30f/1000, ADJ_SCALE*(.045f),ADJ_SCALE*(-.035f),0f,.1f,.1f,.2f,.2f, .03f, .13f);
+            post_body_assets.add(body_asset_1);
+        }else if (body_index==4){
+            //body = new Person_Graphics_Asset_Sprite(myContext, loadTexture(myContext, R.drawable.f_body_clothes_1), 182.756f/57.366f ,ADJ_SCALE*90.366f/1000,ADJ_SCALE*0.02f,ADJ_SCALE*-.285f);
+            upper_body = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_5), 75f/50f ,ADJ_SCALE*90.366f/1000, 0f, 1f/3f, 0f, .5f);
+            lower_body = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_5), 75f/50f ,ADJ_SCALE*90.366f/1000, 0f, 1f/3f, .5f, 1f);
+
+            upper_right_arm = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_5), 75f/50f ,ADJ_SCALE*90.366f/1000, 2f/3f, 1f, 0f, .5f);
+
+            lower_right_arm = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_5), 75f/50f ,ADJ_SCALE*90.366f/1000, 2f/3f, 1f, .5f, 1f);
+
+            upper_left_arm = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_5), 75f/50f ,ADJ_SCALE*90.366f/1000, 1f/3f, 2f/3f, 0f, .5f);
+
+            lower_left_arm = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_body_5), 75f/50f ,ADJ_SCALE*90.366f/1000, 1/3f, 2f/3f, .5f, 1f);
+
+            Person_Graphics_Asset_Asset body_asset_2 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_body_5_asset_1),1,ADJ_SCALE*27f/1000, ADJ_SCALE*(.060f),ADJ_SCALE*(-.032f),0f,.1f,.1f,.2f,.2f, .03f, .13f);
+            post_body_assets.add(body_asset_2);
+
+            Person_Graphics_Asset_Asset body_asset_1 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_body_5_asset_2),1,ADJ_SCALE*30f/1000, ADJ_SCALE*(.045f),ADJ_SCALE*(-.035f),0f,.1f,.1f,.2f,.2f, .03f, .13f);
+            post_body_assets.add(body_asset_1);
         }
 
         if (leg_index==0){

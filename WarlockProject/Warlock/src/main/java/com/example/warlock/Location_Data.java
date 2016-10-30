@@ -115,8 +115,22 @@ public class Location_Data {
             static_assets[STATIC_ASSET_SIZE]= new Location_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.rock_2), 30.806f/67.695f , .15f, 1.95f, -.5f, 1f);STATIC_ASSET_SIZE++;
 
 
-            people_in_scene[0]= new Person("default 1", -.5f, GROUND_LEVEL, myContext);PEOPLE_IN_SCENE_SIZE++;
-            people_in_scene[0].reset(0,GROUND_LEVEL); people_in_scene[0].state.state=0;
+            people_in_scene[PEOPLE_IN_SCENE_SIZE]= new Person("default 1", -.5f, GROUND_LEVEL, myContext,2,0,0,1,0,1);
+            people_in_scene[PEOPLE_IN_SCENE_SIZE].reset(0,GROUND_LEVEL); people_in_scene[0].state.state=0;PEOPLE_IN_SCENE_SIZE++;
+
+
+            people_in_scene[PEOPLE_IN_SCENE_SIZE]= new Person("default 1", -.1f, GROUND_LEVEL, myContext,2,0,0,2,0,1);
+            people_in_scene[PEOPLE_IN_SCENE_SIZE].reset(.4f,GROUND_LEVEL); people_in_scene[0].state.state=0;PEOPLE_IN_SCENE_SIZE++;
+
+
+            people_in_scene[PEOPLE_IN_SCENE_SIZE]= new Person("default 1", -1f, GROUND_LEVEL, myContext,2,0,0,3,0,0);
+            people_in_scene[PEOPLE_IN_SCENE_SIZE].reset(-.4f,GROUND_LEVEL); people_in_scene[0].state.state=0;PEOPLE_IN_SCENE_SIZE++;
+
+
+            people_in_scene[PEOPLE_IN_SCENE_SIZE]= new Person("default 1", .5f, GROUND_LEVEL, myContext,2,0,0,4,0,1);
+            people_in_scene[PEOPLE_IN_SCENE_SIZE].reset(1f,GROUND_LEVEL); people_in_scene[0].state.state=0;PEOPLE_IN_SCENE_SIZE++;
+
+
 
             hitbox_list.add(new Box(.2f, .2f, people_in_scene[0].center_x, people_in_scene[0].center_y, 0));
 
@@ -234,6 +248,8 @@ public class Location_Data {
         }
 
         for (int i=0;i<PEOPLE_IN_SCENE_SIZE;i++){
+            people_in_scene[i].step_npc();
+            //people_in_scene[i].step();
             people_in_scene[i].DrawSelf(scratch,mMVPMatrix,zeroRotationMatrix);
         }
 
