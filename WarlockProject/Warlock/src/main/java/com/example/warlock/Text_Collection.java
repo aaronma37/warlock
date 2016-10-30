@@ -1,5 +1,7 @@
 package com.example.warlock;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,13 +13,25 @@ public class Text_Collection {
     public Hard_Text text[] = new Hard_Text[500];
     public List<Hard_Text> active_text = new ArrayList<>();
     public Hard_Text active_area_text[] = new Hard_Text[10];
+    public GeneralGraphic text_box[] = new GeneralGraphic[5];
+    public Context myContext;
+    public Cont_Font font_1;
+
+
 
     public int helper_counter=0;
 
     private float LOCATION_WIDTH=.4f, LOCATION_HEIGHT=.1f, LOCATION_X=0f, LOCATION_Y=-.8f;
 
 
-    public Text_Collection(){
+    public Text_Collection(Context context){
+        myContext=context;
+
+        font_1 = new Cont_Font(myContext,0);
+
+        for (int i=0;i<5;i++){
+            text_box[i] = new GeneralGraphic(myContext,50+i);
+        }
 
         for (int i=0;i<500;i++){
             text[i] = new Hard_Text("default",0,.1f,.1f,0,0);
@@ -35,6 +49,30 @@ public class Text_Collection {
 
         text[11].str="No action";
         text[11].setSize(.4f,.1f,0f,-.8f);
+
+        //PAUSE MENU 1 TEXTS
+
+
+        helper_counter=20;
+        text[helper_counter].str="Fire ";  text[helper_counter].setSize(.4f,.1f,-.5f,-.1f-(helper_counter-20)*.075f);text[helper_counter].set_background(1); helper_counter++;
+        text[helper_counter].str="0";       text[helper_counter].setSize(.4f,.1f,-1.4f,-.1f-(helper_counter-21)*.075f);text[helper_counter].set_background(1);helper_counter++;
+
+        text[helper_counter].str="Light ";  text[helper_counter].setSize(.4f,.1f,-.5f,-.1f-(helper_counter-20)*.075f);text[helper_counter].set_background(1); helper_counter++;
+        text[helper_counter].str="0";       text[helper_counter].setSize(.4f,.1f,-1.4f,-.1f-(helper_counter-21)*.075f);text[helper_counter].set_background(1);helper_counter++;
+
+        text[helper_counter].str="Dark ";  text[helper_counter].setSize(.4f,.1f,-.5f,-.1f-(helper_counter-20)*.075f);text[helper_counter].set_background(1); helper_counter++;
+        text[helper_counter].str="0";       text[helper_counter].setSize(.4f,.1f,-1.4f,-.1f-(helper_counter-21)*.075f);text[helper_counter].set_background(1);helper_counter++;
+
+        text[helper_counter].str="Water ";  text[helper_counter].setSize(.4f,.1f,-.5f,-.1f-(helper_counter-20)*.075f);text[helper_counter].set_background(1); helper_counter++;
+        text[helper_counter].str="0";       text[helper_counter].setSize(.4f,.1f,-1.4f,-.1f-(helper_counter-21)*.075f);text[helper_counter].set_background(1);helper_counter++;
+
+        helper_counter=40;
+        text[helper_counter].str="Equip ";  text[helper_counter].setSize(.4f,.1f,1f,.6f);text[helper_counter].set_background(1); helper_counter++;
+        text[helper_counter].str="Spirits ";  text[helper_counter].setSize(.4f,.1f,1f,.2f);text[helper_counter].set_background(1); helper_counter++;
+        text[helper_counter].str="Map ";  text[helper_counter].setSize(.4f,.1f,1f,-.2f);text[helper_counter].set_background(1); helper_counter++;
+        text[helper_counter].str="Settings ";  text[helper_counter].setSize(.4f,.1f,1f,-.6f);text[helper_counter].set_background(1); helper_counter++;
+
+
 
         { //LOCATIONS
             helper_counter=100;
@@ -307,6 +345,12 @@ public class Text_Collection {
 
     public void remove_to_active_text(int i){
         active_text.remove(text[i]);
+    }
+
+    public void draw_text(float[] S, float[] M, float[] Z){
+        for (int i = 0;i<active_text.size();i++){
+            active_text.get(i).draw(S,M,Z,text_box[active_text.get(i).background],font_1);
+        }
     }
 
 }

@@ -49,6 +49,7 @@ public class Rend implements GLSurfaceView.Renderer {
 
     private int STARTING_STATE=EXPLORE;
 
+
     private static final String TAG = "MyGLRenderer";
 
     //FOR SURFACE PLOT
@@ -118,8 +119,9 @@ public class Rend implements GLSurfaceView.Renderer {
     public Environment_Data env;
 
     public UI_Graphics ui_graphics[] = new UI_Graphics[10];
+    public UI_Graphics pause_graphics[] = new UI_Graphics[10];
     public Cont_Font font_1;
-    public Text_Collection text_collection;
+    public Text_Collection text_collection,pause_text_collection;
     private List<Hard_Text> active_text = new ArrayList<>();
 
     public SpellCircle water_circle;
@@ -140,6 +142,7 @@ public class Rend implements GLSurfaceView.Renderer {
 
     //game_states!
     public int game_state=STARTING_STATE;
+    public int pause_state=0;
 
 
 
@@ -193,13 +196,15 @@ public class Rend implements GLSurfaceView.Renderer {
         font_1 = new Cont_Font(context,0);
         text_box = new GeneralGraphic(context,18);
 
-        text_collection=new Text_Collection();
+        text_collection=new Text_Collection(context);
+        pause_text_collection = new Text_Collection(context);
 
         player = new Person("Aaron", -.5f, GROUND_LEVEL, context);
         luke = new Person("Luke", .5f, GROUND_LEVEL, context);
 
         for (int i=0;i<10;i++){
             ui_graphics[i] = new UI_Graphics(context,i);
+            pause_graphics[i]=new UI_Graphics(context,i+10);
         }
 
 
@@ -377,19 +382,25 @@ public class Rend implements GLSurfaceView.Renderer {
             draw_explore();
         }
 
-        draw_ui(game_state);
-        draw_text();
+        if (pause_state==0){
+            draw_ui(game_state);
+        }else{
+            draw_pause_ui(pause_state);
+        }
 
     }
 
-    public void draw_text(){
-        for (int i = 0;i<text_collection.active_text.size();i++){
-            draw_word(text_collection.active_text.get(i));
+
+/*    public void draw_text(Text_Collection txt){
+        for (int i = 0;i<txt.active_text.size();i++){
+
+            txt.active_text.get(i).draw(scratch,mMVPMatrix2,zeroRotationMatrix);
+            draw_word(txt.active_text.get(i));
         }
 
         if (game_state==0){
             for (int i =0;i<10;i++){
-                draw_word(text_collection.active_area_text[i]);
+                draw_word(txt.active_area_text[i]);
             }
         }
     }
@@ -410,7 +421,7 @@ public class Rend implements GLSurfaceView.Renderer {
             font_1.Draw_Word(scratch,hard_text.str.charAt(j));
             Matrix.translateM(scratch, 0, -1.2f, 0f, 0f);
         }
-    }
+    }*/
 
     public void draw_battle(){
         //Load stage
@@ -513,7 +524,26 @@ public class Rend implements GLSurfaceView.Renderer {
             Matrix.scaleM(scratch, 0, ui_graphics[k].images[i].width,ui_graphics[k].images[i].height,1f);
             ui_graphics[k].Draw(scratch, false, i);
         }
+
+        text_collection.draw_text(scratch,mMVPMatrix2,zeroRotationMatrix);
     }
+
+
+    public void draw_pause_ui(int k){
+        for (int i=0;i<pause_graphics[k].number_of_images;i++){
+            Matrix.multiplyMM(scratch, 0, mMVPMatrix2, 0, zeroRotationMatrix, 0);
+            Matrix.translateM(scratch, 0, pause_graphics[k].images[i].x, pause_graphics[k].images[i].y, 1f);
+            Matrix.scaleM(scratch, 0, pause_graphics[k].images[i].width,pause_graphics[k].images[i].height,1f);
+            pause_graphics[k].Draw(scratch, false, i);
+        }
+
+        if (pause_graphics[k].char_loadout==1){
+            player.DrawSelf_fixed_location(scratch,mMVPMatrix2,zeroRotationMatrix,pause_graphics[0].PAUSE_MENU_PLAYER_LOADOUT_X,pause_graphics[0].PAUSE_MENU_PLAYER_LOADOUT_Y);
+        }
+
+        pause_text_collection.draw_text(scratch,mMVPMatrix2,zeroRotationMatrix);
+    }
+
 
     public void draw_spell_circle(Person origin){
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
@@ -783,6 +813,28 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public void leave_location(int loc){
         text_collection.remove_to_active_text(100+loc);
+    }
+
+    public void request_pause_menu(int k){
+        for (int i = 0; i < pause_graphics[pause_state].text_index_list.size();i++){
+            pause_text_collection.remove_to_active_text(pause_graphics[pause_state].text_index_list.get(i));
+        }
+            pause_state=k;
+        if (k==1){
+            player.recalculate_attributes(player.wardrobe);
+
+            pause_text_collection.text[21].str=Integer.toString(player.spirit[0].attribute);
+            pause_text_collection.text[23].str=Integer.toString(player.spirit[1].attribute);
+            pause_text_collection.text[25].str=Integer.toString(player.spirit[2].attribute);
+            pause_text_collection.text[27].str=Integer.toString(player.spirit[3].attribute);
+        }
+
+
+
+
+        for (int i = 0; i < pause_graphics[pause_state].text_index_list.size();i++){
+            pause_text_collection.add_to_active_text(pause_graphics[pause_state].text_index_list.get(i));
+        }
     }
 
 }

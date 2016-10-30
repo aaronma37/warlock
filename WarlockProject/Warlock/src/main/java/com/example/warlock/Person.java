@@ -424,6 +424,11 @@ public class Person {
     }
 
 
+    public void DrawSelf_fixed_location(float[] scratch, float[] mMVPMatrix, float[] zeroRotationMatrix, float i_x, float i_y){
+        person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,i_x,i_y,facing_direction*person_graphics.skeleton.skeleton_dir,state);
+    }
+
+
     public boolean checkIndex(int spell_type, int meta_type, int att[]){
 
             if (spell_type==1){

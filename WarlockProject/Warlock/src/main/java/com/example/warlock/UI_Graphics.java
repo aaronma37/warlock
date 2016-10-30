@@ -10,6 +10,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -17,11 +19,12 @@ public class UI_Graphics
 {
     //Reference to Activity Context
     private final Context mActivityContext;
-    public int COMMAND_SEAL=1,NOTHING=0,REWARD=2, START=3, MOVE=4;
+    public int COMMAND_SEAL=1,NOTHING=0,REWARD=2, START=3, MOVE=4, PAUSE_MENU=5;
 
     public int BUTTON=1,ADAPTIVE=2;
 
     public int BATTLE=0, START_SCREEN=1, SECONDARY_SCREEN=2, DUNGEON=3, DUNGEONS_LEVEL=4;
+    public int char_loadout=0;
     //Added for Textures
     private final FloatBuffer mCubeTextureCoordinates;
     private int mTextureUniformHandle;
@@ -35,6 +38,43 @@ public class UI_Graphics
     public float width, height, y,x;
     public boolean active=false;
     public int s;
+
+    private float PAUSE_MENU_BORDER_SIZE=.01f;
+
+    private float PAUSE_MENU_WIDTH=1.6f;
+    private float PAUSE_MENU_HEIGHT=.8f;
+    private float PAUSE_MENU_X=0;
+    private float PAUSE_MENU_Y=0;
+
+    private float PAUSE_MENU_EXIT_BAR_HEIGHT=PAUSE_MENU_HEIGHT-PAUSE_MENU_BORDER_SIZE;
+    private float PAUSE_MENU_EXIT_BAR_WIDTH=.1f-PAUSE_MENU_BORDER_SIZE;
+    private float PAUSE_MENU_EXIT_BAR_X=PAUSE_MENU_X+PAUSE_MENU_WIDTH-PAUSE_MENU_EXIT_BAR_WIDTH-PAUSE_MENU_BORDER_SIZE;
+    private float PAUSE_MENU_EXIT_BAR_Y=PAUSE_MENU_Y;
+
+    private float PAUSE_MENU_BUTTON_WIDTH=1.6f*1.75f/4f-PAUSE_MENU_BORDER_SIZE;
+    private float PAUSE_MENU_BUTTON_HEIGHT=.2f-PAUSE_MENU_BORDER_SIZE;
+    private float PAUSE_MENU_BUTTON_X=PAUSE_MENU_EXIT_BAR_X-PAUSE_MENU_EXIT_BAR_WIDTH-PAUSE_MENU_BUTTON_WIDTH-PAUSE_MENU_BORDER_SIZE;
+    private float PAUSE_MENU_BUTTON_Y=PAUSE_MENU_Y+PAUSE_MENU_HEIGHT-PAUSE_MENU_BUTTON_HEIGHT-PAUSE_MENU_BORDER_SIZE;
+
+    private float PAUSE_MENU_RIGHT_QUAD_WIDTH=PAUSE_MENU_WIDTH/2f-PAUSE_MENU_BORDER_SIZE;
+    private float PAUSE_MENU_RIGHT_QUAD_HEIGHT=PAUSE_MENU_HEIGHT/2f-PAUSE_MENU_BORDER_SIZE;
+    private float PAUSE_MENU_RIGHT_QUAD_X=PAUSE_MENU_X-PAUSE_MENU_RIGHT_QUAD_WIDTH-PAUSE_MENU_BORDER_SIZE;
+    private float PAUSE_MENU_RIGHT_QUAD_Y=PAUSE_MENU_Y+PAUSE_MENU_HEIGHT-PAUSE_MENU_RIGHT_QUAD_HEIGHT-PAUSE_MENU_BORDER_SIZE;
+
+    private float PAUSE_MENU_LEFT_HALF_WIDTH=PAUSE_MENU_WIDTH/2f-PAUSE_MENU_EXIT_BAR_WIDTH-PAUSE_MENU_BORDER_SIZE*2f;
+    private float PAUSE_MENU_LEFT_HALF_HEIGHT=PAUSE_MENU_HEIGHT-PAUSE_MENU_BORDER_SIZE;
+    private float PAUSE_MENU_LEFT_HALF_X=PAUSE_MENU_X+PAUSE_MENU_WIDTH-PAUSE_MENU_RIGHT_QUAD_WIDTH-PAUSE_MENU_BORDER_SIZE-PAUSE_MENU_EXIT_BAR_WIDTH;
+    private float PAUSE_MENU_LEFT_HALF_Y=PAUSE_MENU_Y;
+
+    private float PAUSE_MENU_RIGHT_LOWER_QUAD_WIDTH=PAUSE_MENU_WIDTH/2f-PAUSE_MENU_BORDER_SIZE;
+    private float PAUSE_MENU_RIGHT_LOWER_QUAD_HEIGHT=PAUSE_MENU_HEIGHT/2f-PAUSE_MENU_BORDER_SIZE;
+    private float PAUSE_MENU_RIGHT_LOWER_QUAD_X=PAUSE_MENU_X-PAUSE_MENU_RIGHT_QUAD_WIDTH-PAUSE_MENU_BORDER_SIZE;
+    private float PAUSE_MENU_RIGHT_LOWER_QUAD_Y=PAUSE_MENU_Y-PAUSE_MENU_HEIGHT+PAUSE_MENU_RIGHT_QUAD_HEIGHT+PAUSE_MENU_BORDER_SIZE;
+
+    public float PAUSE_MENU_PLAYER_LOADOUT_X=-PAUSE_MENU_WIDTH/2f;
+    public float PAUSE_MENU_PLAYER_LOADOUT_Y=PAUSE_MENU_HEIGHT/2.3f;
+
+    public List<Integer> text_index_list = new ArrayList<>();
 
 
     private final String vertexShaderCode =
@@ -162,9 +202,51 @@ public class UI_Graphics
             //DUNGEON LEVEL  SCREEN
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.ui_battle_player_portrait), 1f, .3f,.8f,.5f,START,BATTLE,BUTTON);number_of_images++;
         }else if (k==5){
-            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.location_arrow), .1f, .1f,-.8f,1.55f,MOVE,-1,BUTTON);number_of_images++;
-            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.location_arrow),.1f,.1f,-.8f,1.15f,MOVE,1,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.location_arrow), .1f, .1f,-.8f,1.55f,MOVE,1,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.location_arrow),.1f,.1f,-.8f,1.15f,MOVE,-1,BUTTON);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),.1f,.1f,.8f,-1.55f,PAUSE_MENU,1,BUTTON);number_of_images++;
+
+        }else if (k==11){
+            //Pause screen
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_EXIT_BAR_WIDTH, PAUSE_MENU_EXIT_BAR_HEIGHT,PAUSE_MENU_EXIT_BAR_Y,PAUSE_MENU_EXIT_BAR_X,PAUSE_MENU,0,NOTHING);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_BUTTON_WIDTH, PAUSE_MENU_BUTTON_HEIGHT,PAUSE_MENU_BUTTON_Y,PAUSE_MENU_BUTTON_X,PAUSE_MENU,2,NOTHING);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_BUTTON_WIDTH, PAUSE_MENU_BUTTON_HEIGHT,PAUSE_MENU_BUTTON_Y-(PAUSE_MENU_BUTTON_HEIGHT+PAUSE_MENU_BORDER_SIZE)*2f,PAUSE_MENU_BUTTON_X,PAUSE_MENU,3,NOTHING);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_BUTTON_WIDTH, PAUSE_MENU_BUTTON_HEIGHT,PAUSE_MENU_BUTTON_Y-(PAUSE_MENU_BUTTON_HEIGHT+PAUSE_MENU_BORDER_SIZE)*4f,PAUSE_MENU_BUTTON_X,PAUSE_MENU,4,NOTHING);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_BUTTON_WIDTH, PAUSE_MENU_BUTTON_HEIGHT,PAUSE_MENU_BUTTON_Y-(PAUSE_MENU_BUTTON_HEIGHT+PAUSE_MENU_BORDER_SIZE)*6f,PAUSE_MENU_BUTTON_X,PAUSE_MENU,5,NOTHING);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_RIGHT_QUAD_WIDTH, PAUSE_MENU_RIGHT_QUAD_HEIGHT,PAUSE_MENU_RIGHT_QUAD_Y,PAUSE_MENU_RIGHT_QUAD_X,NOTHING,NOTHING,NOTHING);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_RIGHT_LOWER_QUAD_WIDTH, PAUSE_MENU_RIGHT_LOWER_QUAD_HEIGHT,PAUSE_MENU_RIGHT_LOWER_QUAD_Y,PAUSE_MENU_RIGHT_LOWER_QUAD_X,NOTHING,NOTHING,NOTHING);number_of_images++;
+
+            for (int i=20;i<28;i++){
+                text_index_list.add(i);
+            }
+
+            for (int i=40;i<44;i++){
+                text_index_list.add(i);
+            }
+            char_loadout=1;
+
+        }else if (k==12){
+            //Pause screen
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_EXIT_BAR_WIDTH, PAUSE_MENU_EXIT_BAR_HEIGHT,PAUSE_MENU_EXIT_BAR_Y,PAUSE_MENU_EXIT_BAR_X,PAUSE_MENU,1,NOTHING);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_RIGHT_QUAD_WIDTH, PAUSE_MENU_RIGHT_QUAD_HEIGHT,PAUSE_MENU_RIGHT_QUAD_Y,PAUSE_MENU_RIGHT_QUAD_X,NOTHING,NOTHING,NOTHING);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_RIGHT_LOWER_QUAD_WIDTH, PAUSE_MENU_RIGHT_LOWER_QUAD_HEIGHT,PAUSE_MENU_RIGHT_LOWER_QUAD_Y,PAUSE_MENU_RIGHT_LOWER_QUAD_X,NOTHING,NOTHING,NOTHING);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_LEFT_HALF_WIDTH, PAUSE_MENU_LEFT_HALF_HEIGHT,PAUSE_MENU_LEFT_HALF_Y,PAUSE_MENU_LEFT_HALF_X,NOTHING,NOTHING,NOTHING);number_of_images++;
+
+            char_loadout=1;
+        }else if (k==13){
+            //Pause screen
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box), PAUSE_MENU_WIDTH, PAUSE_MENU_HEIGHT,PAUSE_MENU_Y,PAUSE_MENU_X,NOTHING,NOTHING,NOTHING);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box), PAUSE_MENU_EXIT_BAR_WIDTH, PAUSE_MENU_EXIT_BAR_HEIGHT,PAUSE_MENU_EXIT_BAR_Y,PAUSE_MENU_EXIT_BAR_X,PAUSE_MENU,1,NOTHING);number_of_images++;
+        }else if (k==14){
+            //Pause screen
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box), PAUSE_MENU_WIDTH, PAUSE_MENU_HEIGHT,PAUSE_MENU_Y,PAUSE_MENU_X,NOTHING,NOTHING,NOTHING);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box), PAUSE_MENU_EXIT_BAR_WIDTH, PAUSE_MENU_EXIT_BAR_HEIGHT,PAUSE_MENU_EXIT_BAR_Y,PAUSE_MENU_EXIT_BAR_X,PAUSE_MENU,1,NOTHING);number_of_images++;
+        }else if (k==15){
+            //Pause screen
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box), PAUSE_MENU_WIDTH, PAUSE_MENU_HEIGHT,PAUSE_MENU_Y,PAUSE_MENU_X,NOTHING,NOTHING,NOTHING);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box), PAUSE_MENU_EXIT_BAR_WIDTH, PAUSE_MENU_EXIT_BAR_HEIGHT,PAUSE_MENU_EXIT_BAR_Y,PAUSE_MENU_EXIT_BAR_X,PAUSE_MENU,1,NOTHING);number_of_images++;
         }
+
 
 
 

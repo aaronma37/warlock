@@ -232,6 +232,16 @@ public class GeneralGraphic
             mTextureDataHandle = loadTexture(mActivityContext, R.drawable.f_head1);
         }else if (s==21){
             mTextureDataHandle = loadTexture(mActivityContext, R.drawable.f_eyes1);
+        }else if (s==50){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.text_box);
+        }else if (s==51){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.text_box);
+        }else if (s==52){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.text_box);
+        }else if (s==53){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.text_box);
+        }else if (s==54){
+            mTextureDataHandle = loadTexture(mActivityContext, R.drawable.text_box);
         }
 
     }

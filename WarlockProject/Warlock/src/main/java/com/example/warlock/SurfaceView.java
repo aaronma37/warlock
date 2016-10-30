@@ -87,37 +87,47 @@ public class SurfaceView extends GLSurfaceView {
 
                 mRenderer.pointer[0]=modded_x;
                 mRenderer.pointer[1]=modded_y;
-
-                //GAME
-                if ((mRenderer.game_state==0 || mRenderer.game_state ==5) && mRenderer.player.state.can_move){
-                    if (checkClick(modded_x,modded_y,2f,.2f,0,-.2f,mRenderer.screen_x)){
-                        move_player(modded_x+mRenderer.screen_x );
-                        vibrator.vibrate(200);
-                    }
-                    if (checkClick(modded_x,modded_y,2f,.4f,0,.4f,mRenderer.screen_x)){
-                        jump_player(modded_x+mRenderer.screen_x, modded_y);
-                        vibrator.vibrate(200);
-                    }
-                }
-
-                if ((mRenderer.game_state==5) && mRenderer.player.state.state!=1 && mRenderer.player.state.state!=2){
-                    for (int i=0;i<mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.size();i++){
-                        if (checkClick(modded_x,modded_y,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.get(i).width,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.get(i).height,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.get(i).x,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.get(i).y,mRenderer.screen_x)){
-                            mRenderer.enterArena();
+                if (mRenderer.pause_state==0){
+                    //GAME
+                    if ((mRenderer.game_state==0 || mRenderer.game_state ==5) && mRenderer.player.state.can_move){
+                        if (checkClick(modded_x,modded_y,2f,.2f,0,-.2f,mRenderer.screen_x)){
+                            move_player(modded_x+mRenderer.screen_x );
                             vibrator.vibrate(200);
+                        }
+                        if (checkClick(modded_x,modded_y,2f,.4f,0,.4f,mRenderer.screen_x)){
+                            jump_player(modded_x+mRenderer.screen_x, modded_y);
+                            vibrator.vibrate(200);
+                        }
+                    }
+
+                    if ((mRenderer.game_state==5) && mRenderer.player.state.state!=1 && mRenderer.player.state.state!=2){
+                        for (int i=0;i<mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.size();i++){
+                            if (checkClick(modded_x,modded_y,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.get(i).width,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.get(i).height,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.get(i).x,mRenderer.env.all_locations[mRenderer.env.current_location.location_index].hitbox_list.get(i).y,mRenderer.screen_x)){
+                                mRenderer.enterArena();
+                                vibrator.vibrate(200);
+                            }
+                        }
+                    }
+
+                    //ARROWS
+                    check_arrow(modded_x,modded_y);
+
+                    //UI
+
+                    for (int i=0;i<mRenderer.ui_graphics[mRenderer.game_state].number_of_images;i++){
+                        if (checkClick(modded_x,modded_y,mRenderer.ui_graphics[mRenderer.game_state].images[i].width,mRenderer.ui_graphics[mRenderer.game_state].images[i].height, mRenderer.ui_graphics[mRenderer.game_state].images[i].x,mRenderer.ui_graphics[mRenderer.game_state].images[i].y,0)){
+                            click_code(mRenderer.ui_graphics[mRenderer.game_state].images[i].click_code_1, mRenderer.ui_graphics[mRenderer.game_state].images[i].click_code_2);
+                        }
+                    }
+                }else{
+                    for (int i=0;i<mRenderer.pause_graphics[mRenderer.pause_state].number_of_images;i++){
+                        if (checkClick(modded_x,modded_y,mRenderer.pause_graphics[mRenderer.pause_state].images[i].width,mRenderer.pause_graphics[mRenderer.pause_state].images[i].height, mRenderer.pause_graphics[mRenderer.pause_state].images[i].x,mRenderer.pause_graphics[mRenderer.pause_state].images[i].y,0)){
+                            click_code(mRenderer.pause_graphics[mRenderer.pause_state].images[i].click_code_1, mRenderer.pause_graphics[mRenderer.pause_state].images[i].click_code_2);
                         }
                     }
                 }
 
-                //ARROWS
-                check_arrow(modded_x,modded_y);
 
-                    //UI
-                for (int i=0;i<mRenderer.ui_graphics[mRenderer.game_state].number_of_images;i++){
-                    if (checkClick(modded_x,modded_y,mRenderer.ui_graphics[mRenderer.game_state].images[i].width,mRenderer.ui_graphics[mRenderer.game_state].images[i].height, mRenderer.ui_graphics[mRenderer.game_state].images[i].x,mRenderer.ui_graphics[mRenderer.game_state].images[i].y,0)){
-                        click_code(mRenderer.ui_graphics[mRenderer.game_state].images[i].click_code_1, mRenderer.ui_graphics[mRenderer.game_state].images[i].click_code_2);
-                    }
-                }
 
             case MotionEvent.ACTION_MOVE:
 
@@ -192,6 +202,8 @@ public class SurfaceView extends GLSurfaceView {
             return;
         }else if (c1==mRenderer.ui_graphics[mRenderer.game_state].MOVE){
             move_player(mRenderer.player.center_x+.1f*c2);
+        }else if (c1==mRenderer.ui_graphics[mRenderer.game_state].PAUSE_MENU){
+            mRenderer.request_pause_menu(c2);
         }
 
     }
