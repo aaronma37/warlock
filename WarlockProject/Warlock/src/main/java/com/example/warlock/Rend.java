@@ -117,9 +117,8 @@ public class Rend implements GLSurfaceView.Renderer {
     public GeneralGraphic text_box;
 
     public Environment_Data env;
+    public UI_Umbrella ui_umbrella;
 
-    public UI_Graphics ui_graphics[] = new UI_Graphics[10];
-    public UI_Graphics pause_graphics[] = new UI_Graphics[10];
     public Cont_Font font_1;
     public Text_Collection text_collection,pause_text_collection;
     private List<Hard_Text> active_text = new ArrayList<>();
@@ -196,16 +195,15 @@ public class Rend implements GLSurfaceView.Renderer {
         font_1 = new Cont_Font(context,0);
         text_box = new GeneralGraphic(context,18);
 
+        ui_umbrella= new UI_Umbrella(context);
+
         text_collection=new Text_Collection(context);
         pause_text_collection = new Text_Collection(context);
 
         player = new Person("Aaron", -.5f, GROUND_LEVEL, context);
         luke = new Person("Luke", .5f, GROUND_LEVEL, context);
 
-        for (int i=0;i<10;i++){
-            ui_graphics[i] = new UI_Graphics(context,i);
-            pause_graphics[i]=new UI_Graphics(context,i+10);
-        }
+
 
 
         for (int i=0;i<5;i++){
@@ -382,12 +380,8 @@ public class Rend implements GLSurfaceView.Renderer {
             draw_explore();
         }
 
-        if (pause_state==0){
-            draw_ui(game_state);
-        }else{
-            draw_pause_ui(pause_state);
-        }
 
+        draw_ui();
     }
 
 
@@ -501,47 +495,10 @@ public class Rend implements GLSurfaceView.Renderer {
             player.DrawSelf(scratch,mMVPMatrix,zeroRotationMatrix);
         }
 
-    public void update_ui_image(int k, int i){
-        if (ui_graphics[k].images[i].trigger==0){
-            return;
-        }else if (ui_graphics[k].images[i].trigger==1){
-            //Button press
-            return;
-        }else if (ui_graphics[k].images[i].trigger==2){
-            //HP
-            ui_graphics[k].images[i].width = player.health/450f;
-            return;
-        }
-    }
-
-    public void draw_ui(int k){
-        for (int i=0;i<ui_graphics[k].number_of_images;i++){
-
-            update_ui_image(k,i);
-
-            Matrix.multiplyMM(scratch, 0, mMVPMatrix2, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, ui_graphics[k].images[i].x, ui_graphics[k].images[i].y, 1f);
-            Matrix.scaleM(scratch, 0, ui_graphics[k].images[i].width,ui_graphics[k].images[i].height,1f);
-            ui_graphics[k].Draw(scratch, false, i);
-        }
-
-        text_collection.draw_text(scratch,mMVPMatrix2,zeroRotationMatrix);
-    }
 
 
-    public void draw_pause_ui(int k){
-        for (int i=0;i<pause_graphics[k].number_of_images;i++){
-            Matrix.multiplyMM(scratch, 0, mMVPMatrix2, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, pause_graphics[k].images[i].x, pause_graphics[k].images[i].y, 1f);
-            Matrix.scaleM(scratch, 0, pause_graphics[k].images[i].width,pause_graphics[k].images[i].height,1f);
-            pause_graphics[k].Draw(scratch, false, i);
-        }
-
-        if (pause_graphics[k].char_loadout==1){
-            player.DrawSelf_fixed_location(scratch,mMVPMatrix2,zeroRotationMatrix,pause_graphics[0].PAUSE_MENU_PLAYER_LOADOUT_X,pause_graphics[0].PAUSE_MENU_PLAYER_LOADOUT_Y);
-        }
-
-        pause_text_collection.draw_text(scratch,mMVPMatrix2,zeroRotationMatrix);
+    public void draw_ui(){
+        ui_umbrella.draw_ui(game_state,pause_state,scratch,mMVPMatrix2,zeroRotationMatrix, player,text_collection,pause_text_collection);
     }
 
 
@@ -816,8 +773,8 @@ public class Rend implements GLSurfaceView.Renderer {
     }
 
     public void request_pause_menu(int k){
-        for (int i = 0; i < pause_graphics[pause_state].text_index_list.size();i++){
-            pause_text_collection.remove_to_active_text(pause_graphics[pause_state].text_index_list.get(i));
+        for (int i = 0; i < ui_umbrella.pause_graphics[pause_state].text_index_list.size();i++){
+            pause_text_collection.remove_to_active_text(ui_umbrella.pause_graphics[pause_state].text_index_list.get(i));
         }
             pause_state=k;
         if (k==1){
@@ -832,8 +789,8 @@ public class Rend implements GLSurfaceView.Renderer {
 
 
 
-        for (int i = 0; i < pause_graphics[pause_state].text_index_list.size();i++){
-            pause_text_collection.add_to_active_text(pause_graphics[pause_state].text_index_list.get(i));
+        for (int i = 0; i < ui_umbrella.pause_graphics[pause_state].text_index_list.size();i++){
+            pause_text_collection.add_to_active_text(ui_umbrella.pause_graphics[pause_state].text_index_list.get(i));
         }
     }
 

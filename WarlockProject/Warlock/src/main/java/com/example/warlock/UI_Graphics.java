@@ -40,6 +40,8 @@ public class UI_Graphics
     public int s;
 
     private float PAUSE_MENU_BORDER_SIZE=.01f;
+    private float PAUSE_MENU_ITEM_BORDER_SIZE=.1f;
+
 
     private float PAUSE_MENU_WIDTH=1.6f;
     private float PAUSE_MENU_HEIGHT=.8f;
@@ -70,6 +72,17 @@ public class UI_Graphics
     private float PAUSE_MENU_RIGHT_LOWER_QUAD_HEIGHT=PAUSE_MENU_HEIGHT/2f-PAUSE_MENU_BORDER_SIZE;
     private float PAUSE_MENU_RIGHT_LOWER_QUAD_X=PAUSE_MENU_X-PAUSE_MENU_RIGHT_QUAD_WIDTH-PAUSE_MENU_BORDER_SIZE;
     private float PAUSE_MENU_RIGHT_LOWER_QUAD_Y=PAUSE_MENU_Y-PAUSE_MENU_HEIGHT+PAUSE_MENU_RIGHT_QUAD_HEIGHT+PAUSE_MENU_BORDER_SIZE;
+
+    public float PAUSE_MENU_ITEM_PORTRAIT_WIDTH=.2f-PAUSE_MENU_ITEM_BORDER_SIZE;
+    public float PAUSE_MENU_ITEM_PORTRAIT_HEIGHT=.2f-PAUSE_MENU_ITEM_BORDER_SIZE;
+    public float PAUSE_MENU_ITEM_PORTRAIT_X=PAUSE_MENU_LEFT_HALF_X+PAUSE_MENU_LEFT_HALF_WIDTH-PAUSE_MENU_ITEM_PORTRAIT_WIDTH-PAUSE_MENU_ITEM_BORDER_SIZE;
+    public float PAUSE_MENU_ITEM_PORTRAIT_Y=PAUSE_MENU_LEFT_HALF_Y+PAUSE_MENU_LEFT_HALF_HEIGHT-PAUSE_MENU_ITEM_PORTRAIT_HEIGHT-PAUSE_MENU_ITEM_BORDER_SIZE;
+    public float PAUSE_MENU_ITEM_X_DELTA=.3f;
+    public float PAUSE_MENU_ITEM_Y_DELTA=.3f;
+
+    public int num_show_items=0;
+
+
 
     public float PAUSE_MENU_PLAYER_LOADOUT_X=-PAUSE_MENU_WIDTH/2f;
     public float PAUSE_MENU_PLAYER_LOADOUT_Y=PAUSE_MENU_HEIGHT/2.3f;
@@ -232,6 +245,7 @@ public class UI_Graphics
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_RIGHT_LOWER_QUAD_WIDTH, PAUSE_MENU_RIGHT_LOWER_QUAD_HEIGHT,PAUSE_MENU_RIGHT_LOWER_QUAD_Y,PAUSE_MENU_RIGHT_LOWER_QUAD_X,NOTHING,NOTHING,NOTHING);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_LEFT_HALF_WIDTH, PAUSE_MENU_LEFT_HALF_HEIGHT,PAUSE_MENU_LEFT_HALF_Y,PAUSE_MENU_LEFT_HALF_X,NOTHING,NOTHING,NOTHING);number_of_images++;
 
+            num_show_items=10;
             char_loadout=1;
         }else if (k==13){
             //Pause screen
@@ -310,6 +324,9 @@ public class UI_Graphics
         //Disable Vertex Array
         GLES20.glDisableVertexAttribArray(mPositionHandle);
 
+        for (int i=0;i<num_show_items;i++){
+
+        }
 
     }
 

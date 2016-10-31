@@ -114,15 +114,15 @@ public class SurfaceView extends GLSurfaceView {
 
                     //UI
 
-                    for (int i=0;i<mRenderer.ui_graphics[mRenderer.game_state].number_of_images;i++){
-                        if (checkClick(modded_x,modded_y,mRenderer.ui_graphics[mRenderer.game_state].images[i].width,mRenderer.ui_graphics[mRenderer.game_state].images[i].height, mRenderer.ui_graphics[mRenderer.game_state].images[i].x,mRenderer.ui_graphics[mRenderer.game_state].images[i].y,0)){
-                            click_code(mRenderer.ui_graphics[mRenderer.game_state].images[i].click_code_1, mRenderer.ui_graphics[mRenderer.game_state].images[i].click_code_2);
+                    for (int i=0;i<mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].number_of_images;i++){
+                        if (checkClick(modded_x,modded_y,mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].images[i].width,mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].images[i].height, mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].images[i].x,mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].images[i].y,0)){
+                            click_code(mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].images[i].click_code_1, mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].images[i].click_code_2);
                         }
                     }
                 }else{
-                    for (int i=0;i<mRenderer.pause_graphics[mRenderer.pause_state].number_of_images;i++){
-                        if (checkClick(modded_x,modded_y,mRenderer.pause_graphics[mRenderer.pause_state].images[i].width,mRenderer.pause_graphics[mRenderer.pause_state].images[i].height, mRenderer.pause_graphics[mRenderer.pause_state].images[i].x,mRenderer.pause_graphics[mRenderer.pause_state].images[i].y,0)){
-                            click_code(mRenderer.pause_graphics[mRenderer.pause_state].images[i].click_code_1, mRenderer.pause_graphics[mRenderer.pause_state].images[i].click_code_2);
+                    for (int i=0;i<mRenderer.ui_umbrella.pause_graphics[mRenderer.pause_state].number_of_images;i++){
+                        if (checkClick(modded_x,modded_y,mRenderer.ui_umbrella.pause_graphics[mRenderer.pause_state].images[i].width,mRenderer.ui_umbrella.pause_graphics[mRenderer.pause_state].images[i].height, mRenderer.ui_umbrella.pause_graphics[mRenderer.pause_state].images[i].x,mRenderer.ui_umbrella.pause_graphics[mRenderer.pause_state].images[i].y,0)){
+                            click_code(mRenderer.ui_umbrella.pause_graphics[mRenderer.pause_state].images[i].click_code_1, mRenderer.ui_umbrella.pause_graphics[mRenderer.pause_state].images[i].click_code_2);
                         }
                     }
                 }
@@ -174,10 +174,10 @@ public class SurfaceView extends GLSurfaceView {
     public void click_code(int c1, int c2){
 
 
-        if (c1==mRenderer.ui_graphics[0].NOTHING){
+        if (c1==mRenderer.ui_umbrella.ui_graphics[0].NOTHING){
             //Do nothing
             return;
-        }else if (c1==mRenderer.ui_graphics[0].COMMAND_SEAL){
+        }else if (c1==mRenderer.ui_umbrella.ui_graphics[0].COMMAND_SEAL){
             //Command spirit summon:
 
             mRenderer.command_spirit(c2);
@@ -186,23 +186,23 @@ public class SurfaceView extends GLSurfaceView {
 
             vibrator.vibrate(200);
             return;
-        }else if (c1==mRenderer.ui_graphics[0].REWARD){
+        }else if (c1==mRenderer.ui_umbrella.ui_graphics[0].REWARD){
             mRenderer.reward_event(1);
             vibrator.vibrate(200);
             return;
-        }else if (c1==mRenderer.ui_graphics[0].START){
+        }else if (c1==mRenderer.ui_umbrella.ui_graphics[0].START){
             mRenderer.game_state=c2;
             System.out.println("C2: "+c2);
-            if (c2==mRenderer.ui_graphics[0].BATTLE){
+            if (c2==mRenderer.ui_umbrella.ui_graphics[0].BATTLE){
                 mRenderer.enterArena();
-            }else if (c2==mRenderer.ui_graphics[0].START_SCREEN)
+            }else if (c2==mRenderer.ui_umbrella.ui_graphics[0].START_SCREEN)
                 mRenderer.text_collection.add_to_active_text(0);
             vibrator.vibrate(200);
             mRenderer.text_collection.active_text.clear();
             return;
-        }else if (c1==mRenderer.ui_graphics[mRenderer.game_state].MOVE){
+        }else if (c1==mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].MOVE){
             move_player(mRenderer.player.center_x+.1f*c2);
-        }else if (c1==mRenderer.ui_graphics[mRenderer.game_state].PAUSE_MENU){
+        }else if (c1==mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].PAUSE_MENU){
             mRenderer.request_pause_menu(c2);
         }
 
