@@ -48,8 +48,18 @@ public class UI_Umbrella {
         }
     }
 
-    public void select_item(int i){
-        items.selected_item=items.item_info[i];
+    public void select_item(int i,Text_Collection pause_text_collection){
+        items.selected_item.index=items.inventory[i].index;
+
+        pause_text_collection.text[21].str=Float.toString(items.item_info[items.selected_item.index].attributes[0]);
+        pause_text_collection.text[23].str=Float.toString(items.item_info[items.selected_item.index].attributes[1]);
+        pause_text_collection.text[25].str=Float.toString(items.item_info[items.selected_item.index].attributes[2]);
+        pause_text_collection.text[27].str=Float.toString(items.item_info[items.selected_item.index].attributes[3]);
+
+    }
+
+    public void equip_selected(){
+        items.equip(items.selected_item.index);
     }
 
 
@@ -81,11 +91,11 @@ public class UI_Umbrella {
             }
             if (pause_graphics[pause_state].num_show_items>0){
                 for (int i=0;i<pause_graphics[pause_state].num_show_items;i++){
-                    items.draw_portrait(S, M, Z, item_x[i], item_y[i],pause_graphics[0].PAUSE_MENU_ITEM_PORTRAIT_WIDTH,1f,items.item_info[0]);
+                    items.draw_portrait(S, M, Z, item_x[i], item_y[i],pause_graphics[0].PAUSE_MENU_ITEM_PORTRAIT_WIDTH,1f,items.item_info[items.inventory[i].index]);
                 }
             }
             if (pause_graphics[pause_state].item_loadout){
-                player.items.draw_portrait(S,M,Z,pause_graphics[0].PAUSE_MENU_ITEM_LOADOUT_X,pause_graphics[0].PAUSE_MENU_ITEM_LOADOUT_Y,pause_graphics[0].PAUSE_MENU_ITEM_LOADOUT_WIDTH,1f,items.selected_item);
+                items.draw_portrait(S,M,Z,pause_graphics[0].PAUSE_MENU_ITEM_LOADOUT_X,pause_graphics[0].PAUSE_MENU_ITEM_LOADOUT_Y,pause_graphics[0].PAUSE_MENU_ITEM_LOADOUT_WIDTH,1f,items.item_info[items.selected_item.index]);
             }
             pause_text_collection.draw_text(S,M,Z);
 

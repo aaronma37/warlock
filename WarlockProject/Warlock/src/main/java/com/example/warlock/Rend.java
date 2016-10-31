@@ -778,7 +778,7 @@ public class Rend implements GLSurfaceView.Renderer {
         }
             pause_state=k;
         if (k==1){
-            player.items.recalculate_attributes(player.spirit);
+            ui_umbrella.items.recalculate_attributes(player.spirit);
 
             pause_text_collection.text[21].str=Integer.toString(player.spirit[0].attribute);
             pause_text_collection.text[23].str=Integer.toString(player.spirit[1].attribute);

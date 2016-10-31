@@ -19,7 +19,7 @@ public class UI_Graphics
 {
     //Reference to Activity Context
     private final Context mActivityContext;
-    public int COMMAND_SEAL=1,NOTHING=0,REWARD=2, START=3, MOVE=4, PAUSE_MENU=5, SELECT_ITEM=6;
+    public int COMMAND_SEAL=1,NOTHING=0,REWARD=2, START=3, MOVE=4, PAUSE_MENU=5, SELECT_ITEM=6, EQUIP_ITEM=7;
 
     public int BUTTON=1,ADAPTIVE=2;
 
@@ -73,6 +73,11 @@ public class UI_Graphics
     private float PAUSE_MENU_RIGHT_LOWER_QUAD_HEIGHT=PAUSE_MENU_HEIGHT/2f-PAUSE_MENU_BORDER_SIZE;
     private float PAUSE_MENU_RIGHT_LOWER_QUAD_X=PAUSE_MENU_X-PAUSE_MENU_RIGHT_QUAD_WIDTH-PAUSE_MENU_BORDER_SIZE;
     private float PAUSE_MENU_RIGHT_LOWER_QUAD_Y=PAUSE_MENU_Y-PAUSE_MENU_HEIGHT+PAUSE_MENU_RIGHT_QUAD_HEIGHT+PAUSE_MENU_BORDER_SIZE;
+
+    private float EQUIP_BUTTON_WIDTH=.2f;
+    private float EQUIP_BUTTON_HEIGHT=.2f;
+    private float EQUIP_BUTTON_X=PAUSE_MENU_X-.25f;
+    private float EQUIP_BUTTON_Y=PAUSE_MENU_Y+.25f;
 
     public float PAUSE_MENU_ITEM_PORTRAIT_WIDTH=.2f-PAUSE_MENU_ITEM_BORDER_SIZE;
     public float PAUSE_MENU_ITEM_PORTRAIT_HEIGHT=.2f-PAUSE_MENU_ITEM_BORDER_SIZE;
@@ -250,6 +255,13 @@ public class UI_Graphics
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_RIGHT_QUAD_WIDTH, PAUSE_MENU_RIGHT_QUAD_HEIGHT,PAUSE_MENU_RIGHT_QUAD_Y,PAUSE_MENU_RIGHT_QUAD_X,NOTHING,NOTHING,NOTHING);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_RIGHT_LOWER_QUAD_WIDTH, PAUSE_MENU_RIGHT_LOWER_QUAD_HEIGHT,PAUSE_MENU_RIGHT_LOWER_QUAD_Y,PAUSE_MENU_RIGHT_LOWER_QUAD_X,NOTHING,NOTHING,NOTHING);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_LEFT_HALF_WIDTH, PAUSE_MENU_LEFT_HALF_HEIGHT,PAUSE_MENU_LEFT_HALF_Y,PAUSE_MENU_LEFT_HALF_X,SELECT_ITEM,NOTHING,NOTHING);number_of_images++;
+
+            for (int i=20;i<28;i++){
+                text_index_list.add(i);
+            }
+
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.red_box),EQUIP_BUTTON_WIDTH, EQUIP_BUTTON_HEIGHT,EQUIP_BUTTON_Y,EQUIP_BUTTON_X,EQUIP_ITEM,NOTHING,NOTHING);number_of_images++;
+
 
             num_show_items=10;
             item_loadout=true;

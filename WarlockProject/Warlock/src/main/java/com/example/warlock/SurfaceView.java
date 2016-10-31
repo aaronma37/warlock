@@ -209,14 +209,18 @@ public class SurfaceView extends GLSurfaceView {
         }else if (c1==mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].SELECT_ITEM){
             select_item(x,y);
             return;
+        }else if (c1==mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].EQUIP_ITEM){
+            mRenderer.ui_umbrella.equip_selected();
+            return;
         }
 
     }
     public void select_item(float x, float y){
-        System.out.println("CHECKING");
         for (int i=0;i<mRenderer.ui_umbrella.INVENTORY_SIZE;i++){
             if (checkClick(x,y,mRenderer.ui_umbrella.pause_graphics[0].PAUSE_MENU_ITEM_PORTRAIT_WIDTH,mRenderer.ui_umbrella.pause_graphics[0].PAUSE_MENU_ITEM_PORTRAIT_HEIGHT,mRenderer.ui_umbrella.item_x[i],mRenderer.ui_umbrella.item_y[i],0)){
-                mRenderer.ui_umbrella.select_item(0);
+                mRenderer.ui_umbrella.select_item(i,mRenderer.pause_text_collection);
+                System.out.println("found" + i);
+
                 return;
             }
         }
