@@ -1,5 +1,6 @@
 package com.example.warlock;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.pm.LabeledIntent;
 import android.graphics.Bitmap;
@@ -20,27 +21,56 @@ public class Items {
 
     public Item_Info item_info[] = new Item_Info[5];
     public int hi=0;
-
+    private int NUMBER_OF_ATTRIBUTES=4;
+    private int NUMBER_OF_EQUIPMENT_SLOTS=5;
+    public Item_Info equipped[]= new Item_Info[5];
+    public Item_Info selected_item;
 
 
 
     public Items(Context context){
 
         myContext=context;
-        item_info[hi]  = new Item_Info(myContext, loadTexture(myContext, R.drawable.f_body_2_portrait),1f,.15f, 0,0);hi++;
 
+        equipped[0]= new Item_Info(myContext, loadTexture(myContext, R.drawable.pause_box),1f,.15f, 0,0,0,0,0,0,0);
+        equipped[1]= new Item_Info(myContext, loadTexture(myContext, R.drawable.pause_box),1f,.15f, 0,0,0,0,0,0,1);
+        equipped[2]= new Item_Info(myContext, loadTexture(myContext, R.drawable.pause_box),1f,.15f, 0,0,0,0,0,0,2);
+        equipped[3]= new Item_Info(myContext, loadTexture(myContext, R.drawable.pause_box),1f,.15f, 0,0,0,0,0,0,3);
+        equipped[4]= new Item_Info(myContext, loadTexture(myContext, R.drawable.pause_box),1f,.15f, 0,0,0,0,0,0,4);
+
+        selected_item= new Item_Info(myContext, loadTexture(myContext, R.drawable.pause_box),1f,.15f, 0,0,0,0,0,0,0);
+
+
+
+        item_info[hi]  = new Item_Info(myContext, loadTexture(myContext, R.drawable.f_body_2_portrait),1f,.15f, 0,0,1,0,0,0,0);hi++;
+        item_info[hi]  = new Item_Info(myContext, loadTexture(myContext, R.drawable.f_body_1),1f,.15f, 0,0,1,0,0,0,0);hi++;
+        item_info[hi]  = new Item_Info(myContext, loadTexture(myContext, R.drawable.f_body_2),1f,.15f, 0,0,1,0,0,0,0);hi++;
+
+
+
+    }
+
+    public void recalculate_attributes(Spirit[] spirit){
+        for (int i =0;i<NUMBER_OF_ATTRIBUTES;i++){
+            spirit[i].attribute=0;
+            //body slot
+            for (int j=0;j<NUMBER_OF_EQUIPMENT_SLOTS;j++){
+                spirit[i].attribute+=equipped[j].attributes[i];
+            }
+            spirit[i].setAvailableOffensiveActionSpace();
+        }
     }
 
 
 
 
 
-    public void draw_portrait(float[] S, float[] M, float[] Z, float x, float y, float size, float AR, int item_index){
+    public void draw_portrait(float[] S, float[] M, float[] Z, float x, float y, float size, float AR, Item_Info i){
         Matrix.multiplyMM(S, 0, M, 0, Z, 0);
-        Matrix.translateM(S, 0, x+item_info[item_index].x,  y+item_info[item_index].y, 1f);
+        Matrix.translateM(S, 0, x+i.x,  y+i.y, 1f);
         Matrix.scaleM(S, 0, size, size*AR,.5f);
         Matrix.rotateM(S, 0, 0, 0, 1f, 0);
-        item_info[item_index].Draw(S,false);
+        i.Draw(S,false);
     }
 
     public static int loadTexture(final Context context, final int resourceId) {

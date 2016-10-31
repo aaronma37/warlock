@@ -19,12 +19,13 @@ public class UI_Graphics
 {
     //Reference to Activity Context
     private final Context mActivityContext;
-    public int COMMAND_SEAL=1,NOTHING=0,REWARD=2, START=3, MOVE=4, PAUSE_MENU=5;
+    public int COMMAND_SEAL=1,NOTHING=0,REWARD=2, START=3, MOVE=4, PAUSE_MENU=5, SELECT_ITEM=6;
 
     public int BUTTON=1,ADAPTIVE=2;
 
     public int BATTLE=0, START_SCREEN=1, SECONDARY_SCREEN=2, DUNGEON=3, DUNGEONS_LEVEL=4;
     public int char_loadout=0;
+    public boolean item_loadout=false;
     //Added for Textures
     private final FloatBuffer mCubeTextureCoordinates;
     private int mTextureUniformHandle;
@@ -79,6 +80,11 @@ public class UI_Graphics
     public float PAUSE_MENU_ITEM_PORTRAIT_Y=PAUSE_MENU_LEFT_HALF_Y+PAUSE_MENU_LEFT_HALF_HEIGHT-PAUSE_MENU_ITEM_PORTRAIT_HEIGHT-PAUSE_MENU_ITEM_BORDER_SIZE;
     public float PAUSE_MENU_ITEM_X_DELTA=.3f;
     public float PAUSE_MENU_ITEM_Y_DELTA=.3f;
+
+    public float PAUSE_MENU_ITEM_LOADOUT_WIDTH=.25f;
+    public float PAUSE_MENU_ITEM_LOADOUT_HEIGHT=.25f;
+    public float PAUSE_MENU_ITEM_LOADOUT_X=-PAUSE_MENU_WIDTH/2f;
+    public float PAUSE_MENU_ITEM_LOADOUT_Y=PAUSE_MENU_HEIGHT/2.3f;
 
     public int num_show_items=0;
 
@@ -243,10 +249,10 @@ public class UI_Graphics
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_EXIT_BAR_WIDTH, PAUSE_MENU_EXIT_BAR_HEIGHT,PAUSE_MENU_EXIT_BAR_Y,PAUSE_MENU_EXIT_BAR_X,PAUSE_MENU,1,NOTHING);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_RIGHT_QUAD_WIDTH, PAUSE_MENU_RIGHT_QUAD_HEIGHT,PAUSE_MENU_RIGHT_QUAD_Y,PAUSE_MENU_RIGHT_QUAD_X,NOTHING,NOTHING,NOTHING);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_RIGHT_LOWER_QUAD_WIDTH, PAUSE_MENU_RIGHT_LOWER_QUAD_HEIGHT,PAUSE_MENU_RIGHT_LOWER_QUAD_Y,PAUSE_MENU_RIGHT_LOWER_QUAD_X,NOTHING,NOTHING,NOTHING);number_of_images++;
-            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_LEFT_HALF_WIDTH, PAUSE_MENU_LEFT_HALF_HEIGHT,PAUSE_MENU_LEFT_HALF_Y,PAUSE_MENU_LEFT_HALF_X,NOTHING,NOTHING,NOTHING);number_of_images++;
+            images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_LEFT_HALF_WIDTH, PAUSE_MENU_LEFT_HALF_HEIGHT,PAUSE_MENU_LEFT_HALF_Y,PAUSE_MENU_LEFT_HALF_X,SELECT_ITEM,NOTHING,NOTHING);number_of_images++;
 
             num_show_items=10;
-            char_loadout=1;
+            item_loadout=true;
         }else if (k==13){
             //Pause screen
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box), PAUSE_MENU_WIDTH, PAUSE_MENU_HEIGHT,PAUSE_MENU_Y,PAUSE_MENU_X,NOTHING,NOTHING,NOTHING);number_of_images++;
@@ -323,10 +329,6 @@ public class UI_Graphics
 
         //Disable Vertex Array
         GLES20.glDisableVertexAttribArray(mPositionHandle);
-
-        for (int i=0;i<num_show_items;i++){
-
-        }
 
     }
 

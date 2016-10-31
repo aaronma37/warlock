@@ -29,7 +29,6 @@ public class Item_Info
     public boolean active=false;
     public int s;
 
-
     private final String vertexShaderCode =
 //Test
             "attribute vec2 a_TexCoordinate;" +
@@ -66,6 +65,8 @@ public class Item_Info
     public float size;
     public float x_off;
     public float y_off;
+    public float attributes[] = new float[4];
+    public int slot;
 
 
     // number of coordinates per vertex in this array
@@ -82,8 +83,15 @@ public class Item_Info
     // Set color with red, green, blue and alpha (opacity) values
     float color[] = { 1f, 1f, 1f, 1f };
 
-    public Item_Info(final Context activityContext, int k, float i_AR, float i_size, float i_x_off, float i_y_off)
+    public Item_Info(final Context activityContext, int k, float i_AR, float i_size, float i_x_off, float i_y_off, float a1, float a2, float a3, float a4, int i_slot)
     {
+        attributes[0]=a1;
+        attributes[1]=a2;
+        attributes[2]=a3;
+        attributes[3]=a4;
+
+        slot=i_slot;
+
         AR=i_AR;
         size=i_size;
         x_off=i_x_off;
@@ -199,6 +207,9 @@ public class Item_Info
         mTextureDataHandle = k;
         selectedTextureDataHandle=k;
     }
+
+
+
 
 
     public void Draw(float[] mvpMatrix, boolean k)

@@ -116,13 +116,13 @@ public class SurfaceView extends GLSurfaceView {
 
                     for (int i=0;i<mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].number_of_images;i++){
                         if (checkClick(modded_x,modded_y,mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].images[i].width,mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].images[i].height, mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].images[i].x,mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].images[i].y,0)){
-                            click_code(mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].images[i].click_code_1, mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].images[i].click_code_2);
+                            click_code(mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].images[i].click_code_1, mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].images[i].click_code_2,modded_x,modded_y);
                         }
                     }
                 }else{
                     for (int i=0;i<mRenderer.ui_umbrella.pause_graphics[mRenderer.pause_state].number_of_images;i++){
                         if (checkClick(modded_x,modded_y,mRenderer.ui_umbrella.pause_graphics[mRenderer.pause_state].images[i].width,mRenderer.ui_umbrella.pause_graphics[mRenderer.pause_state].images[i].height, mRenderer.ui_umbrella.pause_graphics[mRenderer.pause_state].images[i].x,mRenderer.ui_umbrella.pause_graphics[mRenderer.pause_state].images[i].y,0)){
-                            click_code(mRenderer.ui_umbrella.pause_graphics[mRenderer.pause_state].images[i].click_code_1, mRenderer.ui_umbrella.pause_graphics[mRenderer.pause_state].images[i].click_code_2);
+                            click_code(mRenderer.ui_umbrella.pause_graphics[mRenderer.pause_state].images[i].click_code_1, mRenderer.ui_umbrella.pause_graphics[mRenderer.pause_state].images[i].click_code_2,modded_x,modded_y);
                         }
                     }
                 }
@@ -171,7 +171,7 @@ public class SurfaceView extends GLSurfaceView {
         mRenderer.player.jump_request(destination_x, destination_y);
     }
 
-    public void click_code(int c1, int c2){
+    public void click_code(int c1, int c2,float x, float y){
 
 
         if (c1==mRenderer.ui_umbrella.ui_graphics[0].NOTHING){
@@ -202,10 +202,24 @@ public class SurfaceView extends GLSurfaceView {
             return;
         }else if (c1==mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].MOVE){
             move_player(mRenderer.player.center_x+.1f*c2);
+            return;
         }else if (c1==mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].PAUSE_MENU){
             mRenderer.request_pause_menu(c2);
+            return;
+        }else if (c1==mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].SELECT_ITEM){
+            select_item(x,y);
+            return;
         }
 
+    }
+    public void select_item(float x, float y){
+        System.out.println("CHECKING");
+        for (int i=0;i<mRenderer.ui_umbrella.INVENTORY_SIZE;i++){
+            if (checkClick(x,y,mRenderer.ui_umbrella.pause_graphics[0].PAUSE_MENU_ITEM_PORTRAIT_WIDTH,mRenderer.ui_umbrella.pause_graphics[0].PAUSE_MENU_ITEM_PORTRAIT_HEIGHT,mRenderer.ui_umbrella.item_x[i],mRenderer.ui_umbrella.item_y[i],0)){
+                mRenderer.ui_umbrella.select_item(0);
+                return;
+            }
+        }
     }
 
 

@@ -15,7 +15,7 @@ public class Person {
     private final int DEFENSE_SPACE_SIZE=15;
     private static int NUMBER_OF_SPIRITS=10;
     private static int NUMBER_OF_EQUIPMENT_SLOTS=3;
-    private static int NUMBER_OF_ATTRIBUTES=5;
+    private static int NUMBER_OF_ATTRIBUTES=4;
     private static float GRAVITY=.01f;
 
 
@@ -40,7 +40,7 @@ public class Person {
     //public Person last_target=new Person();
     public int last_spell=0;
     public float action_choose_index[]= new float[ACTION_SPACE_SIZE];
-    public Wardrobe wardrobe;
+    public Items items;
     public Person_Graphics person_graphics;
     public Context myContext;
 
@@ -79,22 +79,17 @@ public class Person {
 
 
 
-    public void recalculate_attributes(Wardrobe w){
+    public void recalculate_attributes(){
 
         //HARDCODE FOR TESTING
         spirit[0].attribute=4;
         spirit[1].attribute=2;
         spirit[2].attribute=2;
         spirit[3].attribute=2;
-        spirit[4].attribute=2;
 
-        for (int i =0;i<NUMBER_OF_ATTRIBUTES;i++){
-/*            for (int j=0;j<NUMBER_OF_EQUIPMENT_SLOTS;j++){
-                spirit[i].attribute+=w.currently_equipped[j].attributes[i];
-            }*/
-            spirit[i].setAvailableOffensiveActionSpace();
+        items.recalculate_attributes(spirit);
 
-        }
+
 
     }
 
@@ -134,10 +129,7 @@ public class Person {
 
         person_graphics = new Person_Graphics(myContext, 2,0,0,4,0);
         setAvailableOffensiveActionSpace();
-        wardrobe= new Wardrobe();
-/*        for (int i=0;i<NUMBER_OF_SPIRITS;i++){
-            spirit[i].setAvailableOffensiveActionSpace();
-        }*/
+        items = new Items(myContext);
     }
     public Person(String given_name, float start_x, float start_y, Context context, int hair_index, int face_index, int eyes_index, int body_index, int leg_index, int i_npc_action) {
         myContext=context;
@@ -176,10 +168,8 @@ public class Person {
 
         person_graphics = new Person_Graphics(myContext, hair_index,face_index,eyes_index,body_index,leg_index);
         setAvailableOffensiveActionSpace();
-        wardrobe= new Wardrobe();
-/*        for (int i=0;i<NUMBER_OF_SPIRITS;i++){
-            spirit[i].setAvailableOffensiveActionSpace();
-        }*/
+        items = new Items(myContext);
+
     }
 
 
@@ -208,8 +198,7 @@ public class Person {
         for (int i=0;i<NUMBER_OF_SPIRITS;i++){
             spirit[i].setAvailableOffensiveActionSpace();
         }
-        recalculate_attributes(wardrobe);
-
+        items.recalculate_attributes(spirit);
     }
 
     public void step_in_air(){

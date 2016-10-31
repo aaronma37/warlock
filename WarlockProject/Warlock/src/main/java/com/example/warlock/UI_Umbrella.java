@@ -1,5 +1,6 @@
 package com.example.warlock;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.opengl.Matrix;
 
@@ -17,13 +18,12 @@ public class UI_Umbrella {
     public float item_x[] = new float[INVENTORY_SIZE];
     public float item_y[] = new float[INVENTORY_SIZE];
 
-
-
     public Context myContext;
 
     public UI_Umbrella(Context context){
         myContext=context;
         items=new Items(myContext);
+
         for (int i=0;i<10;i++){
             ui_graphics[i] = new UI_Graphics(myContext,i);
             pause_graphics[i]=new UI_Graphics(myContext,i+10);
@@ -47,6 +47,11 @@ public class UI_Umbrella {
             return;
         }
     }
+
+    public void select_item(int i){
+        items.selected_item=items.item_info[i];
+    }
+
 
     public void draw_ui(int game_state, int pause_state, float[] S, float[] M, float[] Z, Person player, Text_Collection text_collection, Text_Collection pause_text_collection){
 
@@ -76,8 +81,11 @@ public class UI_Umbrella {
             }
             if (pause_graphics[pause_state].num_show_items>0){
                 for (int i=0;i<pause_graphics[pause_state].num_show_items;i++){
-                    items.draw_portrait(S, M, Z, item_x[i], item_y[i],pause_graphics[0].PAUSE_MENU_ITEM_PORTRAIT_WIDTH,1f,0);
+                    items.draw_portrait(S, M, Z, item_x[i], item_y[i],pause_graphics[0].PAUSE_MENU_ITEM_PORTRAIT_WIDTH,1f,items.item_info[0]);
                 }
+            }
+            if (pause_graphics[pause_state].item_loadout){
+                player.items.draw_portrait(S,M,Z,pause_graphics[0].PAUSE_MENU_ITEM_LOADOUT_X,pause_graphics[0].PAUSE_MENU_ITEM_LOADOUT_Y,pause_graphics[0].PAUSE_MENU_ITEM_LOADOUT_WIDTH,1f,items.selected_item);
             }
             pause_text_collection.draw_text(S,M,Z);
 
