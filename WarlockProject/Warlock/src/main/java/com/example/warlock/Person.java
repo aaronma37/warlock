@@ -82,7 +82,7 @@ public class Person {
         items.recalculate_attributes(spirit);
     }
 
-    public Person(String given_name, float start_x, float start_y, Context context) {
+    public Person(String given_name, float start_x, float start_y, Context context, Global_Assets assets) {
         myContext=context;
         npc=new NPC_Action(false);
         health=100;
@@ -116,10 +116,10 @@ public class Person {
             toCast[i]=0;
         }
 
-        person_graphics = new Person_Graphics(myContext, 2,0,0,4,0);
+        person_graphics = new Person_Graphics(myContext, 2,0,0,4,0, assets);
         setAvailableOffensiveActionSpace();
     }
-    public Person(String given_name, float start_x, float start_y, Context context, int hair_index, int face_index, int eyes_index, int body_index, int leg_index, int i_npc_action) {
+    public Person(String given_name, float start_x, float start_y, Context context, int hair_index, int face_index, int eyes_index, int body_index, int leg_index, int i_npc_action,Global_Assets assets) {
         myContext=context;
         npc=new NPC_Action(true,i_npc_action,-1,1);
 
@@ -154,7 +154,7 @@ public class Person {
             toCast[i]=0;
         }
 
-        person_graphics = new Person_Graphics(myContext, hair_index,face_index,eyes_index,body_index,leg_index);
+        person_graphics = new Person_Graphics(myContext, hair_index,face_index,eyes_index,body_index,leg_index,assets);
         setAvailableOffensiveActionSpace();
     }
 
@@ -426,8 +426,8 @@ public class Person {
 
     }
 
-    public void DrawSelf(float[] scratch, float[] mMVPMatrix, float[] zeroRotationMatrix){
-        person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,center_x,center_y,facing_direction*person_graphics.skeleton.skeleton_dir,state);
+    public void DrawSelf(float[] scratch, float[] mMVPMatrix, float[] zeroRotationMatrix, Global_Assets assets){
+        person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,center_x,center_y,facing_direction*person_graphics.skeleton.skeleton_dir,state,assets);
         if (state.state==7){
             //AFTER ACTION~~
 
@@ -447,8 +447,8 @@ public class Person {
     }
 
 
-    public void DrawSelf_fixed_location(float[] scratch, float[] mMVPMatrix, float[] zeroRotationMatrix, float i_x, float i_y){
-        person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,i_x,i_y,facing_direction*person_graphics.skeleton.skeleton_dir,state);
+    public void DrawSelf_fixed_location(float[] scratch, float[] mMVPMatrix, float[] zeroRotationMatrix, float i_x, float i_y, Global_Assets assets){
+        person_graphics.draw_person(scratch,mMVPMatrix,zeroRotationMatrix,i_x,i_y,facing_direction*person_graphics.skeleton.skeleton_dir,state,assets);
     }
 
 

@@ -18,7 +18,7 @@ public class Environment_Data {
     public Location_Data all_locations[] = new Location_Data[NUM_LOCATIONS];
 
 
-    public Environment_Data(Context context, int default_loc_index){
+    public Environment_Data(Context context, int default_loc_index, Global_Assets assets){
         myContext = context;
 
         overworld = new Overworld();
@@ -26,7 +26,7 @@ public class Environment_Data {
         //active_location = new Location_Data(myContext, overworld.location[default_loc_index]);
 
         for (int i=0;i<NUM_LOCATIONS;i++){
-            all_locations[i]=new Location_Data(myContext, overworld.location[i]);
+            all_locations[i]=new Location_Data(myContext, overworld.location[i],assets);
         }
 
 

@@ -30,6 +30,7 @@ public class Person_Graphics_Asset_Asset
     public int s;
     public float vel_x;
     public float force;
+    public Asset_Motion_Model model;
 
 
 
@@ -60,7 +61,7 @@ public class Person_Graphics_Asset_Asset
                     "}";
 
     private final int shaderProgram;
-    private FloatBuffer vertexBuffer;
+    public FloatBuffer vertexBuffer;
     private final ShortBuffer drawListBuffer;
     private int mPositionHandle;
     private int mColorHandle;
@@ -73,6 +74,7 @@ public class Person_Graphics_Asset_Asset
     public float a1,a2,a3,a4,a5;
     public float mass;
     public float drag;
+    public int order;
 
 
     // number of coordinates per vertex in this array
@@ -136,7 +138,7 @@ public class Person_Graphics_Asset_Asset
     // Set color with red, green, blue and alpha (opacity) values
     float color[] = { 1f, 1f, 1f, 1f };
 
-    public Person_Graphics_Asset_Asset(final Context activityContext, int k, float i_AR, float i_size, float i_x_off, float i_y_off, float a_1, float a_2, float a_3, float a_4, float a_5, float i_mass, float i_drag)
+    public Person_Graphics_Asset_Asset(final Context activityContext, int k, float i_AR, float i_size, float i_x_off, float i_y_off, float a_1, float a_2, float a_3, float a_4, float a_5, float i_mass, float i_drag, int i_order)
     {
         AR=i_AR;
         size=i_size;
@@ -151,6 +153,9 @@ public class Person_Graphics_Asset_Asset
         a5=a_5;
         mass=i_mass;
         drag=i_drag;
+        order=i_order;
+
+        model = new Asset_Motion_Model(a1,a2,a3,a4,a5,mass,drag);
 
         mActivityContext = activityContext;
         s = k;

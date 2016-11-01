@@ -118,6 +118,7 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public Environment_Data env;
     public UI_Umbrella ui_umbrella;
+    public Global_Assets global_assets;
 
     public Cont_Font font_1;
     public Text_Collection text_collection,pause_text_collection;
@@ -156,7 +157,6 @@ public class Rend implements GLSurfaceView.Renderer {
     public Rend(Context context1, Firebase mref) {
         context = context1;
         ref=mref;
-
     }
 
     @Override
@@ -195,13 +195,15 @@ public class Rend implements GLSurfaceView.Renderer {
         font_1 = new Cont_Font(context,0);
         text_box = new GeneralGraphic(context,18);
 
+        global_assets= new Global_Assets(context);
+
         ui_umbrella= new UI_Umbrella(context);
 
         text_collection=new Text_Collection(context);
         pause_text_collection = new Text_Collection(context);
 
-        player = new Person("Aaron", -.5f, GROUND_LEVEL, context);
-        luke = new Person("Luke", .5f, GROUND_LEVEL, context);
+        player = new Person("Aaron", -.5f, GROUND_LEVEL, context,global_assets);
+        luke = new Person("Luke", .5f, GROUND_LEVEL, context,global_assets);
 
 
 
@@ -226,7 +228,7 @@ public class Rend implements GLSurfaceView.Renderer {
             pointer[i]=0;
         }
 
-        env = new Environment_Data(context,1);
+        env = new Environment_Data(context,1,global_assets);
 
 
 
@@ -429,7 +431,7 @@ public class Rend implements GLSurfaceView.Renderer {
             }
 
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            active_people.get(i).DrawSelf(scratch,mMVPMatrix,zeroRotationMatrix);
+            active_people.get(i).DrawSelf(scratch,mMVPMatrix,zeroRotationMatrix,global_assets);
 
             if (show_info){
                 Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
@@ -489,16 +491,16 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public void draw_explore(){
         //Load stage
-        env.all_locations[env.current_location.location_index].draw_location(scratch,mMVPMatrix,zeroRotationMatrix, player.center_x,screen_x);
+        env.all_locations[env.current_location.location_index].draw_location(scratch,mMVPMatrix,zeroRotationMatrix, player.center_x,screen_x,global_assets);
 
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            player.DrawSelf(scratch,mMVPMatrix,zeroRotationMatrix);
+            player.DrawSelf(scratch,mMVPMatrix,zeroRotationMatrix,global_assets);
         }
 
 
 
     public void draw_ui(){
-        ui_umbrella.draw_ui(game_state,pause_state,scratch,mMVPMatrix2,zeroRotationMatrix, player,text_collection,pause_text_collection);
+        ui_umbrella.draw_ui(game_state,pause_state,scratch,mMVPMatrix2,zeroRotationMatrix, player,text_collection,pause_text_collection, global_assets);
     }
 
 

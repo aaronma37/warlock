@@ -30,6 +30,22 @@ public class Person_Graphics {
     public Person_Graphics_Asset upper_right_leg;
     public Person_Graphics_Asset lower_right_leg;
 
+    public int i_eye=0, num_eye_assets=0;
+    public int i_body=0, num_body_assets=0;
+    public int i_legs=0, num_legs_assets=0;
+    public int i_hair=0, num_hair_assets=0;
+    public int i_face=0, num_face_assets=0;
+
+    private int MAX_EYE_MODEL=5,MAX_BODY_MODEL=5,MAX_HAIR_MODEL=5,MAX_LEGS_MODEL=5,MAX_FACE_MODEL=5;
+
+    public Asset_Motion_Model eye_motion_model[] = new Asset_Motion_Model[MAX_EYE_MODEL];
+    public Asset_Motion_Model body_motion_model[] = new Asset_Motion_Model[MAX_BODY_MODEL];
+    public Asset_Motion_Model hair_motion_model[] = new Asset_Motion_Model[MAX_HAIR_MODEL];
+    public Asset_Motion_Model legs_motion_model[] = new Asset_Motion_Model[MAX_LEGS_MODEL];
+    public Asset_Motion_Model face_motion_model[] = new Asset_Motion_Model[MAX_FACE_MODEL];
+
+
+
     public Skeleton skeleton;
 
     public Context myContext;
@@ -50,13 +66,38 @@ public class Person_Graphics {
 
 
 
-    public Person_Graphics(Context context, int hair_index, int face_index, int eyes_index, int body_index, int leg_index){
+    public Person_Graphics(Context context, int hair_index, int face_index, int eyes_index, int body_index, int leg_index, Global_Assets assets){
 
         myContext=context;
+
+        i_eye=eyes_index;
+        i_body=body_index;
+        i_legs=leg_index;
+        i_hair=hair_index;
+        i_face=face_index;
+
+        for (int i =0;i<MAX_EYE_MODEL;i++){
+            eye_motion_model[i]= new Asset_Motion_Model(0,0,0,0,0,0,0);
+        }
+        for (int i =0;i<MAX_BODY_MODEL;i++){
+            body_motion_model[i]= new Asset_Motion_Model(0,0,0,0,0,0,0);
+        }
+        for (int i =0;i<MAX_HAIR_MODEL;i++){
+            hair_motion_model[i]= new Asset_Motion_Model(0,0,0,0,0,0,0);
+        }
+        for (int i =0;i<MAX_LEGS_MODEL;i++){
+            legs_motion_model[i]= new Asset_Motion_Model(0,0,0,0,0,0,0);
+        }
+        for (int i =0;i<MAX_FACE_MODEL;i++){
+            face_motion_model[i]= new Asset_Motion_Model(0,0,0,0,0,0,0);
+        }
+
+
 
         skeleton = new Skeleton();
 
         set_non_sprite_movements();
+/*
 
         if (face_index==0){
             face = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_head1), 1f,1.3f*ADJ_SCALE*44.826f/1000,ADJ_SCALE*.021f,ADJ_SCALE*-.008f);
@@ -184,7 +225,46 @@ public class Person_Graphics {
             upper_right_leg = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_legs_1), 75f/50f ,ADJ_SCALE*90.366f/1000, 1f/3f, 2f/3f, 0f, .5f);
             lower_right_leg = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_legs_1), 75f/50f ,ADJ_SCALE*90.366f/1000, 1f/3f, 2f/3f, .5f, 1f);
         }
+*/
 
+        justify_number_of_assets(assets);
+    }
+
+    public void justify_number_of_assets(Global_Assets assets){
+        num_eye_assets=assets.equipment_assets_Eyes[i_eye].dynamic_asset_number;
+        for (int i =0;i<num_eye_assets;i++){
+            eye_motion_model[i]=assets.equipment_assets_Eyes[i_eye].dynamic_assets.get(i).model;
+        }
+
+        num_body_assets=assets.equipment_assets_body[i_body].dynamic_asset_number;
+        for (int i =0;i<num_body_assets;i++){
+            body_motion_model[i]=assets.equipment_assets_body[i_body].dynamic_assets.get(i).model;
+        }
+
+        num_hair_assets=assets.equipment_assets_Hair[i_hair].dynamic_asset_number;
+        for (int i =0;i<num_hair_assets;i++){
+            hair_motion_model[i]= assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).model;
+        }
+
+        num_legs_assets=assets.equipment_assets_legs[i_legs].dynamic_asset_number;
+        for (int i =0;i<num_legs_assets;i++){
+            legs_motion_model[i]= assets.equipment_assets_legs[i_legs].dynamic_assets.get(i).model;
+        }
+
+        num_face_assets=assets.equipment_assets_Face[i_face].dynamic_asset_number;
+        for (int i =0;i<num_face_assets;i++){
+            face_motion_model[i]= assets.equipment_assets_Face[i_face].dynamic_assets.get(i).model;
+        }
+    }
+
+    public void set_equipment_indices(int eye_index, int hair_index, int body_index, int leg_index, int face_index, Global_Assets assets){
+        i_eye=eye_index;
+        i_body=body_index;
+        i_legs=leg_index;
+        i_hair=hair_index;
+        i_face=face_index;
+
+        justify_number_of_assets(assets);
     }
 
     public void set_non_sprite_movements(){
@@ -229,17 +309,21 @@ public class Person_Graphics {
 
         set_body_sprite(state);
 
-        if (state==3){
-            for (int i =0; i<pre_hair_assets.size();i++){
-                pre_hair_assets.get(i).add_force(x_movement,dir);
+        if (state==3 || state==4){
+            for (int i =0; i<num_hair_assets;i++){
+                hair_motion_model[i].add_force(x_movement,dir);
+                //pre_hair_assets.get(i).add_force(x_movement,dir);
 
             }
-            for (int i =0; i<post_hair_assets.size();i++){
+/*            for (int i =0; i<post_hair_assets.size();i++){
+
                 post_hair_assets.get(i).add_force(x_movement,dir);
 
-            }
-            for (int i =0; i<post_body_assets.size();i++){
-                post_body_assets.get(i).add_force(x_movement,-dir);
+            }*/
+
+            for (int i =0; i<num_body_assets;i++){
+                body_motion_model[i].add_force(x_movement,dir);
+                //post_body_assets.get(i).add_force(x_movement,-dir);
 
             }
         }else if (state==0){
@@ -249,12 +333,10 @@ public class Person_Graphics {
                 head_counter=0;
             }
             if (head_counter>3 && head_counter<10){
-                for (int i =0; i<pre_hair_assets.size();i++){
-                    pre_hair_assets.get(i).add_force(Math.abs(head_position_static[head_counter][X_LOC]-head_position_static[head_counter-1][X_LOC])*1f,dir);
+                for (int i =0; i<num_hair_assets;i++){
+                    hair_motion_model[i].add_force(Math.abs(head_position_static[head_counter][X_LOC]-head_position_static[head_counter-1][X_LOC])*1f,dir);
+                    //pre_hair_assets.get(i).add_force(x_movement,dir);
 
-                }
-                for (int i =0; i<post_hair_assets.size();i++){
-                    post_hair_assets.get(i).add_force(Math.abs(head_position_static[head_counter][X_LOC]-head_position_static[head_counter-1][X_LOC])*1f,dir);
                 }
             }
 
@@ -262,74 +344,78 @@ public class Person_Graphics {
 
     }
 
-    public void draw_person(float scratch[], float mMVPMatrix[], float zeroRotationMatrix[], float x, float y, int dir, PhysicalState i_state){
+    public void draw_person(float scratch[], float mMVPMatrix[], float zeroRotationMatrix[], float x, float y, int dir, PhysicalState i_state, Global_Assets assets){
 
-        for (int i =0; i<pre_hair_assets.size();i++){
-            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, x+overall_scale*skeleton.hair[0]*dir+overall_scale*pre_hair_assets.get(i).x_off*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir,  y+overall_scale*skeleton.hair[1]+overall_scale*pre_hair_assets.get(i).y_off+overall_scale*head_position_static[head_counter][Y_LOC], 1f);
-            Matrix.scaleM(scratch, 0, overall_scale*pre_hair_assets.get(i).size,overall_scale*pre_hair_assets.get(i).size*pre_hair_assets.get(i).AR,.5f);
-            Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
-            pre_hair_assets.get(i).step();
-            pre_hair_assets.get(i).Draw(scratch,false);
+        for (int i =0; i<num_hair_assets;i++){
+            if (assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).order==0){
+                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                Matrix.translateM(scratch, 0, x+overall_scale*skeleton.hair[i_hair]*dir+overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).x_off*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir,  y+overall_scale*skeleton.hair[1]+overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).y_off+overall_scale*head_position_static[head_counter][Y_LOC], 1f);
+                Matrix.scaleM(scratch, 0, overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).size,overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).size*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).AR,.5f);
+                Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
+                hair_motion_model[i].step(assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i));
+                assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).Draw(scratch,false);
+            }
         }
 
         skeleton.step(i_state,dir, x, y);
 
 
-        draw_body_part(x,y,1,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.lower_right_arm, lower_right_arm);
-        draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.upper_right_arm, upper_right_arm);
-        draw_body_part(x,y,1,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.lower_right_leg, lower_right_leg);
-        draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.upper_right_leg, upper_right_leg);
-        draw_body_part(x,y,1,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.lower_left_leg, lower_left_leg);
-        draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.upper_left_leg, upper_left_leg);
-        draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.lower_bod, lower_body);
-        draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.upper_bod, upper_body);
+        draw_body_part(x,y,1,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.lower_right_arm, assets.equipment_assets_body[i_body].lower_right_arm);
+        draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.upper_right_arm, assets.equipment_assets_body[i_body].upper_right_arm);
+        draw_body_part(x,y,1,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.lower_right_leg, assets.equipment_assets_legs[i_legs].lower_right_leg);
+        draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.upper_right_leg, assets.equipment_assets_legs[i_legs].upper_right_leg);
+        draw_body_part(x,y,1,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.lower_left_leg, assets.equipment_assets_legs[i_legs].lower_left_leg);
+        draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.upper_left_leg, assets.equipment_assets_legs[i_legs].upper_left_leg);
+        draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.lower_bod, assets.equipment_assets_body[i_body].lower_body);
+        draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.upper_bod, assets.equipment_assets_body[i_body].upper_body);
 
 
 
         //HEAD
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
         Matrix.translateM(scratch, 0, x+overall_scale*skeleton.head[0]*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir, y+overall_scale*skeleton.head[1]+overall_scale*head_position_static[head_counter][Y_LOC], 1f);
-        Matrix.scaleM(scratch, 0, overall_scale*face.size,overall_scale*face.size*face.AR,.5f);
+        Matrix.scaleM(scratch, 0, overall_scale*assets.equipment_assets_Face[i_face].face.size,overall_scale*assets.equipment_assets_Face[i_face].face.size*assets.equipment_assets_Face[i_face].face.AR,.5f);
         Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
 
-        face.Draw(scratch,false);
+        assets.equipment_assets_Face[i_face].face.Draw(scratch,false);
 
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-        Matrix.translateM(scratch, 0, x+overall_scale*skeleton.head[0]*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir+.01f*dir+overall_scale*eyes.x_off, y+overall_scale*skeleton.head[1]+overall_scale*head_position_static[head_counter][Y_LOC]+overall_scale*eyes.y_off, 1f);
-        Matrix.scaleM(scratch, 0, overall_scale*eyes.size,overall_scale*eyes.size*eyes.AR,.5f);
+        Matrix.translateM(scratch, 0, x+overall_scale*skeleton.head[0]*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir+.01f*dir+overall_scale*assets.equipment_assets_Eyes[i_eye].eyes.x_off, y+overall_scale*skeleton.head[1]+overall_scale*head_position_static[head_counter][Y_LOC]+overall_scale*assets.equipment_assets_Eyes[i_eye].eyes.y_off, 1f);
+        Matrix.scaleM(scratch, 0, overall_scale*assets.equipment_assets_Eyes[i_eye].eyes.size,overall_scale*assets.equipment_assets_Eyes[i_eye].eyes.size*assets.equipment_assets_Eyes[i_eye].eyes.AR,.5f);
         Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
 
-        eyes.Draw(scratch,false);
+        assets.equipment_assets_Eyes[i_eye].eyes.Draw(scratch,false);
 
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
         Matrix.translateM(scratch, 0, x+overall_scale*skeleton.hair[0]*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir, y+overall_scale*skeleton.hair[1]+overall_scale*head_position_static[head_counter][Y_LOC], 1f);
-        Matrix.scaleM(scratch, 0, overall_scale*hair.size,overall_scale*hair.size*hair.AR,.5f);
+        Matrix.scaleM(scratch, 0, overall_scale*assets.equipment_assets_Hair[i_hair].hair.size,overall_scale*assets.equipment_assets_Hair[i_hair].hair.size*assets.equipment_assets_Hair[i_hair].hair.AR,.5f);
         Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
 
-        hair.Draw(scratch,false);
+        assets.equipment_assets_Hair[i_hair].hair.Draw(scratch,false);
 
-        for (int i =0; i<post_body_assets.size();i++){
-            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, x+overall_scale*skeleton.upper_bod[0]*dir+overall_scale*post_body_assets.get(i).x_off*dir, y+overall_scale*skeleton.upper_bod[1]+overall_scale*post_body_assets.get(i).y_off, 1f);
-            Matrix.scaleM(scratch, 0, overall_scale*post_body_assets.get(i).size,overall_scale*post_body_assets.get(i).size*post_body_assets.get(i).AR,.5f);
-            Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
-            post_body_assets.get(i).step();
-            post_body_assets.get(i).Draw(scratch,false);
+        for (int i =0; i<num_body_assets;i++){
+            if (assets.equipment_assets_body[i_body].dynamic_assets.get(i).order==1){
+                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                Matrix.translateM(scratch, 0, x+overall_scale*skeleton.upper_bod[0]*dir+overall_scale*assets.equipment_assets_body[i_body].dynamic_assets.get(i).x_off*dir, y+overall_scale*skeleton.upper_bod[1]+overall_scale*assets.equipment_assets_body[i_body].dynamic_assets.get(i).y_off, 1f);
+                Matrix.scaleM(scratch, 0, overall_scale*assets.equipment_assets_body[i_body].dynamic_assets.get(i).size,overall_scale*assets.equipment_assets_body[i_body].dynamic_assets.get(i).size*assets.equipment_assets_body[i_body].dynamic_assets.get(i).AR,.5f);
+                Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
+                assets.equipment_assets_body[i_body].dynamic_assets.get(i).step();
+                assets.equipment_assets_body[i_body].dynamic_assets.get(i).Draw(scratch,false);
+            }
         }
 
+        draw_body_part(x,y,1,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.lower_left_arm, assets.equipment_assets_body[i_body].lower_left_arm);
+        draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.upper_left_arm, assets.equipment_assets_body[i_body].upper_left_arm);
 
-
-        draw_body_part(x,y,1,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.lower_left_arm, lower_left_arm);
-        draw_body_part(x,y,dir,dir,scratch,mMVPMatrix,zeroRotationMatrix, skeleton.upper_left_arm, upper_left_arm);
-
-        for (int i =0; i<post_hair_assets.size();i++){
-            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-            Matrix.translateM(scratch, 0, x+overall_scale*skeleton.hair[0]*dir+overall_scale*post_hair_assets.get(i).x_off*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir, y+overall_scale*skeleton.hair[1]+overall_scale*post_hair_assets.get(i).y_off+overall_scale*head_position_static[head_counter][Y_LOC], 1f);
-            Matrix.scaleM(scratch, 0, overall_scale*post_hair_assets.get(i).size,overall_scale*post_hair_assets.get(i).size*post_hair_assets.get(i).AR,.5f);
-            Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
-            post_hair_assets.get(i).step();
-            post_hair_assets.get(i).Draw(scratch,false);
+        for (int i =0; i<num_hair_assets;i++){
+            if (assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).order==1){
+                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
+                Matrix.translateM(scratch, 0, x+overall_scale*skeleton.hair[i_hair]*dir+overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).x_off*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir,  y+overall_scale*skeleton.hair[1]+overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).y_off+overall_scale*head_position_static[head_counter][Y_LOC], 1f);
+                Matrix.scaleM(scratch, 0, overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).size,overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).size*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).AR,.5f);
+                Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
+                hair_motion_model[i].step(assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i));
+                assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).Draw(scratch,false);
+            }
         }
     }
 

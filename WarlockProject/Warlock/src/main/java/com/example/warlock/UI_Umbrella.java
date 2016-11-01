@@ -63,7 +63,7 @@ public class UI_Umbrella {
     }
 
 
-    public void draw_ui(int game_state, int pause_state, float[] S, float[] M, float[] Z, Person player, Text_Collection text_collection, Text_Collection pause_text_collection){
+    public void draw_ui(int game_state, int pause_state, float[] S, float[] M, float[] Z, Person player, Text_Collection text_collection, Text_Collection pause_text_collection, Global_Assets assets){
 
         if (pause_state==0){
             for (int i=0;i<ui_graphics[game_state].number_of_images;i++){
@@ -87,7 +87,7 @@ public class UI_Umbrella {
             }
 
             if (pause_graphics[pause_state].char_loadout==1){
-                player.DrawSelf_fixed_location(S,M,Z,pause_graphics[0].PAUSE_MENU_PLAYER_LOADOUT_X,pause_graphics[0].PAUSE_MENU_PLAYER_LOADOUT_Y);
+                player.DrawSelf_fixed_location(S,M,Z,pause_graphics[0].PAUSE_MENU_PLAYER_LOADOUT_X,pause_graphics[0].PAUSE_MENU_PLAYER_LOADOUT_Y, assets);
             }
             if (pause_graphics[pause_state].num_show_items>0){
                 for (int i=0;i<pause_graphics[pause_state].num_show_items;i++){

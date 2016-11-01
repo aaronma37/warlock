@@ -47,7 +47,7 @@ public class Projectile {
 
     public void reset(){active=false; time_active=0;}
 
-    public Projectile(float init_cast_location_x,float init_cast_location_y, float init_speed, float init_damage, int init_type, int init_debuff, float init_persistance, Hitbox init_hitbox, float init_direction, int init_active_time,Context context){
+    public Projectile(float init_cast_location_x,float init_cast_location_y, float init_speed, float init_damage, int init_type, int init_debuff, float init_persistance, Hitbox init_hitbox, float init_direction, int init_active_time,Context context, Global_Assets assets){
         cast_location_x=init_cast_location_x;
         cast_location_y=init_cast_location_y;
         location_x=cast_location_x;
@@ -65,7 +65,7 @@ public class Projectile {
         spell_type=0;
         skeleton = new Projectile_Skeleton();
         myContext=context;
-        owner = new Person("dummy",0,0,myContext);
+        owner = new Person("dummy",0,0,myContext,assets);
     }
 
     public void step() {
