@@ -53,32 +53,34 @@ public class Spirit {
 
 
     public int[] choose(int meta_o[], int target_o[], int off_o[], Person target, Person origin){
-        //choose meta
-        chosen_move[3]=this.identity;
 
-        reset_action_choose_index();
-        int meta_decision=0;
-        int action_decision=0;
+        if (attribute!=0){
+            //choose meta
+            chosen_move[3]=this.identity;
 
-        max_sum=0;
-        for (int i=0; i< META_SIZE; i++){
-            temp_sum=0;
-            for (int j=0;j<10;j++){
-                temp_sum+=meta_a[i].o[j]*meta_o[j];
-            }
-            if (temp_sum>max_sum){
-                max_sum=temp_sum;
-                meta_decision=i;
-            }
-        }
-        chosen_move[0]=meta_decision;
+            reset_action_choose_index();
+            int meta_decision=0;
+            int action_decision=0;
 
-        if (meta_decision == 0){
             max_sum=0;
-            for (int i =0;i<attribute;i++){
-                //if (checkFeasibility(off_a[i].index, target, available_offensive_action_space)){
+            for (int i=0; i< META_SIZE; i++){
                 temp_sum=0;
-                //if (checkFeasibility(0,i,target, origin,available_offensive_action_space)){
+                for (int j=0;j<10;j++){
+                    temp_sum+=meta_a[i].o[j]*meta_o[j];
+                }
+                if (temp_sum>max_sum){
+                    max_sum=temp_sum;
+                    meta_decision=i;
+                }
+            }
+            chosen_move[0]=meta_decision;
+
+            if (meta_decision == 0){
+                max_sum=0;
+                for (int i =0;i<attribute;i++){
+                    //if (checkFeasibility(off_a[i].index, target, available_offensive_action_space)){
+                    temp_sum=0;
+                    //if (checkFeasibility(0,i,target, origin,available_offensive_action_space)){
 
 
                     for (int j=0;j<15;j++){
@@ -95,34 +97,39 @@ public class Spirit {
                         action_decision=i;
                     }
 
-               // }
-                if(i==0){
-                    action_choose_index[i]=temp_sum;
-                }else{
-                    action_choose_index[i]=action_choose_index[i-1]+temp_sum;
-                }
-            }
-
-            if (action_choose_index[attribute-1]==0){
-                action_decision=-1;
-            }else{
-                action_decision=(int)Math.floor(Math.random()*action_choose_index[attribute-1]);
-                for(int i=0;i<attribute;i++){
-                    if (action_decision<action_choose_index[i]){
-                        action_decision=i;
-                        break;
+                    // }
+                    if(i==0){
+                        action_choose_index[i]=temp_sum;
+                    }else{
+                        action_choose_index[i]=action_choose_index[i-1]+temp_sum;
                     }
                 }
+
+                if (action_choose_index[attribute-1]==0){
+                    action_decision=-1;
+                }else{
+                    action_decision=(int)Math.floor(Math.random()*action_choose_index[attribute-1]);
+                    for(int i=0;i<attribute;i++){
+                        if (action_decision<action_choose_index[i]){
+                            action_decision=i;
+                            break;
+                        }
+                    }
+                }
+
+
+                System.out.println(origin.name+"casts attack: " + action_decision + "score: " + (action_choose_index[action_decision])/action_choose_index[attribute-1]);
+
+            }else if (meta_decision==1){
+
             }
+            chosen_move[1]=0;
+            chosen_move[2]=action_decision;
 
-
-            System.out.println(origin.name+"casts attack: " + action_decision + "score: " + (action_choose_index[action_decision])/action_choose_index[attribute-1]);
-
-        }else if (meta_decision==1){
-
+            return chosen_move;
         }
         chosen_move[1]=0;
-        chosen_move[2]=action_decision;
+        chosen_move[2]=0;
 
         return chosen_move;
     }

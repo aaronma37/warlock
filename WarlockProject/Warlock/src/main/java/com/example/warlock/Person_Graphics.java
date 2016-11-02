@@ -349,7 +349,7 @@ public class Person_Graphics {
         for (int i =0; i<num_hair_assets;i++){
             if (assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).order==0){
                 Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                Matrix.translateM(scratch, 0, x+overall_scale*skeleton.hair[i_hair]*dir+overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).x_off*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir,  y+overall_scale*skeleton.hair[1]+overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).y_off+overall_scale*head_position_static[head_counter][Y_LOC], 1f);
+                Matrix.translateM(scratch, 0, x+overall_scale*skeleton.hair[0]*dir+overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).x_off*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir,  y+overall_scale*skeleton.hair[1]+overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).y_off+overall_scale*head_position_static[head_counter][Y_LOC], 1f);
                 Matrix.scaleM(scratch, 0, overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).size,overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).size*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).AR,.5f);
                 Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
                 hair_motion_model[i].step(assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i));
@@ -410,7 +410,7 @@ public class Person_Graphics {
         for (int i =0; i<num_hair_assets;i++){
             if (assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).order==1){
                 Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                Matrix.translateM(scratch, 0, x+overall_scale*skeleton.hair[i_hair]*dir+overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).x_off*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir,  y+overall_scale*skeleton.hair[1]+overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).y_off+overall_scale*head_position_static[head_counter][Y_LOC], 1f);
+                Matrix.translateM(scratch, 0, x+overall_scale*skeleton.hair[0]*dir+overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).x_off*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir,  y+overall_scale*skeleton.hair[1]+overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).y_off+overall_scale*head_position_static[head_counter][Y_LOC], 1f);
                 Matrix.scaleM(scratch, 0, overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).size,overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).size*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).AR,.5f);
                 Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
                 hair_motion_model[i].step(assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i));

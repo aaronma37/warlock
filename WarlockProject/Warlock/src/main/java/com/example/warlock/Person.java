@@ -243,13 +243,16 @@ public class Person {
     }
 
     public void command_spirit(int meta_o[], int target_o[],int off_o[], Person target, int spirit_type){
-        toCast=spirit[spirit_type].choose(meta_o,target_o,off_o,target,this);
-        if (toCast[2]==-1){
-            return;
+        if (spirit[spirit_type].attribute!=0){
+            toCast=spirit[spirit_type].choose(meta_o,target_o,off_o,target,this);
+            if (toCast[2]==-1){
+                return;
+            }
+            cast(toCast[0], toCast[2], target, toCast[3]);
+            last_cast=toCast;
+            last_spirit=spirit_type;
+
         }
-        cast(toCast[0], toCast[2], target, toCast[3]);
-        last_cast=toCast;
-        last_spirit=spirit_type;
 
     }
 

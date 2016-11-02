@@ -271,18 +271,6 @@ public class Rend implements GLSurfaceView.Renderer {
         player.off_a[2].o[7]=100;
 
 
-        player.attribute[0]=1;
-        player.attribute[1]=1;
-        player.attribute[2]=1;
-        player.attribute[3]=1;
-        player.attribute[4]=1;
-
-        luke.attribute[0]=0;
-        luke.attribute[1]=0;
-        luke.attribute[2]=0;
-        luke.attribute[3]=0;
-        luke.attribute[4]=0;
-
         player.setAvailableOffensiveActionSpace();
         luke.setAvailableOffensiveActionSpace();
 
