@@ -58,8 +58,10 @@ public class UI_Umbrella {
 
     }
 
-    public void equip_selected(){
+    public void equip_selected(Person player, Global_Assets assets){
         items.equip(items.selected_item.index);
+        player.person_graphics.set_equipment_indices_from_items(items,assets);
+
     }
 
     public void draw_image(float[] S, float[] M, float[] Z, float x, float y, float width, float height, Image_Info img){

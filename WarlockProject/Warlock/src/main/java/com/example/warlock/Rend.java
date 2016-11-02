@@ -409,7 +409,7 @@ public class Rend implements GLSurfaceView.Renderer {
 
     public void draw_battle(){
         //Load stage
-        env.all_locations[env.current_location.location_index].draw_location_battle(scratch,mMVPMatrix,zeroRotationMatrix, screen_x);
+        env.all_locations[env.current_location.location_index].draw_location_battle(scratch,mMVPMatrix,zeroRotationMatrix, screen_x,global_assets);
 
         //Load characters
         for (int i = 0; i< active_people.size();i++){

@@ -9,8 +9,10 @@ public class Dynamic_Location {
     public int type, size_index;
     public float width;
     public float vx,vy,vz;
+    public int index;
 
-    public Dynamic_Location(int i_type, float i_width, int i_size_index){
+    public Dynamic_Location(int img_index,int i_type, float i_width, int i_size_index){
+        index=img_index;
         width=i_width;
         type=i_type;
         size_index=i_size_index;

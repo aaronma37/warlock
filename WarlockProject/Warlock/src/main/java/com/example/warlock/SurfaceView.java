@@ -210,7 +210,7 @@ public class SurfaceView extends GLSurfaceView {
             select_item(x,y);
             return;
         }else if (c1==mRenderer.ui_umbrella.ui_graphics[mRenderer.game_state].EQUIP_ITEM){
-            mRenderer.ui_umbrella.equip_selected();
+            mRenderer.ui_umbrella.equip_selected(mRenderer.player,mRenderer.global_assets);
             return;
         }
 
