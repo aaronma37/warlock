@@ -28,12 +28,10 @@ public class Asset_Motion_Model {
 
     public void step(Person_Graphics_Asset_Asset asset){
 
-
-
-
-
         vel_x=vel_x+.2f*(0-alpha)-force/mass-vel_x*drag;
         alpha=alpha+vel_x;
+
+        System.out.println(alpha);
 
         if (alpha>1f){
             alpha=1f;

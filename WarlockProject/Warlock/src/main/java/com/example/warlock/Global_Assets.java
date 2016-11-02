@@ -15,6 +15,8 @@ public class Global_Assets {
 
 
 
+
+
     private int NUM_SLOTS=5;
 
     public Context myContext;
@@ -24,12 +26,15 @@ public class Global_Assets {
     public Equipment_Assets_Face equipment_assets_Face[] = new Equipment_Assets_Face[NUM_EQUIPMENT_FACE];
     public Equipment_Assets_Hair equipment_assets_Hair[] = new Equipment_Assets_Hair[NUM_EQUIPMENT_HAIR];
     public Equipment_Assets_Eyes equipment_assets_Eyes[] = new Equipment_Assets_Eyes[NUM_EQUIPMENT_EYES];
+    public UI_Assets ui_assets;
 
 
 
     public Global_Assets(Context context){
 
         myContext=context;
+
+        ui_assets= new UI_Assets(myContext);
 
         for (int i =0 ;i<NUM_EQUIPMENT_BODY;i++){
             equipment_assets_body[i] = new Equipment_Assets_Body(myContext,i);

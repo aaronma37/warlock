@@ -40,6 +40,8 @@ public class UI_Graphics
     public boolean active=false;
     public int s;
 
+    public List<UI_Asset_Small> assets_list = new ArrayList<>();
+
     private float PAUSE_MENU_BORDER_SIZE=.01f;
     private float PAUSE_MENU_ITEM_BORDER_SIZE=.1f;
 
@@ -202,6 +204,20 @@ public class UI_Graphics
 
         if (k==0){
             //BATTLE
+            assets_list.add(new UI_Asset_Small(0,   1.8f, .3f,-.8f,0,NOTHING,NOTHING,NOTHING));
+            assets_list.add(new UI_Asset_Small(1,   .1f,.1f,-.85f,-1.35f+0*.7f,COMMAND_SEAL,0,BUTTON));
+            assets_list.add(new UI_Asset_Small(2,   .1f,.1f,-.55f,-1.35f+0*.3f,COMMAND_SEAL,3,BUTTON));
+            assets_list.add(new UI_Asset_Small(3,   .1f,.1f,-.85f,-1.35f+2*.3f,COMMAND_SEAL,1,BUTTON));
+            assets_list.add(new UI_Asset_Small(4,   .1f,.1f,-.55f,-1.35f+2*.3f,COMMAND_SEAL,2,BUTTON));
+            assets_list.add(new UI_Asset_Small(5,   .15f,.12f,-.85f,.15f,REWARD,0,BUTTON));
+            assets_list.add(new UI_Asset_Small(6,   .15f,.12f,-.85f,-.1f,REWARD,1,BUTTON));
+            assets_list.add(new UI_Asset_Small(5,   .15f,.12f,-.85f,.9f,REWARD,2,BUTTON));
+            assets_list.add(new UI_Asset_Small(6,   .15f,.12f,-.85f,.65f,REWARD,3,BUTTON));
+            assets_list.add(new UI_Asset_Small(7,   .1f,.03f,-.91f,1.45f,NOTHING,NOTHING,ADAPTIVE));
+            assets_list.add(new UI_Asset_Small(8,   .23f,.23f,-.65f,1.45f,NOTHING,NOTHING,NOTHING));
+
+
+
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.ui_battle_bottom), 1.8f, .3f,-.8f,0,NOTHING,NOTHING,NOTHING);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.fire_symbol),.1f,.1f,-.85f,-1.35f+0*.7f,COMMAND_SEAL,0,BUTTON);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.water_symbol),.1f,.1f,-.55f,-1.35f+0*.3f,COMMAND_SEAL,3,BUTTON);number_of_images++;
@@ -226,12 +242,32 @@ public class UI_Graphics
             //DUNGEON LEVEL  SCREEN
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.ui_battle_player_portrait), 1f, .3f,.8f,.5f,START,BATTLE,BUTTON);number_of_images++;
         }else if (k==5){
+
+            assets_list.add(new UI_Asset_Small(9,   .1f, .1f,-.8f,1.55f,MOVE,1,BUTTON));
+            assets_list.add(new UI_Asset_Small(10,  .1f,.1f,-.8f,1.15f,MOVE,-1,BUTTON));
+            assets_list.add(new UI_Asset_Small(11,   .1f,.1f,.8f,-1.55f,PAUSE_MENU,1,BUTTON));
+
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.location_arrow), .1f, .1f,-.8f,1.55f,MOVE,1,BUTTON);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.location_arrow),.1f,.1f,-.8f,1.15f,MOVE,-1,BUTTON);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),.1f,.1f,.8f,-1.55f,PAUSE_MENU,1,BUTTON);number_of_images++;
 
         }else if (k==11){
             //Pause screen
+
+            assets_list.add(new UI_Asset_Small(11,   PAUSE_MENU_EXIT_BAR_WIDTH, PAUSE_MENU_EXIT_BAR_HEIGHT,PAUSE_MENU_EXIT_BAR_Y,PAUSE_MENU_EXIT_BAR_X,PAUSE_MENU,0,NOTHING));
+            assets_list.add(new UI_Asset_Small(11,  PAUSE_MENU_BUTTON_WIDTH, PAUSE_MENU_BUTTON_HEIGHT,PAUSE_MENU_BUTTON_Y,PAUSE_MENU_BUTTON_X,PAUSE_MENU,2,NOTHING));
+            assets_list.add(new UI_Asset_Small(11,  PAUSE_MENU_BUTTON_WIDTH, PAUSE_MENU_BUTTON_HEIGHT,PAUSE_MENU_BUTTON_Y-(PAUSE_MENU_BUTTON_HEIGHT+PAUSE_MENU_BORDER_SIZE)*2f,PAUSE_MENU_BUTTON_X,PAUSE_MENU,3,NOTHING));
+            assets_list.add(new UI_Asset_Small(11,  PAUSE_MENU_BUTTON_WIDTH, PAUSE_MENU_BUTTON_HEIGHT,PAUSE_MENU_BUTTON_Y-(PAUSE_MENU_BUTTON_HEIGHT+PAUSE_MENU_BORDER_SIZE)*4f,PAUSE_MENU_BUTTON_X,PAUSE_MENU,4,NOTHING));
+            assets_list.add(new UI_Asset_Small(11,  PAUSE_MENU_BUTTON_WIDTH, PAUSE_MENU_BUTTON_HEIGHT,PAUSE_MENU_BUTTON_Y-(PAUSE_MENU_BUTTON_HEIGHT+PAUSE_MENU_BORDER_SIZE)*6f,PAUSE_MENU_BUTTON_X,PAUSE_MENU,5,NOTHING));
+            assets_list.add(new UI_Asset_Small(11,  PAUSE_MENU_RIGHT_QUAD_WIDTH, PAUSE_MENU_RIGHT_QUAD_HEIGHT,PAUSE_MENU_RIGHT_QUAD_Y,PAUSE_MENU_RIGHT_QUAD_X,NOTHING,NOTHING,NOTHING));
+            assets_list.add(new UI_Asset_Small(11,  PAUSE_MENU_RIGHT_LOWER_QUAD_WIDTH, PAUSE_MENU_RIGHT_LOWER_QUAD_HEIGHT,PAUSE_MENU_RIGHT_LOWER_QUAD_Y,PAUSE_MENU_RIGHT_LOWER_QUAD_X,NOTHING,NOTHING,NOTHING));
+
+
+
+
+
+
+
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_EXIT_BAR_WIDTH, PAUSE_MENU_EXIT_BAR_HEIGHT,PAUSE_MENU_EXIT_BAR_Y,PAUSE_MENU_EXIT_BAR_X,PAUSE_MENU,0,NOTHING);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_BUTTON_WIDTH, PAUSE_MENU_BUTTON_HEIGHT,PAUSE_MENU_BUTTON_Y,PAUSE_MENU_BUTTON_X,PAUSE_MENU,2,NOTHING);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_BUTTON_WIDTH, PAUSE_MENU_BUTTON_HEIGHT,PAUSE_MENU_BUTTON_Y-(PAUSE_MENU_BUTTON_HEIGHT+PAUSE_MENU_BORDER_SIZE)*2f,PAUSE_MENU_BUTTON_X,PAUSE_MENU,3,NOTHING);number_of_images++;
@@ -251,6 +287,14 @@ public class UI_Graphics
 
         }else if (k==12){
             //Pause screen
+
+            assets_list.add(new UI_Asset_Small(11,   PAUSE_MENU_EXIT_BAR_WIDTH, PAUSE_MENU_EXIT_BAR_HEIGHT,PAUSE_MENU_EXIT_BAR_Y,PAUSE_MENU_EXIT_BAR_X,PAUSE_MENU,1,NOTHING));
+            assets_list.add(new UI_Asset_Small(11,   PAUSE_MENU_RIGHT_QUAD_WIDTH, PAUSE_MENU_RIGHT_QUAD_HEIGHT,PAUSE_MENU_RIGHT_QUAD_Y,PAUSE_MENU_RIGHT_QUAD_X,NOTHING,NOTHING,NOTHING));
+            assets_list.add(new UI_Asset_Small(11,   PAUSE_MENU_RIGHT_LOWER_QUAD_WIDTH, PAUSE_MENU_RIGHT_LOWER_QUAD_HEIGHT,PAUSE_MENU_RIGHT_LOWER_QUAD_Y,PAUSE_MENU_RIGHT_LOWER_QUAD_X,NOTHING,NOTHING,NOTHING));
+            assets_list.add(new UI_Asset_Small(11,   PAUSE_MENU_LEFT_HALF_WIDTH, PAUSE_MENU_LEFT_HALF_HEIGHT,PAUSE_MENU_LEFT_HALF_Y,PAUSE_MENU_LEFT_HALF_X,SELECT_ITEM,NOTHING,NOTHING));
+            assets_list.add(new UI_Asset_Small(12,   EQUIP_BUTTON_WIDTH, EQUIP_BUTTON_HEIGHT,EQUIP_BUTTON_Y,EQUIP_BUTTON_X,EQUIP_ITEM,NOTHING,NOTHING));
+
+
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_EXIT_BAR_WIDTH, PAUSE_MENU_EXIT_BAR_HEIGHT,PAUSE_MENU_EXIT_BAR_Y,PAUSE_MENU_EXIT_BAR_X,PAUSE_MENU,1,NOTHING);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_RIGHT_QUAD_WIDTH, PAUSE_MENU_RIGHT_QUAD_HEIGHT,PAUSE_MENU_RIGHT_QUAD_Y,PAUSE_MENU_RIGHT_QUAD_X,NOTHING,NOTHING,NOTHING);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box),PAUSE_MENU_RIGHT_LOWER_QUAD_WIDTH, PAUSE_MENU_RIGHT_LOWER_QUAD_HEIGHT,PAUSE_MENU_RIGHT_LOWER_QUAD_Y,PAUSE_MENU_RIGHT_LOWER_QUAD_X,NOTHING,NOTHING,NOTHING);number_of_images++;
@@ -260,6 +304,8 @@ public class UI_Graphics
                 text_index_list.add(i);
             }
 
+
+
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.red_box),EQUIP_BUTTON_WIDTH, EQUIP_BUTTON_HEIGHT,EQUIP_BUTTON_Y,EQUIP_BUTTON_X,EQUIP_ITEM,NOTHING,NOTHING);number_of_images++;
 
 
@@ -267,14 +313,22 @@ public class UI_Graphics
             item_loadout=true;
         }else if (k==13){
             //Pause screen
+            assets_list.add(new UI_Asset_Small(11,   PAUSE_MENU_WIDTH, PAUSE_MENU_HEIGHT,PAUSE_MENU_Y,PAUSE_MENU_X,NOTHING,NOTHING,NOTHING));
+            assets_list.add(new UI_Asset_Small(11,   PAUSE_MENU_EXIT_BAR_WIDTH, PAUSE_MENU_EXIT_BAR_HEIGHT,PAUSE_MENU_EXIT_BAR_Y,PAUSE_MENU_EXIT_BAR_X,PAUSE_MENU,1,NOTHING));
+
+
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box), PAUSE_MENU_WIDTH, PAUSE_MENU_HEIGHT,PAUSE_MENU_Y,PAUSE_MENU_X,NOTHING,NOTHING,NOTHING);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box), PAUSE_MENU_EXIT_BAR_WIDTH, PAUSE_MENU_EXIT_BAR_HEIGHT,PAUSE_MENU_EXIT_BAR_Y,PAUSE_MENU_EXIT_BAR_X,PAUSE_MENU,1,NOTHING);number_of_images++;
         }else if (k==14){
             //Pause screen
+            assets_list.add(new UI_Asset_Small(11,   PAUSE_MENU_WIDTH, PAUSE_MENU_HEIGHT,PAUSE_MENU_Y,PAUSE_MENU_X,NOTHING,NOTHING,NOTHING));
+            assets_list.add(new UI_Asset_Small(11,   PAUSE_MENU_EXIT_BAR_WIDTH, PAUSE_MENU_EXIT_BAR_HEIGHT,PAUSE_MENU_EXIT_BAR_Y,PAUSE_MENU_EXIT_BAR_X,PAUSE_MENU,1,NOTHING));
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box), PAUSE_MENU_WIDTH, PAUSE_MENU_HEIGHT,PAUSE_MENU_Y,PAUSE_MENU_X,NOTHING,NOTHING,NOTHING);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box), PAUSE_MENU_EXIT_BAR_WIDTH, PAUSE_MENU_EXIT_BAR_HEIGHT,PAUSE_MENU_EXIT_BAR_Y,PAUSE_MENU_EXIT_BAR_X,PAUSE_MENU,1,NOTHING);number_of_images++;
         }else if (k==15){
             //Pause screen
+            assets_list.add(new UI_Asset_Small(11,   PAUSE_MENU_WIDTH, PAUSE_MENU_HEIGHT,PAUSE_MENU_Y,PAUSE_MENU_X,NOTHING,NOTHING,NOTHING));
+            assets_list.add(new UI_Asset_Small(11,   PAUSE_MENU_EXIT_BAR_WIDTH, PAUSE_MENU_EXIT_BAR_HEIGHT,PAUSE_MENU_EXIT_BAR_Y,PAUSE_MENU_EXIT_BAR_X,PAUSE_MENU,1,NOTHING));
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box), PAUSE_MENU_WIDTH, PAUSE_MENU_HEIGHT,PAUSE_MENU_Y,PAUSE_MENU_X,NOTHING,NOTHING,NOTHING);number_of_images++;
             images[number_of_images] = new Image_Info(loadTexture(mActivityContext, R.drawable.pause_box), PAUSE_MENU_EXIT_BAR_WIDTH, PAUSE_MENU_EXIT_BAR_HEIGHT,PAUSE_MENU_EXIT_BAR_Y,PAUSE_MENU_EXIT_BAR_X,PAUSE_MENU,1,NOTHING);number_of_images++;
         }
@@ -283,6 +337,61 @@ public class UI_Graphics
 
 
     }
+
+    public void Draw2(float[] mvpMatrix, int texture_data)
+    {
+
+        GLES20.glUseProgram(shaderProgram);
+
+        //Get handle to vertex shader's vPosition member
+        mPositionHandle = GLES20.glGetAttribLocation(shaderProgram, "vPosition");
+
+        //Enable a handle to the triangle vertices
+        GLES20.glEnableVertexAttribArray(mPositionHandle);
+
+        //Prepare the triangle coordinate data
+        GLES20.glVertexAttribPointer(mPositionHandle, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, vertexStride, vertexBuffer);
+
+        //Get Handle to Fragment Shader's vColor member
+        mColorHandle = GLES20.glGetUniformLocation(shaderProgram, "vColor");
+
+        //Set the Color for drawing the triangle
+        GLES20.glUniform4fv(mColorHandle, 1, color, 0);
+
+        //Set Texture Handles and bind Texture
+        mTextureUniformHandle = GLES20.glGetAttribLocation(shaderProgram, "u_Texture");
+        mTextureCoordinateHandle = GLES20.glGetAttribLocation(shaderProgram, "a_TexCoordinate");
+
+        //Set the active texture unit to texture unit 0.
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture_data);
+
+
+        //Tell the texture uniform sampler to use this texture in the shader by binding to texture unit 0.
+        GLES20.glUniform1i(mTextureUniformHandle, 0);
+
+        //Pass in the texture coordinate information
+        mCubeTextureCoordinates.position(0);
+        GLES20.glVertexAttribPointer(mTextureCoordinateHandle, mTextureCoordinateDataSize, GLES20.GL_FLOAT, false, 0, mCubeTextureCoordinates);
+        GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
+
+        //Get Handle to Shape's Transformation Matrix
+        mMVPMatrixHandle = GLES20.glGetUniformLocation(shaderProgram, "uMVPMatrix");
+
+        //Apply the projection and view transformation
+        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mvpMatrix, 0);
+        //GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+
+        GLES20.glEnable(GLES20.GL_BLEND);
+        //Draw the triangle
+        GLES20.glDrawElements(GLES20.GL_TRIANGLES, drawOrder.length, GLES20.GL_UNSIGNED_SHORT, drawListBuffer);
+
+        //Disable Vertex Array
+        GLES20.glDisableVertexAttribArray(mPositionHandle);
+
+    }
+
 
     public void Draw(float[] mvpMatrix, boolean k, int g)
     {

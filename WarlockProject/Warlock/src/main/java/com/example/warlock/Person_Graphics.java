@@ -399,7 +399,7 @@ public class Person_Graphics {
                 Matrix.translateM(scratch, 0, x+overall_scale*skeleton.upper_bod[0]*dir+overall_scale*assets.equipment_assets_body[i_body].dynamic_assets.get(i).x_off*dir, y+overall_scale*skeleton.upper_bod[1]+overall_scale*assets.equipment_assets_body[i_body].dynamic_assets.get(i).y_off, 1f);
                 Matrix.scaleM(scratch, 0, overall_scale*assets.equipment_assets_body[i_body].dynamic_assets.get(i).size,overall_scale*assets.equipment_assets_body[i_body].dynamic_assets.get(i).size*assets.equipment_assets_body[i_body].dynamic_assets.get(i).AR,.5f);
                 Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
-                assets.equipment_assets_body[i_body].dynamic_assets.get(i).step();
+                body_motion_model[i].step(assets.equipment_assets_body[i_body].dynamic_assets.get(i));
                 assets.equipment_assets_body[i_body].dynamic_assets.get(i).Draw(scratch,false);
             }
         }
