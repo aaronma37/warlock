@@ -23,6 +23,8 @@ public class Equipment_Assets_Hair {
     public float ADJ_SCALE=1.5f;
 
 
+    public List<Person_Graphics_Asset> asset_list = new ArrayList<>();
+
     public List<Person_Graphics_Asset_Asset> dynamic_assets = new ArrayList<>();
 
     public int dynamic_asset_number=0;
@@ -33,12 +35,22 @@ public class Equipment_Assets_Hair {
 
 
         if (hair_index==0){
+
+            asset_list.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h1_base),.15f/.15f,ADJ_SCALE*.1f, ADJ_SCALE*(.035f-x_off),ADJ_SCALE*(-y_off)));
+            asset_list.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h1_add_1),.15f/.15f,ADJ_SCALE*.06f, new Motion_Model_2(0,1f,1f,1f,1f,1f,1)));
+
+
             hair  = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h1_base),.15f/.15f,ADJ_SCALE*.1f, ADJ_SCALE*(.035f-x_off),ADJ_SCALE*(-y_off));
 
             Person_Graphics_Asset_Asset hair_asset_1 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_h1_add_1),.15f/.15f,ADJ_SCALE*.06f, ADJ_SCALE*(-.1f-x_off-hair.x_off),ADJ_SCALE*(.02f-y_off-hair.y_off),0f,.2f,.4f,.6f,.8f, .1f,2f,1);
             dynamic_assets.add(hair_asset_1);
             dynamic_asset_number=1;
         }else if (hair_index==1){
+
+            asset_list.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h1_base),.15f/.15f,ADJ_SCALE*.1f, ADJ_SCALE*(.035f-x_off),ADJ_SCALE*(-y_off)));
+            asset_list.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h1_add_1),.15f/.15f,ADJ_SCALE*.06f, new Motion_Model_2(0,1f,1f,1f,1f,1f,1)));
+
+
             hair  = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h1_base),.15f/.15f,ADJ_SCALE*.1f, ADJ_SCALE*(.035f-x_off),ADJ_SCALE*(-y_off));
 
             Person_Graphics_Asset_Asset hair_asset_1 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_h1_add_1),.15f/.15f,ADJ_SCALE*.06f, ADJ_SCALE*(-.1f-x_off-hair.x_off),ADJ_SCALE*(.02f-y_off-hair.y_off),0f,.2f,.4f,.6f,.8f, .1f,2f,1);
@@ -46,6 +58,14 @@ public class Equipment_Assets_Hair {
             dynamic_asset_number=1;
         }
         else if (hair_index==2){
+
+            asset_list.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h2_base),19.879f/46.368f,1.3f*ADJ_SCALE*46.368f/1000, ADJ_SCALE*(.025f)-x_off,ADJ_SCALE*(.03f)-y_off));
+
+            asset_list.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h2_asset_1),99.416f/37.059f,1.3f*ADJ_SCALE*37.059f/1000, new Motion_Model_2(0,1.3f*ADJ_SCALE*(-.015f),1.3f*ADJ_SCALE*(-0.0750f),.1f,1f,1f,1)));
+            asset_list.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h2_asset_2),50.217f/36.993f,1.3f*ADJ_SCALE*36.993f/1000, new Motion_Model_2(0,1.3f*ADJ_SCALE*(.009f),1.3f*ADJ_SCALE*(-.037f),1f,1f,1f,1)));
+            asset_list.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h2_asset_3),59.797f/5.595f,1.3f*ADJ_SCALE*5.595f/1000, new Motion_Model_2(0,1.3f*ADJ_SCALE*(.04f),1.3f*ADJ_SCALE*(-.08f),1f,1f,1f,-1)));
+
+
             hair  = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h2_base),19.879f/46.368f,1.3f*ADJ_SCALE*46.368f/1000, ADJ_SCALE*(.025f)-x_off,ADJ_SCALE*(.03f)-y_off);
 
             Person_Graphics_Asset_Asset hair_asset_1 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_h2_asset_1),99.416f/37.059f,1.3f*ADJ_SCALE*37.059f/1000, 1.3f*ADJ_SCALE*(0.005f)-x_off-hair.x_off,1.3f*ADJ_SCALE*(-0.080f)-y_off-hair.y_off,0f,.2f,.4f,.6f,.8f, .1f,.2f,1);

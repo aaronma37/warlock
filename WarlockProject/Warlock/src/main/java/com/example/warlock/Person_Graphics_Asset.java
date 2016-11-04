@@ -66,6 +66,7 @@ public class Person_Graphics_Asset
     public float size;
     public float x_off;
     public float y_off;
+    public Motion_Model_2 model;
 
 
     // number of coordinates per vertex in this array
@@ -84,12 +85,72 @@ public class Person_Graphics_Asset
 
     public Person_Graphics_Asset(final Context activityContext, int k, float i_AR, float i_size, float i_x_off, float i_y_off)
     {
-
-
         AR=i_AR;
         size=i_size;
         x_off=i_x_off;
         y_off=i_y_off;
+
+        model = new Motion_Model_2();
+
+        mActivityContext = activityContext;
+        s = k;
+
+        //Initialize Vertex Byte Buffer for Shape Coordinates / # of coordinate values * 4 bytes per float
+        ByteBuffer bb = ByteBuffer.allocateDirect(spriteCoords.length * 4);
+        //Use the Device's Native Byte Order
+        bb.order(ByteOrder.nativeOrder());
+        //Create a floating point buffer from the ByteBuffer
+        vertexBuffer = bb.asFloatBuffer();
+        //Add the coordinates to the FloatBuffer
+        vertexBuffer.put(spriteCoords);
+        //Set the Buffer to Read the first coordinate
+        vertexBuffer.position(0);
+
+
+        final float[] cubeTextureCoordinateData =
+                {
+                        .99f,  .01f,
+                        .99f, .99f,
+                        .01f, .99f,
+                        .01f, .01f
+                };
+
+
+
+        mCubeTextureCoordinates = ByteBuffer.allocateDirect(cubeTextureCoordinateData.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
+        mCubeTextureCoordinates.put(cubeTextureCoordinateData).position(0);
+
+        //Initialize byte buffer for the draw list
+        ByteBuffer dlb = ByteBuffer.allocateDirect(spriteCoords.length * 2);
+        dlb.order(ByteOrder.nativeOrder());
+        drawListBuffer = dlb.asShortBuffer();
+        drawListBuffer.put(drawOrder);
+        drawListBuffer.position(0);
+
+        int vertexShader = Rend.loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
+        int fragmentShader = Rend.loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
+
+        shaderProgram = GLES20.glCreateProgram();
+        GLES20.glAttachShader(shaderProgram, vertexShader);
+        GLES20.glAttachShader(shaderProgram, fragmentShader);
+
+        //Texture Code
+        GLES20.glBindAttribLocation(shaderProgram, 0, "a_TexCoordinate");
+
+        GLES20.glLinkProgram(shaderProgram);
+
+        mTextureDataHandle = k;
+        selectedTextureDataHandle=k;
+    }
+
+    public Person_Graphics_Asset(final Context activityContext, int k, float i_AR, float i_size, Motion_Model_2 i_model)
+    {
+
+        model= new Motion_Model_2();
+        model=i_model;
+
+        AR=i_AR;
+        size=i_size;
 
         mActivityContext = activityContext;
         s = k;
