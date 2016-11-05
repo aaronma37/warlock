@@ -115,7 +115,7 @@ public class Location_Data {
 
 
 
-            people_in_scene[PEOPLE_IN_SCENE_SIZE]= new Person("default 1", -.5f, GROUND_LEVEL, myContext,2,0,0,1,0,1,assets);
+            people_in_scene[PEOPLE_IN_SCENE_SIZE]= new Person("default 1", -.5f, GROUND_LEVEL, myContext,2,0,0,1,0,0,1,assets);
             people_in_scene[PEOPLE_IN_SCENE_SIZE].reset(0,GROUND_LEVEL); people_in_scene[0].state.state=0;PEOPLE_IN_SCENE_SIZE++;
 /*
 

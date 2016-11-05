@@ -13,10 +13,6 @@ public class Global_Assets {
     private int NUM_EQUIPMENT_HAIR=3;
     private int NUM_EQUIPMENT_EYES=1;
 
-
-
-
-
     private int NUM_SLOTS=5;
 
     public Context myContext;
@@ -27,6 +23,7 @@ public class Global_Assets {
     public Equipment_Assets_Hair equipment_assets_Hair[] = new Equipment_Assets_Hair[NUM_EQUIPMENT_HAIR];
     public Equipment_Assets_Eyes equipment_assets_Eyes[] = new Equipment_Assets_Eyes[NUM_EQUIPMENT_EYES];
     public UI_Assets ui_assets;
+    public Equipment_Assets_Weapon weapon_assets;
     public Location_Assets location_assets;
 
 
@@ -37,6 +34,7 @@ public class Global_Assets {
 
         ui_assets= new UI_Assets(myContext);
         location_assets = new Location_Assets(myContext);
+        weapon_assets = new Equipment_Assets_Weapon(myContext);
 
         for (int i =0 ;i<NUM_EQUIPMENT_BODY;i++){
             equipment_assets_body[i] = new Equipment_Assets_Body(myContext,i);

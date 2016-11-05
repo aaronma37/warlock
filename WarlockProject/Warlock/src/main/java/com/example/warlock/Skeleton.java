@@ -44,6 +44,7 @@ public class Skeleton {
     public float UPPER_BOD_LENGTH_2 = .045f;
     public float UPPER_ARM_OFFSET_1 = -.02f;
     public float UPPER_ARM_OFFSET_2 = -.02f;
+    public float LOWER_ARM_LENGTH=.2f;
 
 
     public float lower_bod[] = new float[3];

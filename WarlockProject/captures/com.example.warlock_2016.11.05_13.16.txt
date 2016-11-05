@@ -1,0 +1,32 @@
+Applications Memory Usage (kB):
+Uptime: 4836882 Realtime: 8951632
+
+** MEMINFO in pid 17395 [com.example.warlock] **
+                   Pss  Private  Private  Swapped     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------
+  Native Heap     6994     6992        0      128    12072    11464      115
+  Dalvik Heap     9136     8976        0     5196    17332    16365      967
+ Dalvik Other     3749     3676        0      824                           
+        Stack      196      196        0       12                           
+    Other dev    17786    15436        4        0                           
+     .so mmap     2332      860      620     3020                           
+    .apk mmap      847        0       56        0                           
+    .ttf mmap        2        0        0        0                           
+    .dex mmap     6063      132     5176      108                           
+   Other mmap       11        4        0        0                           
+      Unknown        0        0        0        0                           
+        TOTAL    47116    36272     5856     9288    29404    27829     1082
+ 
+ Objects
+               Views:       16         ViewRootImpl:        1
+         AppContexts:        4           Activities:        1
+              Assets:        5        AssetManagers:        5
+       Local Binders:       16        Proxy Binders:       22
+    Death Recipients:        1
+     OpenSSL Sockets:        3
+ 
+ SQL
+         MEMORY_USED:        0
+  PAGECACHE_OVERFLOW:        0          MALLOC_SIZE:        0
+ 

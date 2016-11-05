@@ -21,6 +21,7 @@ public class Person_Graphics {
     public int i_legs=0, num_legs_assets=0;
     public int i_hair=0, num_hair_assets=0;
     public int i_face=0, num_face_assets=0;
+    public int i_weapon=0;
 
     private int MAX_EYE_MODEL=5,MAX_BODY_MODEL=5,MAX_HAIR_MODEL=5,MAX_LEGS_MODEL=5,MAX_FACE_MODEL=5;
 
@@ -29,6 +30,8 @@ public class Person_Graphics {
     public Asset_Motion_Model hair_motion_model[] = new Asset_Motion_Model[MAX_HAIR_MODEL];
 
     public List<Motion_Model_2> hair_motion_model2 = new ArrayList<>();
+    public List<Motion_Model_2> weapon_motion_model2 = new ArrayList<>();
+
 
     public Asset_Motion_Model legs_motion_model[] = new Asset_Motion_Model[MAX_LEGS_MODEL];
     public Asset_Motion_Model face_motion_model[] = new Asset_Motion_Model[MAX_FACE_MODEL];
@@ -52,7 +55,7 @@ public class Person_Graphics {
 
 
 
-    public Person_Graphics(Context context, int hair_index, int face_index, int eyes_index, int body_index, int leg_index, Global_Assets assets){
+    public Person_Graphics(Context context, int hair_index, int face_index, int eyes_index, int body_index, int leg_index, int  weapon_index, Global_Assets assets){
 
         myContext=context;
 
@@ -61,6 +64,7 @@ public class Person_Graphics {
         i_legs=leg_index;
         i_hair=hair_index;
         i_face=face_index;
+        i_weapon=weapon_index;
 
         for (int i =0;i<MAX_EYE_MODEL;i++){
             eye_motion_model[i]= new Asset_Motion_Model(0,0,0,0,0,0,0);
@@ -106,6 +110,13 @@ public class Person_Graphics {
 
         for (int i=0; i<assets.equipment_assets_Hair[i_hair].asset_list.size();i++){
             hair_motion_model2.add(assets.equipment_assets_Hair[i_hair].asset_list.get(i).model);
+        }
+
+        weapon_motion_model2.clear();
+
+
+        for (int i=0; i<assets.weapon_assets.weapons.get(i_weapon).size();i++){
+            weapon_motion_model2.add(assets.weapon_assets.weapons.get(i_weapon).get(i).model);
         }
 
 
@@ -210,6 +221,13 @@ public class Person_Graphics {
         skeleton.step(i_state,dir, x, y);
 
         step_dynamic(x+overall_scale*skeleton.hair[0]*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir,y+overall_scale*skeleton.hair[1]+overall_scale*head_position_static[head_counter][Y_LOC],dir, hair_motion_model2);
+
+        if (dir==1){
+            step_dynamic(x+overall_scale*skeleton.lower_left_arm[0]*dir+(float) Math.sin(skeleton.lower_left_arm[2]*3.14f/180f)*skeleton.LOWER_ARM_LENGTH,y+overall_scale*skeleton.lower_left_arm[1]-(float) Math.cos(skeleton.lower_left_arm[2]*3.14f/180f)*skeleton.LOWER_ARM_LENGTH, dir,weapon_motion_model2);
+        }else{
+            step_dynamic(x+overall_scale*skeleton.lower_right_arm[0]+(float) Math.sin(skeleton.lower_right_arm[2]*3.14f/180f)*skeleton.LOWER_ARM_LENGTH,y+overall_scale*skeleton.lower_right_arm[1]-(float) Math.cos(skeleton.lower_right_arm[2]*3.14f/180f)*skeleton.LOWER_ARM_LENGTH, dir,weapon_motion_model2);
+
+        }
     }
 
     public void step_dynamic(float x, float y,int dir, List<Motion_Model_2> m){
@@ -239,6 +257,12 @@ public class Person_Graphics {
     public void draw_person(float scratch[], float mMVPMatrix[], float zeroRotationMatrix[], float x, float y, int dir, PhysicalState i_state, Global_Assets assets){
 
         step(i_state,dir, x, y);
+
+        if (dir==-1){
+            for (int i=0;i<assets.weapon_assets.weapons.get(i_weapon).size();i++){
+                draw_asset(scratch,mMVPMatrix,zeroRotationMatrix,dir,weapon_motion_model2.get(i).x,weapon_motion_model2.get(i).y,weapon_motion_model2.get(i).alpha,assets.weapon_assets.weapons.get(i_weapon).get(i));
+            }
+        }
 
         for (int i=1;i<hair_motion_model2.size();i++){
             if (hair_motion_model2.get(i).dynamic && hair_motion_model2.get(i).layer==-1){
@@ -327,16 +351,12 @@ public class Person_Graphics {
             }
         }
 
-/*        for (int i =0; i<num_hair_assets;i++){
-            if (assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).order==1){
-                Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, zeroRotationMatrix, 0);
-                Matrix.translateM(scratch, 0, x+overall_scale*skeleton.hair[0]*dir+overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).x_off*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir,  y+overall_scale*skeleton.hair[1]+overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).y_off+overall_scale*head_position_static[head_counter][Y_LOC], 1f);
-                Matrix.scaleM(scratch, 0, overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).size,overall_scale*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).size*assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).AR,.5f);
-                Matrix.rotateM(scratch, 0, 90-dir*90, 0, 1f, 0);
-                hair_motion_model[i].step(assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i));
-                assets.equipment_assets_Hair[i_hair].dynamic_assets.get(i).Draw(scratch,false);
+        if (dir==1){
+            for (int i=0;i<assets.weapon_assets.weapons.get(i_weapon).size();i++){
+                draw_asset(scratch,mMVPMatrix,zeroRotationMatrix,dir,weapon_motion_model2.get(i).x,weapon_motion_model2.get(i).y,weapon_motion_model2.get(i).alpha,assets.weapon_assets.weapons.get(i_weapon).get(i));
             }
-        }*/
+        }
+
     }
 
 

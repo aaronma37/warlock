@@ -116,10 +116,10 @@ public class Person {
             toCast[i]=0;
         }
 
-        person_graphics = new Person_Graphics(myContext, 2,0,0,4,0, assets);
+        person_graphics = new Person_Graphics(myContext, 2,0,0,4,0,0, assets);
         setAvailableOffensiveActionSpace();
     }
-    public Person(String given_name, float start_x, float start_y, Context context, int hair_index, int face_index, int eyes_index, int body_index, int leg_index, int i_npc_action,Global_Assets assets) {
+    public Person(String given_name, float start_x, float start_y, Context context, int hair_index, int face_index, int eyes_index, int body_index, int leg_index, int weapon_index, int i_npc_action,Global_Assets assets) {
         myContext=context;
         npc=new NPC_Action(true,i_npc_action,-1,1);
 
@@ -154,7 +154,7 @@ public class Person {
             toCast[i]=0;
         }
 
-        person_graphics = new Person_Graphics(myContext, hair_index,face_index,eyes_index,body_index,leg_index,assets);
+        person_graphics = new Person_Graphics(myContext, hair_index,face_index,eyes_index,body_index,leg_index, weapon_index,assets);
         setAvailableOffensiveActionSpace();
     }
 
