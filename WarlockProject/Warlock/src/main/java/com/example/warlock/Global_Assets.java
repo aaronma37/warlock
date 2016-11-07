@@ -25,6 +25,7 @@ public class Global_Assets {
     public UI_Assets ui_assets;
     public Equipment_Assets_Weapon weapon_assets;
     public Location_Assets location_assets;
+    public Equipment_Assets_Hair hair_assets;
 
 
 
@@ -47,10 +48,7 @@ public class Global_Assets {
         for (int i =0 ;i<NUM_EQUIPMENT_FACE;i++){
             equipment_assets_Face[i] = new Equipment_Assets_Face(myContext,i);
         }
-
-        for (int i =0 ;i<NUM_EQUIPMENT_HAIR;i++){
-            equipment_assets_Hair[i] = new Equipment_Assets_Hair(myContext,i,equipment_assets_Face[0].face.x_off,equipment_assets_Face[0].face.y_off);
-        }
+        hair_assets = new Equipment_Assets_Hair(myContext,0,equipment_assets_Face[0].face.x_off,equipment_assets_Face[0].face.y_off);
 
         for (int i =0 ;i<NUM_EQUIPMENT_EYES;i++){
             equipment_assets_Eyes[i] = new Equipment_Assets_Eyes(myContext,i);

@@ -17,6 +17,10 @@ import java.util.List;
 public class Equipment_Assets_Hair {
 
     public Person_Graphics_Asset hair;
+
+    public List<List<Person_Graphics_Asset>> hairs = new ArrayList<List<Person_Graphics_Asset>>();
+
+
     public Context myContext;
 
     public int HEAD_STATIC_MAX=30;
@@ -32,6 +36,32 @@ public class Equipment_Assets_Hair {
     public Equipment_Assets_Hair(Context context, int hair_index,float x_off, float y_off){
 
         myContext=context;
+
+        List<Person_Graphics_Asset> h_1 = new ArrayList<>();
+
+        h_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h_1),100f/66f,.15f, 0f/4f, 1f/4f, 0f, 1f, new Motion_Model_2()));
+        h_1.get(h_1.size()-1).model.set_offsets(.01f,-.12f);
+        h_1.get(h_1.size()-1).model.layer=1;
+
+        h_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h_1),100f/66f,.15f, 1f/4f, 2f/4f, 0f, 1f, new Motion_Model_2(1,0,0,0)));
+        h_1.get(h_1.size()-1).model.set_offsets(.01f,-.12f);
+        h_1.get(h_1.size()-1).model.layer=1;
+
+
+        h_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h_1),100f/66f,.15f, 2f/4f, 3f/4f, 0f, 1f, new Motion_Model_2(1,0,0,0)));
+        h_1.get(h_1.size()-1).model.set_offsets(.01f,-.12f);
+        h_1.get(h_1.size()-1).model.layer=-1;
+
+        h_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h_1),100f/66f,.15f, 3f/4f, 4f/4f, 0f, 1f, new Motion_Model_2(1,0,0,0)));
+        h_1.get(h_1.size()-1).model.set_offsets(.01f,-.12f);
+        h_1.get(h_1.size()-1).model.layer=1;
+
+
+
+
+        hairs.add(h_1);        hairs.add(h_1);        hairs.add(h_1);        hairs.add(h_1);
+
+
 
 
         if (hair_index==0){
@@ -59,11 +89,14 @@ public class Equipment_Assets_Hair {
         }
         else if (hair_index==2){
 
-            asset_list.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h2_base),19.879f/46.368f,1.3f*ADJ_SCALE*46.368f/1000, ADJ_SCALE*(.025f)-x_off,ADJ_SCALE*(.03f)-y_off));
 
-            asset_list.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h2_asset_1),99.416f/37.059f,1.3f*ADJ_SCALE*37.059f/1000, new Motion_Model_2(0,1.3f*ADJ_SCALE*(-.015f),1.3f*ADJ_SCALE*(-0.0750f),.1f,1f,1f,1)));
-            asset_list.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h2_asset_2),50.217f/36.993f,1.3f*ADJ_SCALE*36.993f/1000, new Motion_Model_2(0,1.3f*ADJ_SCALE*(.009f),1.3f*ADJ_SCALE*(-.037f),1f,1f,1f,1)));
-            asset_list.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h2_asset_3),59.797f/5.595f,1.3f*ADJ_SCALE*5.595f/1000, new Motion_Model_2(0,1.3f*ADJ_SCALE*(.04f),1.3f*ADJ_SCALE*(-.08f),1f,1f,1f,-1)));
+
+
+            asset_list.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h_1),19.879f/46.368f,1.3f*ADJ_SCALE*46.368f/1000, ADJ_SCALE*(.025f)-x_off,ADJ_SCALE*(.03f)-y_off));
+
+            asset_list.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h_1),99.416f/37.059f,1.3f*ADJ_SCALE*37.059f/1000, new Motion_Model_2(0,1.3f*ADJ_SCALE*(-.015f),1.3f*ADJ_SCALE*(-0.0750f),.1f,1f,1f,1)));
+            asset_list.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h_1),50.217f/36.993f,1.3f*ADJ_SCALE*36.993f/1000, new Motion_Model_2(0,1.3f*ADJ_SCALE*(.009f),1.3f*ADJ_SCALE*(-.037f),1f,1f,1f,1)));
+            asset_list.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h_1),59.797f/5.595f,1.3f*ADJ_SCALE*5.595f/1000, new Motion_Model_2(0,1.3f*ADJ_SCALE*(.04f),1.3f*ADJ_SCALE*(-.08f),1f,1f,1f,-1)));
 
 
             hair  = new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.f_h2_base),19.879f/46.368f,1.3f*ADJ_SCALE*46.368f/1000, ADJ_SCALE*(.025f)-x_off,ADJ_SCALE*(.03f)-y_off);
@@ -76,7 +109,7 @@ public class Equipment_Assets_Hair {
 
             Person_Graphics_Asset_Asset hair_asset_3 = new Person_Graphics_Asset_Asset(myContext, loadTexture(myContext,R.drawable.f_h2_asset_3),59.797f/5.595f,1.3f*ADJ_SCALE*5.595f/1000, 1.3f*ADJ_SCALE*(.04f)-x_off-hair.x_off,1.3f*ADJ_SCALE*(-.08f)-y_off-hair.y_off,0f,.2f,.4f,.6f,.8f, .01f, .13f,0);
             dynamic_assets.add(hair_asset_3);
-            dynamic_asset_number=3;
+            dynamic_asset_number=4;
         }
 
     }

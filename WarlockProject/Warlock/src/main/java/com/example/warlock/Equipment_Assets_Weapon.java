@@ -34,10 +34,24 @@ public class Equipment_Assets_Weapon {
         myContext=context;
 
         List<Person_Graphics_Asset> l_1 = new ArrayList<>();
-        l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.2f, 1f/4f, 2f/4f, 0f, 1f, new Motion_Model_2(0,0,0,.1f,1f,1f,1,0)));
-        l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.2f, 2f/4f, 3f/4f, 0f, 1f, new Motion_Model_2(0,0,0,.1f,1f,1f,1,0)));
-        l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.2f, 0f, 1f/4f, 0f, 1f, new Motion_Model_2(0,0,0,.1f,1f,1f,1,0)));
-        l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.2f, 3f/4f, 1f, 0f, 1f, new Motion_Model_2(0,0,0,.1f,1f,1f,1,0)));
+        l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.2f, 1f/4f, 2f/4f, 0f, 1f, new Motion_Model_2(0,0,0,.5f,.1f,1f,1,0,0,.2f*50f/60f)));
+        l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.2f, 2f/4f, 3f/4f, 0f, 1f, new Motion_Model_2(1,0,0,.2f*50f/60f)));
+
+
+        l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.15f, 3f/4f, 1f, 0f, 1f, new Motion_Model_2(2,0,0,.2f*50f/60f,0,10)));
+        l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.2f, 3f/4f, 1f, 0f, 1f, new Motion_Model_2(2,0,0,.2f*50f/60f,3,10)));
+
+        l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.2f, 3f/4f, 1f, 0f, 1f, new Motion_Model_2(0,0,0,.5f,.1f,1f,1,0,0,.2f*50f/60f)));
+
+        l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.1f, 3f/4f, 1f, 0f, 1f, new Motion_Model_2(2,0,0,.2f*50f/60f,6,10)));
+        l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.15f, 3f/4f, 1f, 0f, 1f, new Motion_Model_2(2,0,0,.2f*50f/60f,1,10)));
+        l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.2f, 3f/4f, 1f, 0f, 1f, new Motion_Model_2(2,0,0,.2f*50f/60f,4,10)));
+        l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.1f, 3f/4f, 1f, 0f, 1f, new Motion_Model_2(2,0,0,.2f*50f/60f,7,10)));
+
+        l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.2f, 0f, 1f/4f, 0f, 1f, new Motion_Model_2(1,0,0,.2f*50f/60f)));
+
+
+
 
         weapons.add(l_1);
 
