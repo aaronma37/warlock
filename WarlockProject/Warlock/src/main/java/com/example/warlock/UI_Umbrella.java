@@ -82,17 +82,6 @@ public class UI_Umbrella {
                 draw_image(S,M,Z,ui_graphics[game_state].assets_list.get(i).x,ui_graphics[game_state].assets_list.get(i).y,ui_graphics[game_state].assets_list.get(i).width, ui_graphics[game_state].assets_list.get(i).height,assets.ui_assets.assets.get(ui_graphics[game_state].assets_list.get(i).index));
             }
 
-
-/*            for (int i=0;i<ui_graphics[game_state].number_of_images;i++){
-
-                update_ui_image(game_state,i,player);
-
-                Matrix.multiplyMM(S, 0, M, 0, Z, 0);
-                Matrix.translateM(S, 0, ui_graphics[game_state].images[i].x, ui_graphics[game_state].images[i].y, 1f);
-                Matrix.scaleM(S, 0, ui_graphics[game_state].images[i].width,ui_graphics[game_state].images[i].height,1f);
-                ui_graphics[game_state].Draw(S, false, i);
-
-            }*/
             text_collection.draw_text(S,M,Z);
 
         }else{
@@ -101,13 +90,6 @@ public class UI_Umbrella {
                 //update_ui_image(game_state,i,player);
                 draw_image(S,M,Z,pause_graphics[game_state].assets_list.get(i).x,pause_graphics[game_state].assets_list.get(i).y,pause_graphics[game_state].assets_list.get(i).width, pause_graphics[game_state].assets_list.get(i).height,assets.ui_assets.assets.get(pause_graphics[game_state].assets_list.get(i).index));
             }
-
-/*            for (int i=0;i<pause_graphics[pause_state].number_of_images;i++){
-                Matrix.multiplyMM(S, 0, M, 0, Z, 0);
-                Matrix.translateM(S, 0, pause_graphics[pause_state].images[i].x, pause_graphics[pause_state].images[i].y, 1f);
-                Matrix.scaleM(S, 0, pause_graphics[pause_state].images[i].width,pause_graphics[pause_state].images[i].height,1f);
-                pause_graphics[pause_state].Draw(S, false, i);
-            }*/
 
             if (pause_graphics[pause_state].char_loadout==1){
                 player.DrawSelf_fixed_location(S,M,Z,pause_graphics[0].PAUSE_MENU_PLAYER_LOADOUT_X,pause_graphics[0].PAUSE_MENU_PLAYER_LOADOUT_Y, assets);

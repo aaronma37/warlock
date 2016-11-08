@@ -48,7 +48,11 @@ public class Equipment_Assets_Weapon {
         l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.2f, 3f/4f, 1f, 0f, 1f, new Motion_Model_2(2,0,0,.2f*50f/60f,4,10)));
         l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.1f, 3f/4f, 1f, 0f, 1f, new Motion_Model_2(2,0,0,.2f*50f/60f,7,10)));
 
-        l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.2f, 0f, 1f/4f, 0f, 1f, new Motion_Model_2(1,0,0,.2f*50f/60f)));
+
+
+
+        //l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.2f, 0f, 1f/4f, 0f, 1f, new Motion_Model_2(1,0,0,.2f*50f/60f)));
+        l_1.add(new Person_Graphics_Asset(myContext, loadTexture(myContext, R.drawable.l_1),50f/66f,.2f, 0f, 1f/4f, 0f, 1f, new Motion_Model_2(1,0,0,.2f*50f/60f,7,50)));
 
 
 

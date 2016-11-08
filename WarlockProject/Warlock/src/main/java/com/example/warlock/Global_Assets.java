@@ -27,8 +27,6 @@ public class Global_Assets {
     public Location_Assets location_assets;
     public Equipment_Assets_Hair hair_assets;
 
-
-
     public Global_Assets(Context context){
 
         myContext=context;

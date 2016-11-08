@@ -104,14 +104,19 @@ public class Person_Graphics {
         hair_motion_model2.clear();
 
         for (int i=0; i<assets.hair_assets.hairs.get(i_hair).size();i++){
-            hair_motion_model2.add(assets.hair_assets.hairs.get(i_hair).get(i).model);
+
+            try{
+                hair_motion_model2.add((Motion_Model_2)assets.hair_assets.hairs.get(i_hair).get(i).model.clone());
+            }catch(CloneNotSupportedException c){}
         }
 
         weapon_motion_model2.clear();
 
 
         for (int i=0; i<assets.weapon_assets.weapons.get(i_weapon).size();i++){
-            weapon_motion_model2.add(assets.weapon_assets.weapons.get(i_weapon).get(i).model);
+            try{
+                weapon_motion_model2.add((Motion_Model_2) assets.weapon_assets.weapons.get(i_weapon).get(i).model.clone());
+            }catch(CloneNotSupportedException c){}
         }
 
 
@@ -218,28 +223,18 @@ public class Person_Graphics {
         step_dynamic(x+overall_scale*skeleton.hair[0]*dir+overall_scale*head_position_static[head_counter][X_LOC]*dir,y+overall_scale*skeleton.hair[1]+overall_scale*head_position_static[head_counter][Y_LOC],dir, hair_motion_model2);
 
         if (dir==1){
-            step_dynamic(x+overall_scale*skeleton.lower_left_arm[0]*dir+(float) Math.sin(skeleton.lower_left_arm[2]*3.14f/180f)*skeleton.LOWER_ARM_LENGTH,y+overall_scale*skeleton.lower_left_arm[1]-(float) Math.cos(skeleton.lower_left_arm[2]*3.14f/180f)*skeleton.LOWER_ARM_LENGTH, dir,weapon_motion_model2);
+            step_dynamic( x+overall_scale*skeleton.lower_left_arm[0]*dir+(float) Math.sin(skeleton.lower_left_arm[2]*3.14f/180f)*skeleton.LOWER_ARM_LENGTH,y+overall_scale*skeleton.lower_left_arm[1]-(float) Math.cos(skeleton.lower_left_arm[2]*3.14f/180f)*skeleton.LOWER_ARM_LENGTH, dir,weapon_motion_model2);
         }else{
-            step_dynamic(x+overall_scale*skeleton.lower_right_arm[0]+(float) Math.sin(skeleton.lower_right_arm[2]*3.14f/180f)*skeleton.LOWER_ARM_LENGTH,y+overall_scale*skeleton.lower_right_arm[1]-(float) Math.cos(skeleton.lower_right_arm[2]*3.14f/180f)*skeleton.LOWER_ARM_LENGTH, dir,weapon_motion_model2);
+            step_dynamic( x+overall_scale*skeleton.lower_right_arm[0]+(float) Math.sin(skeleton.lower_right_arm[2]*3.14f/180f)*skeleton.LOWER_ARM_LENGTH,y+overall_scale*skeleton.lower_right_arm[1]-(float) Math.cos(skeleton.lower_right_arm[2]*3.14f/180f)*skeleton.LOWER_ARM_LENGTH, dir,weapon_motion_model2);
 
         }
     }
 
     public void step_dynamic(float x, float y,int dir, List<Motion_Model_2> m){
-/*        asset_list.get(0).model.x=x;
-        asset_list.get(0).model.y=y;*/
 
-/*        m.get(0).x=x;
-        m.get(0).y=y;*/
         m.get(0).update_force(x,y,0);
         m.get(0).step();
 
-/*        for (int i=1;i<asset_list.size();i++){
-            if (asset_list.get(i).model.dynamic){
-                asset_list.get(i).model.update_force(asset_list.get(asset_list.get(i).model.hinge_index).model.x+overall_scale*dir*(float)Math.cos(asset_list.get(asset_list.get(i).model.hinge_index).model.alpha)*asset_list.get(i).model.off_x+overall_scale*dir*(float)Math.sin(asset_list.get(asset_list.get(i).model.hinge_index).model.alpha)*asset_list.get(i).model.off_y, asset_list.get(asset_list.get(i).model.hinge_index).model.y+(float)Math.cos(asset_list.get(asset_list.get(i).model.hinge_index).model.alpha)*asset_list.get(i).model.off_y+(float)Math.sin(asset_list.get(asset_list.get(i).model.hinge_index).model.alpha)*asset_list.get(i).model.off_x);
-                asset_list.get(i).model.step();
-            }
-        }*/
 
         for (int i=1;i<m.size();i++){
             if (m.get(i).dynamic){
@@ -257,7 +252,7 @@ public class Person_Graphics {
 
         if (dir==-1){
             for (int i=0;i<assets.weapon_assets.weapons.get(i_weapon).size();i++){
-                draw_asset(scratch,mMVPMatrix,zeroRotationMatrix,dir,weapon_motion_model2.get(i).x+overall_scale*weapon_motion_model2.get(i).lever_y*(float)Math.sin(weapon_motion_model2.get(i).alpha*3.14/180),weapon_motion_model2.get(i).y-weapon_motion_model2.get(i).lever_y*(float)Math.cos(weapon_motion_model2.get(i).alpha*3.14/180),weapon_motion_model2.get(i).alpha,assets.weapon_assets.weapons.get(i_weapon).get(i), weapon_motion_model2.get(i).alph );
+                draw_asset(scratch,mMVPMatrix,zeroRotationMatrix,dir,weapon_motion_model2.get(i).x+overall_scale*weapon_motion_model2.get(i).lever_y*(float)Math.sin(weapon_motion_model2.get(i).alpha*3.14/180),weapon_motion_model2.get(i).y-weapon_motion_model2.get(i).lever_y*(float)Math.cos(weapon_motion_model2.get(i).alpha*3.14/180),weapon_motion_model2.get(i).alpha,assets.weapon_assets.weapons.get(i_weapon).get(i));
             }
         }
 

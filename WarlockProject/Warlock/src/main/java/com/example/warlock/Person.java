@@ -82,6 +82,10 @@ public class Person {
         items.recalculate_attributes(spirit);
     }
 
+    public Person(){
+
+    }
+
     public Person(String given_name, float start_x, float start_y, Context context, Global_Assets assets) {
         myContext=context;
         npc=new NPC_Action(false);

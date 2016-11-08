@@ -3,7 +3,7 @@ package com.example.warlock;
 /**
  * Created by aaron on 11/4/16.
  */
-public class Motion_Model_2 {
+public class Motion_Model_2 implements Cloneable{
 
     public int hinge_index=-1, layer=0;
     public int held_index=-1;
@@ -13,9 +13,13 @@ public class Motion_Model_2 {
     public float lever_x=0, lever_y=0;
     public float PI_CONV=3.14f/180f;
     public int type =0;
-    public int ct=0;
-    public int ft=0;
+    public float ct=0;
+    public float ft=0;
     public float alph=1f;
+
+    public Object clone()throws CloneNotSupportedException{
+        return super.clone();
+    }
 
     public Motion_Model_2(){
         type=-1;
@@ -29,8 +33,8 @@ public class Motion_Model_2 {
         force=0;
         alpha=0;
         hinge_x=0;hinge_y=0;
-        x=0;
-        y=0;
+        this.x=0;
+        this.y=0;
     }
 
     public Motion_Model_2(int ind, float i_off_x, float i_off_y, float i_mass, float i_drag, float i_length, int i_layer){
@@ -46,8 +50,8 @@ public class Motion_Model_2 {
         force=0;
         alpha=0;
         hinge_x=0;hinge_y=0;
-        x=0;
-        y=0;
+        this.x=0;
+        this.y=0;
     }
 
     public Motion_Model_2(int ind, float i_off_x, float i_off_y, float i_mass, float i_drag, float i_length, int i_layer, int i_held){
@@ -82,8 +86,8 @@ public class Motion_Model_2 {
         force=0;
         alpha=0;
         hinge_x=0;hinge_y=0;
-        x=0;
-        y=0;
+        this.x=0;
+        this.y=0;
         lever_x=i_lever_x;
         lever_y=i_lever_y;
     }
@@ -103,29 +107,29 @@ public class Motion_Model_2 {
         force=0;
         alpha=0;
         hinge_x=0;hinge_y=0;
-        x=0;
-        y=0;
+        this.x=0;
+        this.y=0;
         lever_x=i_lever_x;
         lever_y=i_lever_y;
     }
 
-    public Motion_Model_2(int i_type, int ind, float i_lever_x, float i_lever_y, int cur_time, int fin_time){
-        type=i_type;
+    public Motion_Model_2(int i_type, int ind, float i_lever_x, float i_lever_y, float cur_time, float fin_time){
+        this.type=i_type;
         held_index=0;
         layer=1;
         dynamic=true;
         hinge_index=ind;
         off_x=0;
         off_y=0;
-        mass=0;
-        drag=0;
-        length=0;
+        mass=1;
+        drag=1;
+        length=1;
         omega=0;
         force=0;
         alpha=0;
         hinge_x=0;hinge_y=0;
-        x=0;
-        y=0;
+        this.x=0;
+        this.y=0;
         lever_x=i_lever_x;
         lever_y=i_lever_y;
         ct=cur_time;
@@ -142,15 +146,27 @@ public class Motion_Model_2 {
         //alpha=(float)Math.atan2(((double)(i_x-hinge_x)),((double)(i_y-hinge_y)));
         if (type==0 || type==-1){
             force=((float)Math.cos(alpha*PI_CONV)*(i_x-x)+(float)Math.sin(alpha*PI_CONV)*(i_y-y));
-            x=i_x;//+lever_x*(float)Math.cos(alpha*PI_CONV) + lever_y*(float)Math.sin(alpha*PI_CONV);
-            y=i_y;//+lever_x*(float)Math.sin(alpha*PI_CONV) + lever_y*(float)Math.cos(alpha*PI_CONV)-lever_y;
+            this.x=i_x;//+lever_x*(float)Math.cos(alpha*PI_CONV) + lever_y*(float)Math.sin(alpha*PI_CONV);
+            this.y=i_y;//+lever_x*(float)Math.sin(alpha*PI_CONV) + lever_y*(float)Math.cos(alpha*PI_CONV)-lever_y;
         }else if (type==1){
-            x=i_x;
-            y=i_y;
+            this.x=i_x;
+            this.y=i_y;
+            alpha=i_alpha;
+        }else{
+/*            this.x=i_x+ct*.01f;
+            this.y=i_y+ct*.01f;*/
+            x=x+.005f;
+            y=y+.005f;
             alpha=i_alpha;
         }
+
         if (type == 2) {
+/*            this.x=x+.001f;
+            this.y=y+.001f;
+            alpha=i_alpha;*/
+
             ct++;
+
             if (ct>ft){
 
                 reset_values(type,i_x,i_y);
@@ -161,21 +177,23 @@ public class Motion_Model_2 {
     }
 
 
+
+
     public void step(){
         if (type==0){
 
             omega+=.01*(-alpha) + force/mass-.05*(omega*drag);
             alpha+=omega;
         }else if (type==2){
-            alph=(float)(ft-ct)/ft;
+            alph=(ft-ct)/ft;
         }
 
     }
 
     public void reset_values(int t, float x_, float y_){
         if (t==2){
-            x=x_;
-            y=y_;
+            this.x=x_;
+            this.y=y_;
             ct=0;
             alph=1f;
         }
